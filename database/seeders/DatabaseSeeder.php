@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
             // FAKE data
         }
 
+        DB::unprepared(file_get_contents(__dir__ . '/categories.sql'));
     }
 }
