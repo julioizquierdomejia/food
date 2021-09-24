@@ -1,12 +1,12 @@
 @extends('admin.default')
 
 @section('page-header')
-    <a href="{{ route('admin.cities.index') }}">Notifications</a> <small>{{ trans('app.update_item') }}</small>
+    <a href="{{ route('admin.notifications.index') }}">Notifications</a> <small>{{ trans('app.update_item') }}</small>
 @stop
 
 @section('content')
     {!! Form::model($item, [
-            'route'  => [ ADMIN . '.notifications.update', $item->idnotify ],
+            'route'  => [ ADMIN . '.notifications.update', $item->id ],
             'method' => 'put'
         ])
     !!}

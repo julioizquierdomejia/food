@@ -35,7 +35,7 @@
                         <td>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <a href="{{ route(ADMIN . '.notifications.edit', $notification->idnotify) }}"
+                                    <a href="{{ route(ADMIN . '.notifications.edit', $notification->id) }}"
                                        title="{{ trans('app.edit_title') }}" class="btn btn-primary btn-sm">
                                         <span class="ti-pencil"></span>
                                     </a>
@@ -43,7 +43,7 @@
                                 <li class="list-inline-item">
                                     {!! Form::open([
                                         'class'=>'delete',
-                                        'url'  => route(ADMIN . '.notifications.notify', $notification->idnotify),
+                                        'url'  => route(ADMIN . '.notifications.notify', $notification->id),
                                         'method' => 'POST',
                                         ])
                                     !!}
@@ -55,7 +55,7 @@
                                 <li class="list-inline-item">
                                     {!! Form::open([
                                         'class'=>'delete',
-                                        'url'  => route(ADMIN . '.notifications.destroy', $notification->idnotify),
+                                        'url'  => route(ADMIN . '.notifications.destroy', $notification->id),
                                         'method' => 'DELETE',
                                         ])
                                     !!}
