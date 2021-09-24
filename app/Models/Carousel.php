@@ -5,23 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CarouselModel extends Model
+class Carousel extends Model
 {
     use HasFactory;
 
-    protected $table = 'ml_carrousel';
+    protected $table = 'carousel_images';
 
-    protected $primaryKey = 'idcarrousel';
+    protected $primaryKey = 'id';
 
     public $incrementing = true;
     public $timestamps = true;
 
     protected $fillable = [
-        'nameimg',
+        'image',
         'order'
     ];
     protected $casts = [
-        'nameimg' => 'string'
+        'image' => 'string'
     ];
 
     /*
@@ -32,7 +32,7 @@ class CarouselModel extends Model
     public static function rules($update = false, $id=null)
     {
         return [
-            'nameimg' => 'required|image|mimes:jpeg,png,jpg,bmp|max:5120',
+            'image' => 'required|image|mimes:jpeg,png,jpg,bmp|max:5120',
         ];
     }
 

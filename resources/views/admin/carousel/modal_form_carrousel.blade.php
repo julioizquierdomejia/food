@@ -16,7 +16,7 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-6">
-                            {!! Form::myFile('nameimg', 'Banner',['required']) !!}
+                            {!! Form::myFile('image', 'Banner',['required']) !!}
                         </div>
                     </div>
                 </div>

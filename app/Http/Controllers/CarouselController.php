@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\CarouselModel;
+use App\Models\Carousel;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ class CarouselController extends Controller
      */
     public function index(): View
     {
-        $items = CarouselModel::all();
+        $items = Carousel::all();
         return view('admin.carousel.index', compact('items'));
     }
 
@@ -38,20 +38,20 @@ class CarouselController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, CarouselModel::rules());
-        $data = new CarouselModel();
+        $this->validate($request, Carousel::rules());
+        $data = new Carousel();
         $name = '';
 
-        if ($request->has('nameimg')) {
-            $n_file = $request->file("nameimg");
+        if ($request->has('image')) {
+            $n_file = $request->file("image");
             $name = "carrousel_" . time() . "." . $n_file->guessExtension();
             $ruta = public_path("images/carousel/" . $name);
             copy($n_file, $ruta);
         } else {
             return back()->withErrors(trans('app.erro_store'));
         }
-        $data->nameimg = "images/carousel/" . $name;
-        $data->order = CarouselModel::all()->count() + 1;
+        $data->image = "images/carousel/" . $name;
+        $data->order = Carousel::all()->count() + 1;
         $data->save();
 
         return back()->withSuccess(trans('app.success_store'));
@@ -76,7 +76,7 @@ class CarouselController extends Controller
      */
     public function edit($id): View
     {
-        $item = CarouselModel::findOrFail($id);
+        $item = Carousel::findOrFail($id);
 
         return view('admin.carousel.edit', compact('item'));
     }
@@ -90,14 +90,14 @@ class CarouselController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = CarouselModel::findOrFail($id);
+        $item = Carousel::findOrFail($id);
         $data = $request->all();
-        if ($request->has('nameimg')) {
-            $n_file = $request->file("nameimg");
+        if ($request->has('image')) {
+            $n_file = $request->file("image");
             $name = "carrousel_" . time() . "." . $n_file->guessExtension();
             $ruta = public_path("images/carousel/" . $name);
             copy($n_file, $ruta);
-            $data['nameimg'] = "images/carousel/" . $name;
+            $data['image'] = "images/carousel/" . $name;
         }
         $item->update($data);
 
@@ -112,7 +112,7 @@ class CarouselController extends Controller
      */
     public function destroy($id)
     {
-        CarouselModel::destroy($id);
+        Carousel::destroy($id);
 
         return back()->withSuccess(trans('app.success_destroy'));
     }

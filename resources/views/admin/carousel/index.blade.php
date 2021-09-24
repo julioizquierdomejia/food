@@ -7,9 +7,6 @@
 @section('content')
 
     <div class="mB-20">
-        <!--<a href="{{ route(ADMIN . '.carousel.create') }}" class="btn btn-info">
-            {{ trans('app.add_button') }}
-        </a>-->
         <button data-toggle="modal" data-target="#modalAddCarrousel" class="btn btn-info">
             {{ trans('app.add_button') }}
         </button>
@@ -37,12 +34,12 @@
                 <tbody>
                     @foreach($items as $carrousel)
                     <tr>
-                        <td>{{ $carrousel->nameimg }}</td>
+                        <td>{{ $carrousel->image }}</td>
                         <td>{{ $carrousel->order }}</td>
                         <td>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <a href="{{ route(ADMIN . '.cities.edit', $carrousel->idcarrousel) }}"
+                                    <a href="{{ route(ADMIN . '.carousel.edit', $carrousel->id) }}"
                                        title="{{ trans('app.edit_title') }}" class="btn btn-primary btn-sm">
                                         <span class="ti-pencil"></span>
                                     </a>
@@ -50,7 +47,7 @@
                                 <li class="list-inline-item">
                                     {!! Form::open([
                                         'class'=>'delete',
-                                        'url'  => route(ADMIN . '.cities.destroy', $carrousel->idcarrousel),
+                                        'url'  => route(ADMIN . '.carousel.destroy', $carrousel->id),
                                         'method' => 'DELETE',
                                         ])
                                     !!}
