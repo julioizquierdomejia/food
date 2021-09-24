@@ -31,13 +31,6 @@
                 List
             </a>
         </li>
-        <li>
-            <a class="{{ Str::startsWith($route, ADMIN . '.home_categories') || Str::startsWith($route, ADMIN . '.dash') ?
-                        'actived c-blue-500' : '' }}"
-               href="{{ route(ADMIN . '.home_categories.index') }}">
-                Home Categories
-            </a>
-        </li>
     </ul>
 </li>
 <li class="nav-item">
@@ -56,24 +49,6 @@
             <i class="ti-user"></i>
         </span>
         <span class="title">Users</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.countries') ? 'actived c-blue-500' : '' }}"
-       href="{{ route(ADMIN . '.countries.index') }}">
-        <span class="icon-holder">
-            <i class="ti-world"></i>
-        </span>
-        <span class="title">Countries</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.cities') ? 'actived c-blue-500' : '' }}"
-       href="{{ route(ADMIN . '.cities.index') }}">
-        <span class="icon-holder">
-            <i class="ti-flag-alt"></i>
-        </span>
-        <span class="title">Cities</span>
     </a>
 </li>
 <li class="nav-item">
