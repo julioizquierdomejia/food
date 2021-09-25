@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Item extends Model
 {
     use HasFactory;
 
-    protected $table = 'categories';
+    protected $table = 'items';
+    protected $primaryKey = 'id';
     protected $fillable = [
+        'category_id',
         'name',
-        'icon',
+        'description',
+        'image',
+        'unit_price',
+        'price',
+        'active'
     ];
 
     /*
@@ -20,10 +26,11 @@ class Category extends Model
     | Validations
     |------------------------------------------------------------------------------------
     */
-    public static function rules($update = false, $id=null)
+    public static function rules($update = false, $id = null)
     {
         return [
             'name' => 'required',
+            'category_id' => 'required',
         ];
     }
 
