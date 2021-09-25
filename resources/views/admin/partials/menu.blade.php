@@ -23,12 +23,12 @@
     </a>
 </li>
 <li class="nav-item">
-    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.users') ? 'actived c-blue-500' : '' }}"
-       href="{{ route(ADMIN . '.users.index') }}">
+    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.raffles') ? 'actived c-blue-500' : '' }}"
+       href="{{ route(ADMIN . '.raffles.index') }}">
         <span class="icon-holder">
-            <i class="ti-user"></i>
+            <i class="ti-ticket"></i>
         </span>
-        <span class="title">Users</span>
+        <span class="title">Rifas</span>
     </a>
 </li>
 <li class="nav-item">
@@ -47,5 +47,14 @@
             <i class="ti-bell"></i>
         </span>
         <span class="title">Notifications</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.users') ? 'actived c-blue-500' : '' }}"
+       href="{{ route(ADMIN . '.users.index') }}">
+        <span class="icon-holder">
+            <i class="ti-user"></i>
+        </span>
+        <span class="title">Users</span>
     </a>
 </li>
