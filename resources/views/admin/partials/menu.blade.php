@@ -22,35 +22,6 @@
         <span class="title">Productos</span>
     </a>
 </li>
-<li class="nav-item dropdown">
-    <a class="dropdown-toggle sidebar-link
-       {{ Str::startsWith($route, ADMIN . '.categories') || Str::startsWith($route, ADMIN . '.home_categories')
-        || Str::startsWith($route, ADMIN . '.dash') ?
-        'actived c-blue-500' : '' }}"
-       href="javascript:void(0);">
-        <span class="icon-holder">
-            <i class="ti-layers-alt"></i>
-        </span>
-        <span class="title">Categories</span>
-        <span class="arrow"><i class="ti-angle-right"></i></span></a>
-    <ul class="dropdown-menu">
-        <li>
-            <a class="{{ Str::startsWith($route, ADMIN . '.categories') ? 'actived c-blue-500' : '' }}"
-               href="{{ route(ADMIN . '.categories.index') }}">
-                List
-            </a>
-        </li>
-    </ul>
-</li>
-<li class="nav-item">
-    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.business') ? 'actived c-blue-500' : '' }}"
-       href="{{ route(ADMIN . '.business.index') }}">
-        <span class="icon-holder">
-            <i class="ti-briefcase"></i>
-        </span>
-        <span class="title">Business</span>
-    </a>
-</li>
 <li class="nav-item">
     <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.users') ? 'actived c-blue-500' : '' }}"
        href="{{ route(ADMIN . '.users.index') }}">
