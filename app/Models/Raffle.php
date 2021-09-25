@@ -17,9 +17,11 @@ class Raffle extends Model
         'start_date',
         'end_date',
         'max_tickets_number',
+        'raffle_goal_amount',
         'tickets_number',
         'progress',
-        'status'
+        'active',
+        'status',
     ];
 
     /*

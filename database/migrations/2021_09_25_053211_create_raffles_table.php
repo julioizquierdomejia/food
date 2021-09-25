@@ -20,8 +20,10 @@ class CreateRafflesTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->integer('max_tickets_number')->nullable();
+            $table->integer('raffle_goal_amount')->nullable();
             $table->integer('tickets_number')->default(0)->nullable();
             $table->integer('progress')->default(0)->nullable();
+            $table->integer('active')->default(0)->nullable()->comment('0 show in app | 1 hide in app');
             $table->integer('status')->default(0)->nullable()->comment('0 not raffled | 1 raffled');
             $table->timestamps();
         });
