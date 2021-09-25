@@ -13,6 +13,15 @@
 {{--    </a>--}}
 {{--</li>--}}
 
+<li class="nav-item">
+    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.items') ? 'actived c-blue-500' : '' }}"
+       href="{{ route(ADMIN . '.items.index') }}">
+        <span class="icon-holder">
+            <i class="ti-package"></i>
+        </span>
+        <span class="title">Productos</span>
+    </a>
+</li>
 <li class="nav-item dropdown">
     <a class="dropdown-toggle sidebar-link
        {{ Str::startsWith($route, ADMIN . '.categories') || Str::startsWith($route, ADMIN . '.home_categories')

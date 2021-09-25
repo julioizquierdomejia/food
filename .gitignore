@@ -3,6 +3,8 @@
 /public/storage
 /public/images/gallery/*
 /public/images/carousel/*
+/public/images/items/*
+!/public/images/items/item_default.jpg
 /storage/*.key
 /vendor
 .env

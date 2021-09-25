@@ -14,6 +14,7 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('users', 'UserController');
     Route::resource('carousel', 'CarouselController');
     Route::resource('categories', 'CategoriesController');
+    Route::resource('items', 'ItemsController');
 
     /**
      *  Business Gallery
