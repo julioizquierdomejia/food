@@ -9,8 +9,8 @@ Auth::routes();
 |------------------------------------------------------------------------------------
 */
 Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', 'Role:10']], function () {
-    Route::get('/', 'DashboardController@index')->name('dash');
-//    Route::get('/', 'HomeCategoriesController@index')->name('dash');
+//    Route::get('/', 'DashboardController@index')->name('dash');
+    Route::get('/', 'RaffleWinnersController@index')->name('dash');
     Route::resource('users', 'UserController');
     Route::resource('carousel', 'CarouselController');
     Route::resource('categories', 'CategoriesController');

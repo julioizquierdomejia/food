@@ -12,7 +12,15 @@
 {{--        <span class="title">Dashboard</span>--}}
 {{--    </a>--}}
 {{--</li>--}}
-
+<li class="nav-item mT-30">
+    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.dash') ? 'actived  c-blue-500' : '' }}"
+       href="{{ route(ADMIN . '.dash') }}">
+        <span class="icon-holder">
+            <i class="ti-cup"></i>
+        </span>
+        <span class="title">Ganadores</span>
+    </a>
+</li>
 <li class="nav-item">
     <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.items') ? 'actived c-blue-500' : '' }}"
        href="{{ route(ADMIN . '.items.index') }}">
