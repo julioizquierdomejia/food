@@ -21,6 +21,7 @@ return [
 	// View buttons
 	"add_button"    => "Add",
 	"edit_button"    => "Edit",
+    "cancel_button"    => "Cancel",
 
 	// Login, Logout ..etc
 	"start_session"      => "Sign in to start your session",
