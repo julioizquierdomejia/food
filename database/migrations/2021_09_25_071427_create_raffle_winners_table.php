@@ -17,6 +17,7 @@ class CreateRaffleWinnersTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('raffle_id');
+            $table->string('banner');
             $table->dateTime('win_date')->nullable();
             $table->timestamps();
         });

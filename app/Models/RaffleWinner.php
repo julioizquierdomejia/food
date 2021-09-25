@@ -15,6 +15,8 @@ class RaffleWinner extends Model
         'user_id',
         'raffle_id',
         'win_date',
+        'banner',
+        'active',
     ];
 
     /*
