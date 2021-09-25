@@ -14,6 +14,7 @@ class RaffleWinner extends Model
     protected $fillable = [
         'user_id',
         'raffle_id',
+        'win_date',
     ];
 
     /*
