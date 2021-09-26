@@ -50,11 +50,13 @@
                                 <div class="row" data-repeater-item>
                                     <div class="form-group col-md-5">
                                         <label for="quantity">Cantidad</label>
-                                        <input type="text" name="quantity" id="quantity" class="form-control">
+                                        <input type="number" name="quantity" id="quantity"
+                                               required class="form-control">
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label for="price">Precio</label>
-                                        <input type="text" name="price" id="price" class="form-control">
+                                        <input type="number" name="price" id="price" step="0.01"
+                                               required class="form-control">
                                     </div>
                                     <div class="form-group col-md-2" style="padding-top: 2rem!important">
                                         <button type="button" data-repeater-delete
@@ -96,7 +98,8 @@
                     if (confirm('¿Eliminar Elemento?')) {
                         $(this).slideUp(deleteElement);
                     }
-                }
+                },
+                isFirstItemUndeletable: true
             })
 
         });
