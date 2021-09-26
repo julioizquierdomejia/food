@@ -20,15 +20,15 @@
                                 <select class="form-control" name="item_id" id="item_id" required>
                                     <option value="">-- seleccionar --</option>
                                     @foreach($items as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}" price="{{ $item->price }}">
+                                            {{ $item->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="max_tickets_number">Maximo de Tickets (opcional)</label>
-                                <input type="number" name="max_tickets_number" id="max_tickets_number"
+                                <label for="raffle_goal_amount">Monto Objetivo:</label>
+                                <input type="number" name="raffle_goal_amount" id="raffle_goal_amount"
                                        class="form-control">
                             </div>
                             <div class="form-group">
@@ -40,6 +40,29 @@
                                 <label for="end_date">Fecha Fin</label>
                                 <input type="date" name="end_date" id="end_date"
                                        class="form-control" value="{{ getFecha('Y-m-d') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6 repeater">
+                            <p class="font-weight-bold">TICKETS |
+                                <a href="#" data-repeater-create>agregar<i class="ti-plus"></i></a>
+                            </p>
+                            <div data-repeater-list="group-a">
+                                <div class="row" data-repeater-item>
+                                    <div class="form-group col-md-5">
+                                        <label for="quantity">Cantidad</label>
+                                        <input type="text" name="quantity" id="quantity" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label for="price">Precio</label>
+                                        <input type="text" name="price" id="price" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-2" style="padding-top: 2rem!important">
+                                        <button type="button" data-repeater-delete
+                                                class="btn btn-sm text-danger" id="btn-add">
+                                            <i class="ti-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -58,3 +81,24 @@
         </div>
     </div>
 </div>
+
+@push('js')
+    <script>
+        $('#item_id').change(function () {
+            const price = $('option:selected', this).attr('price');
+            $('#raffle_goal_amount').val(price);
+        });
+
+        $(document).ready(function () {
+
+            $('.repeater').repeater({
+                hide: function (deleteElement) {
+                    if (confirm('¿Eliminar Elemento?')) {
+                        $(this).slideUp(deleteElement);
+                    }
+                }
+            })
+
+        });
+    </script>
+@endpush
