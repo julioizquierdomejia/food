@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Raffle;
+use App\Models\Ticket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -46,7 +47,16 @@ class RafflesController extends Controller
     {
         $this->validate($request, Raffle::rules());
         $raffles = $request->all();
-        Raffle::create($raffles);
+        $tickets = $request->tickets;
+        $raffle = Raffle::create($raffles);
+
+        foreach ($tickets as $ticket) {
+            Ticket::create([
+                'raffle_id' => $raffle->id,
+                'quantity' => $ticket['quantity'],
+                'price' => $ticket['price'],
+            ]);
+        }
 
         return back()->withSuccess(trans('app.success_store'));
     }

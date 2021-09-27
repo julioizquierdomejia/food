@@ -46,7 +46,7 @@
                             <p class="font-weight-bold">TICKETS |
                                 <a href="#" data-repeater-create>agregar<i class="ti-plus"></i></a>
                             </p>
-                            <div data-repeater-list="group-a">
+                            <div data-repeater-list="tickets">
                                 <div class="row" data-repeater-item>
                                     <div class="form-group col-md-5">
                                         <label for="quantity">Cantidad</label>
