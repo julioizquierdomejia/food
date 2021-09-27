@@ -9,17 +9,24 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $table = 'tickets';
+    protected $fillable = [
+        'raffle_id',
+        'quantity',
+        'price',
+    ];
 
     /*
     |------------------------------------------------------------------------------------
     | Validations
     |------------------------------------------------------------------------------------
     */
-    public static function rules($update = false, $id=null)
+    public static function rules($update = false, $id = null)
     {
         return [
-            'name' => 'required',
+            'raffle_id' => 'required',
+            'quantity' => 'required',
+            'price' => 'required',
         ];
     }
 
