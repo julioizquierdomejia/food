@@ -48,6 +48,7 @@ class RafflesController extends Controller
         $this->validate($request, Raffle::rules());
         $raffles = $request->all();
         $tickets = $request->tickets;
+        $raffles['tickets_number'] = array_sum(array_column($tickets, 'quantity'));
         $raffle = Raffle::create($raffles);
 
         foreach ($tickets as $ticket) {
@@ -101,6 +102,7 @@ class RafflesController extends Controller
         $raffle = Raffle::findOrFail($id);
         $data = $request->all();
         $tickets = $request->tickets;
+        $data['tickets_number'] = array_sum(array_column($tickets, 'quantity'));
 
         Ticket::where('raffle_id', $raffle->id)->delete();
         foreach ($tickets as $ticket) {

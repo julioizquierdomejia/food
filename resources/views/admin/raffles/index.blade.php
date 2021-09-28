@@ -20,7 +20,7 @@
                     <th style="width: 20%">Producto</th>
                     <th style="width: 15%">Fecha Inicio</th>
                     <th style="width: 15%">Fecha Fin</th>
-                    <th style="width: 20%">Cantidad Tickets Vendidos</th>
+                    <th style="width: 20%">Cantidad Tickets</th>
                     <th style="width: 20%">Progreso</th>
                     <th style="width: 10%">Acciones</th>
                 </tr>
@@ -31,7 +31,7 @@
                     <th>Producto</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
-                    <th>Cantidad Tickets Vendidos</th>
+                    <th>Cantidad Tickets</th>
                     <th>Progreso</th>
                     <th>Acciones</th>
                 </tr>
