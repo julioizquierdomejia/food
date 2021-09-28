@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\BusinessController;
-use App\Http\Controllers\Api\HomeController;
-use App\Http\Controllers\Api\UserController;
+
+
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,25 +18,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('login', [UserController::class, 'login']);
-    Route::post('register', [UserController::class, 'register']);
-    Route::post('logout', [UserController::class, 'logout']);
-    Route::get('users', [UserController::class, 'index']);
-    Route::get('info', [UserController::class, 'info'])->middleware(['jwt.auth']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('users', [AuthController::class, 'index']);
+    Route::get('info', [AuthController::class, 'info'])->middleware(['jwt.auth']);
+    Route::post('storeToken', [AuthController::class, 'storeToken'])->middleware(['jwt.auth']);
+});
+
+Route::group(['prefix' => 'users'], function () {
+    Route::put('/{id_user}', [UserController::class, 'update'])->middleware(['jwt.auth']);
+    Route::get('/public/resetpass/{email_user}', [UserController::class, 'sendEmailPassword']);
+    Route::post('/public/resetpass', [UserController::class, 'NewPass']);
 });
 
 Route::get('home', [HomeController::class, 'index'])->middleware(['jwt.auth']);
 
-Route::group(['prefix' => 'business'], function () {
-    Route::get('', [BusinessController::class, 'index'])->middleware(['jwt.auth']);
-    Route::get('/category/{category_id}', [BusinessController::class, 'getBusinessByCategory'])->middleware(['jwt.auth']);
-    Route::get('/restaurant/country/{country_id}', [BusinessController::class, 'getRestaurantByCountry'])
-        ->middleware(['jwt.auth']);
-    Route::get('/city/{city_id}', [BusinessController::class, 'getBusinessByCity'])->middleware(['jwt.auth']);
-    Route::get('/{business_id}', [BusinessController::class, 'getBusinessById'])->middleware(['jwt.auth']);
-});
+
+

@@ -1,13 +1,13 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API Mas Latinos",
+        "title": "API La Rifa Peru",
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "http://3.17.120.44/api",
-            "description": "maslatinos api",
+            "url": "http://larifa.com/api",
+            "description": "La Rifa Perú API",
             "variables": {
                 "schema": {
                     "enum": [
@@ -44,212 +44,13 @@
         }
     ],
     "paths": {
-        "/business": {
-            "get": {
-                "tags": [
-                    "Business"
-                ],
-                "summary": "Devuelve los datos de Business",
-                "operationId": "d5565e76960829e56bd5e12b42e867a5",
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error."
-                    }
-                },
-                "deprecated": false,
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/business/category/{category_id}": {
-            "get": {
-                "tags": [
-                    "Business"
-                ],
-                "summary": "Devuelve los business de una Categoria",
-                "operationId": "2e249d5039192137fccba93532f91ed4",
-                "parameters": [
-                    {
-                        "name": "category_id",
-                        "in": "path",
-                        "description": "category_id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error."
-                    }
-                },
-                "deprecated": false,
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/business/{business_id}": {
-            "get": {
-                "tags": [
-                    "Business"
-                ],
-                "summary": "Devuelve el business Info",
-                "operationId": "b43452cc746c17d60aa8f2f35ad2643a",
-                "parameters": [
-                    {
-                        "name": "business_id",
-                        "in": "path",
-                        "description": "business_id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error."
-                    }
-                },
-                "deprecated": false,
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/business/restaurant/country/{country_id}": {
-            "get": {
-                "tags": [
-                    "Business"
-                ],
-                "summary": "Devuelve los Restaurants de un Country",
-                "operationId": "68180fd4c879d95e9e2295414fcb3d09",
-                "parameters": [
-                    {
-                        "name": "country_id",
-                        "in": "path",
-                        "description": "country_id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error."
-                    }
-                },
-                "deprecated": false,
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/business/city/{city_id}": {
-            "get": {
-                "tags": [
-                    "Business"
-                ],
-                "summary": "Devuelve los Restaurants de un Country",
-                "operationId": "c0fade8170991bc1e9821886ba7b2ef6",
-                "parameters": [
-                    {
-                        "name": "city_id",
-                        "in": "path",
-                        "description": "City ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error."
-                    }
-                },
-                "deprecated": false,
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/home": {
-            "get": {
-                "tags": [
-                    "Home"
-                ],
-                "summary": "Retorna los datos a mostrar en el inicio",
-                "operationId": "f4e4a775375271959dabcdd3686525ec",
-                "responses": {
-                    "200": {
-                        "description": "Home page data"
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error."
-                    }
-                },
-                "deprecated": false,
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/auth/users": {
-            "get": {
-                "tags": [
-                    "Autentificación"
-                ],
-                "summary": "Mostrar usuarios",
-                "operationId": "83d11465b059eab26494c595f54ebb8d",
-                "responses": {
-                    "200": {
-                        "description": "Mostrar todos los usuarios."
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error."
-                    }
-                }
-            }
-        },
         "/auth/login": {
             "post": {
                 "tags": [
                     "Autentificación"
                 ],
                 "summary": "Autentificación de usuarios",
-                "operationId": "a46d338aa491a103570c86c30b068b01",
+                "operationId": "1ff9c65c5cd1a8e0786e318eed856972",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -283,22 +84,60 @@
                 "deprecated": false
             }
         },
-        "/auth/register": {
+        "/auth/storeToken": {
             "post": {
                 "tags": [
                     "Autentificación"
                 ],
-                "summary": "Registro de asesorados",
-                "operationId": "3e6494ded839842a0ae609c798feaedb",
+                "summary": "Guardar token de dispositivo",
+                "operationId": "f7f98fb110b8166e3bdf4e1ff04f5621",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "dni": {
+                                    "token": {
                                         "type": "string"
-                                    },
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "token": "admin@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed"
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Autentificación"
+                ],
+                "summary": "Registro de usuario",
+                "operationId": "c47a1b563e5e8bc3c7b962f893981e84",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
                                     "email": {
                                         "type": "string"
                                     },
@@ -308,28 +147,15 @@
                                     "name": {
                                         "type": "string"
                                     },
-                                    "surnames": {
-                                        "type": "string"
-                                    },
-                                    "date_of_birth": {
-                                        "type": "date"
-                                    },
-                                    "sex": {
-                                        "type": "string"
-                                    },
                                     "phone": {
                                         "type": "string"
                                     }
                                 },
                                 "type": "object",
                                 "example": {
-                                    "dni": "dni",
                                     "email": "email@gmail.com",
                                     "password": "123456789",
                                     "name": "Pepe",
-                                    "surnames": "Garcia Fuentes",
-                                    "date_of_birth": "2021-10-6",
-                                    "sex": "Masculino",
                                     "phone": "phone"
                                 }
                             }
@@ -353,7 +179,7 @@
                     "Autentificación"
                 ],
                 "summary": "Información del usuario logeado",
-                "operationId": "d3eb334475b255771114cbdf50ce7205",
+                "operationId": "eb02f0c18032f15a98791041bbb6d9c3",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -376,13 +202,162 @@
                     "Autentificación"
                 ],
                 "summary": "Finaliza la sessión del usuario",
-                "operationId": "faa166bae342da221818136a2a7a3008",
+                "operationId": "eae6a8251a6469bbabe454860f64cf37",
                 "responses": {
                     "200": {
                         "description": "OK"
                     },
                     "400": {
                         "description": "Failed"
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/{id_user}": {
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Modifiy user information",
+                "operationId": "1afc67ddeed0ff529a72d7f249b5c1d8",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Pepe",
+                                    "surnames": "Garcia Fuentes",
+                                    "phone": "984575821"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed"
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/public/resetpass/{email}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "email to reset password, send code to email",
+                "operationId": "93b785331fd73faddb226c2794d8cb68",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/users/public/resetpass": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Reset password",
+                "operationId": "9778d67f89a9fe5ae52d293d6f75727c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "password": "123456",
+                                    "token": "123456"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/home": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Retorna los datos a mostrar en el inicio",
+                "operationId": "f8dc767a4c83166e4cdcbccd11d666f8",
+                "responses": {
+                    "200": {
+                        "description": "Home page data"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
                     }
                 },
                 "deprecated": false,
