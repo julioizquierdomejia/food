@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Ticket extends Model
 {
@@ -35,6 +36,11 @@ class Ticket extends Model
     | Relations
     |------------------------------------------------------------------------------------
     */
+
+    public function raffle(): BelongsTo
+    {
+        return $this->belongsTo(Raffle::class);
+    }
 
     /*
     |------------------------------------------------------------------------------------

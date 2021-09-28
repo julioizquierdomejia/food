@@ -30,7 +30,7 @@
                 <tbody>
                 @foreach($winners as $winner)
                     <tr>
-                        <td>{{ $winner->name ? $winner->name : 'Jhon Doe'}}</td>
+                        <td>{{ $winner->user ? $winner->user->name : 'Jhon Doe' }}</td>
                         <td>{{ $winner->raffle->item->name . ' - ' . $winner->raffle->item->description }}</td>
                         <td>{{ $winner->raffle->item->price }}</td>
                         <td>{{ explode(' ', $winner->win_date)[0] }}</td>

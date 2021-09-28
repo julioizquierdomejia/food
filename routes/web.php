@@ -16,6 +16,7 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('categories', 'CategoriesController');
     Route::resource('items', 'ItemsController');
     Route::resource('raffles', 'RafflesController');
+    Route::resource('sales', 'SalesController');
 
     /**
      * Notifications

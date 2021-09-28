@@ -47,6 +47,11 @@ class Raffle extends Model
         return $this->belongsTo(Item::class);
     }
 
+    public function winner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'winner_id');
+    }
+
     /*
     |------------------------------------------------------------------------------------
     | Scopes

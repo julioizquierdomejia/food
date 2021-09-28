@@ -13,8 +13,8 @@ class RaffleWinnersController extends Controller
 {
     public function index()
     {
-//        $this->raffleDraw();
-        $winners = RaffleWinner::all();
+        $this->raffleDraw();
+        $winners = RaffleWinner::with('user', 'raffle')->get();
         return view('admin.raffle_winners.index', compact('winners'));
     }
 
@@ -24,46 +24,42 @@ class RaffleWinnersController extends Controller
         $winners = [];
 
         foreach ($raffles as $raffle) {
-            $tickets = Ticket::where('raffle_id', 9)->get();
+            $tickets = Ticket::where('raffle_id', $raffle->id)->get();
             $box = [];
             foreach ($tickets as $ticket) {
-                $user_tickets = UserTicket::where('raffled', '0')->where('ticket_id', $ticket->id)->get();
+                $user_tickets = UserTicket::where('ticket_id', $ticket->id)->get();
                 if ($user_tickets) {
                     foreach ($user_tickets as $user_ticket) {
                         for ($i = 0; $i < $ticket->quantity; $i++) {
                             array_push($box, $user_ticket->user_id);
-                            $u_ticket = UserTicket::where('id', $user_ticket->id)->first();
-                            $u_ticket->raffled = 1;
-                            $u_ticket->update();
                         }
                     }
                 }
-//                dd($box, $raffle->id);
-                if (count($box) > 0) {
-                    shuffle($box);
-                    shuffle($box);
-                    $winner_position = array_rand($box);
-                    $winner_id = $box[$winner_position];
+            }
 
-//                    dd($winner_id, $ticket);
-                    $raffle_result = Raffle::where('id', $raffle->id)->first();
-                    $raffle_result->winner_id = $winner_id;
-                    $raffle_result->status = 1;
-                    $raffle_result->update();
+            if (count($box) > 0) {
+                shuffle($box);
+                shuffle($box);
+                $winner_position = array_rand($box);
+                $winner_id = $box[$winner_position];
 
-                    $raffle = RaffleWinner::create([
-                        'user_id' => $winner_id,
-                        'raffle_id' => $raffle->id,
-                        'win_date' => getFecha(),
-                    ]);
+                $raffle_result = Raffle::where('id', $raffle->id)->first();
+                $raffle_result->winner_id = $winner_id;
+                $raffle_result->status = 1;
+                $raffle_result->update();
 
-                    $winner = [
-                        "raffle" => $raffle,
-                        "winner_id" => $winner_id
-                    ];
+                $raffle = RaffleWinner::create([
+                    'user_id' => $winner_id,
+                    'raffle_id' => $raffle->id,
+                    'win_date' => getFecha(),
+                ]);
 
-                    array_push($winners, $winner);
-                }
+                $winner = [
+                    "raffle" => $raffle,
+                    "winner_id" => $winner_id
+                ];
+
+                array_push($winners, $winner);
             }
         }
         return true;

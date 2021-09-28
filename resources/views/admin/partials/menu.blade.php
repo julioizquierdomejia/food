@@ -22,6 +22,15 @@
     </a>
 </li>
 <li class="nav-item">
+    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.sales') ? 'actived  c-blue-500' : '' }}"
+       href="{{ route(ADMIN . '.sales.index') }}">
+        <span class="icon-holder">
+            <i class="ti-shopping-cart-full"></i>
+        </span>
+        <span class="title">Ventas</span>
+    </a>
+</li>
+<li class="nav-item">
     <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.items') ? 'actived c-blue-500' : '' }}"
        href="{{ route(ADMIN . '.items.index') }}">
         <span class="icon-holder">
