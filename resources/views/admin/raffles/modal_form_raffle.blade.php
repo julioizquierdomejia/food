@@ -26,11 +26,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="raffle_goal_amount">Monto Objetivo:</label>
-                                <input type="number" name="raffle_goal_amount" id="raffle_goal_amount"
-                                       class="form-control">
-                            </div>
+                            {!! Form::myInput('number', 'raffle_goal_amount', 'Monto Objetivo:', ['required']) !!}
                             <div class="form-group">
                                 <label for="start_date">Fecha Inicio</label>
                                 <input type="date" name="start_date" id="start_date"
