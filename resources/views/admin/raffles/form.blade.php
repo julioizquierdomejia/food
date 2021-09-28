@@ -25,7 +25,32 @@
                                class="form-control" value="{{ $raffle->end_date->format('Y-m-d') }}">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 repeater">
+                    <p class="font-weight-bold">TICKETS |
+                        <a href="#" data-repeater-create>agregar<i class="ti-plus"></i></a>
+                    </p>
+                    <div data-repeater-list="tickets">
+                        @foreach($tickets as $ticket)
+                            <div class="row" data-repeater-item>
+                                <div class="form-group col-md-5">
+                                    <label for="quantity">Cantidad</label>
+                                    <input type="number" name="quantity" id="quantity"
+                                           required class="form-control" value="{{ $ticket->quantity }}">
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="price">Precio</label>
+                                    <input type="number" name="price" id="price" step="0.01"
+                                           required class="form-control" value="{{ $ticket->price }}">
+                                </div>
+                                <div class="form-group col-md-2" style="padding-top: 2rem!important">
+                                    <button type="button" data-repeater-delete
+                                            class="btn btn-sm text-danger" id="btn-add">
+                                        <i class="ti-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

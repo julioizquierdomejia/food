@@ -82,7 +82,8 @@ class RafflesController extends Controller
     {
         $raffle = Raffle::find($id);
         $items = Item::orderBy('id', 'DESC')->get();
-        return view('admin.raffles.edit', compact('raffle', 'items'));
+        $tickets = Ticket::where('raffle_id', $raffle->id)->get();
+        return view('admin.raffles.edit', compact('raffle', 'items', 'tickets'));
     }
 
     /**
@@ -97,9 +98,20 @@ class RafflesController extends Controller
     {
         $this->validate($request, Raffle::rules(true, $id));
 
-        $item = Raffle::findOrFail($id);
-        $raffle = $request->all();
-        $item->update($raffle);
+        $raffle = Raffle::findOrFail($id);
+        $data = $request->all();
+        $tickets = $request->tickets;
+
+        Ticket::where('raffle_id', $raffle->id)->delete();
+        foreach ($tickets as $ticket) {
+            Ticket::create([
+                'raffle_id' => $raffle->id,
+                'quantity' => $ticket['quantity'],
+                'price' => $ticket['price'],
+            ]);
+        }
+
+        $raffle->update($data);
 
         return redirect()->route(ADMIN . '.raffles.index')->withSuccess(trans('app.success_update'));
     }
