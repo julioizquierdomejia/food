@@ -35,6 +35,8 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 Route::get('home', [HomeController::class, 'index'])->middleware(['jwt.auth']);
+Route::get('winners', [HomeController::class, 'winners'])->middleware(['jwt.auth']);
 
+Route::get('category/{id_category}', [HomeController::class, 'items_category'])->middleware(['jwt.auth']);
 
 

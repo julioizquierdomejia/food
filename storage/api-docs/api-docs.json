@@ -367,6 +367,63 @@
                     }
                 ]
             }
+        },
+        "/category/{id_category}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Retorna las rifas por categoria",
+                "operationId": "a36233fb635ebb40bff4f7102027dc35",
+                "parameters": [
+                    {
+                        "name": "id_category",
+                        "in": "path",
+                        "description": "id de categoria",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Page category data"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/winners": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Retorna los datos a mostrar en el inicio",
+                "operationId": "fd8638b9c318a4adae18161f8d2db44c",
+                "responses": {
+                    "200": {
+                        "description": "Home page data"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
