@@ -15,6 +15,9 @@
                     <th>Rifa</th>
                     <th>Estado</th>
                     <th>Fecha Sorteo</th>
+                    <th>Cant. Tickets Comprados</th>
+                    <th>Precio</th>
+{{--                    <th></th>--}}
                 </tr>
                 </thead>
 
@@ -24,16 +27,24 @@
                     <th>Producto Rifado</th>
                     <th>Estado</th>
                     <th>Fecha Sorteo</th>
+                    <th>Cant. Tickets Comprados</th>
+                    <th>Precio</th>
+{{--                    <th></th>--}}
                 </tr>
                 </tfoot>
 
                 <tbody>
                 @foreach($sales as $sale)
                     <tr>
-                        <td>{{ $sale->user ? $sale->user->name : 'Jhon Doe'}}</td>
-                        <td>{{ $sale->ticket->raffle->item->name . ' - ' . $sale->ticket->raffle->item->description }}</td>
+                        <td>{{ $sale->client }}</td>
+                        <td>{{ $sale->product }}</td>
                         <td>{{ $sale->raffled ? 'Sorteo Finalizado' : 'Sorteo en Proceso' }}</td>
-                        <td>{{ explode(' ', $sale->ticket->raffle->end_date)[0]  }}</td>
+                        <td>{{ explode(' ', $sale->end_date)[0]  }}</td>
+                        <td>{{ $sale->precio  }}</td>
+                        <td>{{ $sale->quantity  }}</td>
+{{--                        <td>--}}
+{{--                            <button class="btn btn-info btn-sm" title="Detalles"><i class="ti-list"></i></button>--}}
+{{--                        </td>--}}
                     </tr>
                 @endforeach
                 </tbody>
