@@ -490,4 +490,5 @@ class AuthController extends Controller
             return $this->errorResponse($exception->getMessage(), 400);
         }
     }
+    
 }

@@ -424,6 +424,143 @@
                     }
                 ]
             }
+        },
+        "/detailRaffle/{id_raffle}": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Retorna el detalle de una rifa.",
+                "operationId": "b1ca179ce36b6805be958ab48a4d7b36",
+                "parameters": [
+                    {
+                        "name": "id_raffle",
+                        "in": "path",
+                        "description": "id de rifa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Home page data"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/favoritesRaffles": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Retorna tus rifas favoritas.",
+                "operationId": "2cfc09192af7a2d33675e1ccf375dc15",
+                "responses": {
+                    "200": {
+                        "description": "Home page data"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/favorites": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "New favorite",
+                "operationId": "9f4efa7ba1b4295adc6092cfd48e4c42",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_raffle": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "id_raffle": "123456"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed"
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Delete favorite",
+                "operationId": "3be1d5fdfeae580fe37891e63af5eb7f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_raffle": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "id_raffle": "123456"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed"
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

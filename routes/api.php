@@ -30,12 +30,16 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['prefix' => 'users'], function () {
     Route::put('/{id_user}', [UserController::class, 'update'])->middleware(['jwt.auth']);
+    Route::post('/favorites', [HomeController::class, 'NewFavorite'])->middleware(['jwt.auth']);
+    Route::delete('/favorites', [HomeController::class, 'DeleteFavorite'])->middleware(['jwt.auth']);
     Route::get('/public/resetpass/{email_user}', [UserController::class, 'sendEmailPassword']);
     Route::post('/public/resetpass', [UserController::class, 'NewPass']);
 });
 
 Route::get('home', [HomeController::class, 'index'])->middleware(['jwt.auth']);
+Route::get('detailRaffle/{id_raffle}', [HomeController::class, 'detail'])->middleware(['jwt.auth']);
 Route::get('winners', [HomeController::class, 'winners'])->middleware(['jwt.auth']);
+Route::get('favoritesRaffles', [HomeController::class, 'favorites'])->middleware(['jwt.auth']);
 
 Route::get('category/{id_category}', [HomeController::class, 'items_category'])->middleware(['jwt.auth']);
 
