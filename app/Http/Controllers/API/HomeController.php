@@ -54,6 +54,13 @@ class HomeController extends Controller
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
             ->get();
             
+            for ($i = 0; $i < count($raffles); $i++ ) {
+                $favorite = RaffleFavorite::where('raffle_id',$raffles[$i]['raffle_id'])
+                ->where('user_id',auth()->guard('api')->user()->id)
+                ->get()->first();
+                
+                $favorite != null ? $raffles[$i]['favorite'] = true : $raffles[$i]['favorite'] = false;
+            }
 
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
@@ -109,6 +116,13 @@ class HomeController extends Controller
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
             ->get();
             
+            for ($i = 0; $i < count($raffles); $i++ ) {
+                $favorite = RaffleFavorite::where('raffle_id',$raffles[$i]['raffle_id'])
+                ->where('user_id',auth()->guard('api')->user()->id)
+                ->get()->first();
+                
+                $favorite != null ? $raffles[$i]['favorite'] = true : $raffles[$i]['favorite'] = false;
+            }
 
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
@@ -200,6 +214,13 @@ class HomeController extends Controller
 
             $raffles['tickets'] = Ticket::where('raffle_id',$id_raffle)->select('id','quantity','price')->get();
             
+            
+            $favorite = RaffleFavorite::where('raffle_id',$id_raffle)
+            ->where('user_id',auth()->guard('api')->user()->id)
+            ->get()->first();
+                
+            $favorite != null ? $raffles[$i]['favorite'] = true : $raffles[$i]['favorite'] = false;
+
 
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
