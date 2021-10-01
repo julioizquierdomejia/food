@@ -53,12 +53,12 @@ class HomeController extends Controller
             ->where('winner_id','=',null)
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
             ->get();
-            
+
             for ($i = 0; $i < count($raffles); $i++ ) {
                 $favorite = RaffleFavorite::where('raffle_id',$raffles[$i]['raffle_id'])
                 ->where('user_id',auth()->guard('api')->user()->id)
                 ->get()->first();
-                
+
                 $favorite != null ? $raffles[$i]['favorite'] = true : $raffles[$i]['favorite'] = false;
             }
 
@@ -115,12 +115,12 @@ class HomeController extends Controller
             ->where('category_id','=',$id_category)
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
             ->get();
-            
+
             for ($i = 0; $i < count($raffles); $i++ ) {
                 $favorite = RaffleFavorite::where('raffle_id',$raffles[$i]['raffle_id'])
                 ->where('user_id',auth()->guard('api')->user()->id)
                 ->get()->first();
-                
+
                 $favorite != null ? $raffles[$i]['favorite'] = true : $raffles[$i]['favorite'] = false;
             }
 
@@ -164,7 +164,7 @@ class HomeController extends Controller
             ->join('raffle_winners','raffle_winners.raffle_id','=','raffles.id')
             ->join('users','raffles.winner_id','=','users.id')
             ->get();
-            
+
 
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
@@ -190,7 +190,7 @@ class HomeController extends Controller
      *              type="integer"
      *          )
      *      ),
-     * 
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Home page data"
@@ -213,13 +213,13 @@ class HomeController extends Controller
             $raffles = Raffle::find($id_raffle);
 
             $raffles['tickets'] = Ticket::where('raffle_id',$id_raffle)->select('id','quantity','price')->get();
-            
-            
+
+
             $favorite = RaffleFavorite::where('raffle_id',$id_raffle)
             ->where('user_id',auth()->guard('api')->user()->id)
             ->get()->first();
-                
-            $favorite != null ? $raffles[$i]['favorite'] = true : $raffles[$i]['favorite'] = false;
+
+            $favorite != null ? $raffles['favorite'] = true : $raffles['favorite'] = false;
 
 
         } catch (\Exception $exception) {
@@ -237,7 +237,7 @@ class HomeController extends Controller
      *     path="/favoritesRaffles",
      *     summary="Retorna tus rifas favoritas.",
      *     tags={"Home"},
-     * 
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Home page data"
@@ -260,7 +260,7 @@ class HomeController extends Controller
             $raffles = Raffle::join('raffle_favorites','raffles.id','=','raffle_favorites.raffle_id')
             ->where('raffle_favorites.user_id',auth()->guard('api')->user()->id)
             ->get();
-            
+
 
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
@@ -361,7 +361,7 @@ class HomeController extends Controller
      *         response="400",
      *         description="Failed",
      *     ),
-     *     security={{"apiAuth": {} }},     
+     *     security={{"apiAuth": {} }},
      *     deprecated=false
      * )
      */
@@ -373,7 +373,7 @@ class HomeController extends Controller
             ->where('user_id', auth()->guard('api')->user()->id)
             ->get()->first();
 
-            if (!is_null($favorites)) {
+            if (is_null($favorites)) {
                 return $this->errorResponse('No se encontro favorito', 400);
             }
 
