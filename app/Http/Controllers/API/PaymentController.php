@@ -5,10 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\UserTicket;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Str;
 class PaymentController extends Controller
 {
     use ApiResponse;
@@ -53,6 +54,8 @@ class PaymentController extends Controller
 
         $price = $ticket->price * 100;
 
+        $order_id = Str::uuid();
+
         $url = 'https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment';
         $account = "89289758:testpassword_7vAtvN49E8Ad6e6ihMqIOvOHC6QV5YKmIXgxisMm0V7Eq";
         $b64account = base64_encode($account);
@@ -76,18 +79,30 @@ class PaymentController extends Controller
                     "firstName" => $user->name
                 ]
             ],
-            "orderId"=> "myOrderId-585920"
+            "orderId"=> $order_id
         ];
 
 
 
         $response = Http::withHeaders($headers)->post($url, $body);
 
+        $sell = new UserTicket();
+        $sell->user_id = $iduser;
+        $sell->ticket_id = $idticket;
+        if ($response->status()==200) {
+            $sell->status = 'confirmed';
+            $sell->oreder_id = $order_id;
+            $sell->save();
+        }else{
+            $sell->status = 'failed';
+            $sell->oreder_id = $order_id;
+            $sell->save();
+        }
 
         return $this->successResponse([
             'status' => 200,
             'message' => 'Mail was sent to reset password',
-            'data' =>$response->status()
+            'data' =>$sell
         ]);
     }
 }

@@ -15,6 +15,8 @@ class UserTicket extends Model
         'user_id',
         'ticket_id',
         'raffled',
+        'oreder_id',
+        'status'
     ];
 
     /*
@@ -27,6 +29,7 @@ class UserTicket extends Model
         return [
             'user_id' => 'required',
             'ticket_id' => 'required',
+            'oreder_id' => 'required'
         ];
     }
 

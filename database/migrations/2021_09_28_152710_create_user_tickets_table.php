@@ -17,6 +17,8 @@ class CreateUserTicketsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('ticket_id');
+            $table->uudi('oreder_id');
+            $table->string('status');
             $table->integer('raffled')->default(0);
             $table->timestamps();
         });
