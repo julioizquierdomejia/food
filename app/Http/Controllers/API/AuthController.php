@@ -187,15 +187,12 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'name' => 'required|string|min:3',
-                'phone' => 'required|digits:9',
                 'password' => 'required|min:5',
             ], [
                 'email.required' => 'Correo electrónico es un campo requerido',
                 'email.email' => 'Correo electrónico invalido',
                 'name.required' => 'Nombre es un campo requerido',
                 'name.min' => 'Mínimo de caracteres no válido {name}',
-                'phone.required' => 'Número telefónico es un campo requerido',
-                'phone.digits' => 'Número telefónico incorrecto',
                 'password.required' => 'Contraseña es un campo requerido',
                 'password.min' => 'Contraseña es demasiado corta',
             ]);
@@ -207,11 +204,6 @@ class AuthController extends Controller
             $user = User::where('email', $request->get('email'))->get()->first();
             if ($user != null) {
                 return $this->errorResponse('El correo electrónico ya está registrado', 400);
-            }
-
-            $user = User::where('phone', $request->get('phone'))->get()->first();
-            if ($user != null) {
-                return $this->errorResponse('Ya el número de telefono está registrado', 400);
             }
 
             $users = new User();
