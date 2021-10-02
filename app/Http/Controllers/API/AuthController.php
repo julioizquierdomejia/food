@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use App\Models\User;
 class AuthController extends Controller
@@ -283,7 +284,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        $users = UsersMovilModel::where('iduser', auth()->guard('api')->user()->iduser)->get()->first();
+        $users = User::where('iduser', auth()->guard('api')->user()->iduser)->get()->first();
         auth()->logout(true);
         $users->token = null;
         $users->device_token = null;
@@ -471,7 +472,7 @@ class AuthController extends Controller
     {
         try {
 
-            $user = UsersMovilModel::where('reset_token', $request->get('token'))->first();
+            $user = User::where('reset_token', $request->get('token'))->first();
 
             if (is_null($user)) {
                 return $this->errorResponse('Code has been expired', 400);
@@ -490,5 +491,5 @@ class AuthController extends Controller
             return $this->errorResponse($exception->getMessage(), 400);
         }
     }
-    
+
 }

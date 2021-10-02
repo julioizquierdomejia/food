@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\HomeController;
+use App\Http\Controllers\API\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +44,4 @@ Route::get('favoritesRaffles', [HomeController::class, 'favorites'])->middleware
 
 Route::get('category/{id_category}', [HomeController::class, 'items_category'])->middleware(['jwt.auth']);
 
-
+Route::get('payment', [PaymentController::class, 'paymentCreate']);
