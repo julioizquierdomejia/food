@@ -57,7 +57,7 @@
         <span class="title">Carousel</span>
     </a>
 </li>
-<li class="nav-item">
+{{-- <li class="nav-item">
     <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.notifications') ? 'actived c-blue-500' : '' }}"
        href="{{ route(ADMIN . '.notifications.index') }}">
         <span class="icon-holder">
@@ -65,7 +65,7 @@
         </span>
         <span class="title">Notifications</span>
     </a>
-</li>
+</li> --}}
 <li class="nav-item">
     <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.users') ? 'actived c-blue-500' : '' }}"
        href="{{ route(ADMIN . '.users.index') }}">
