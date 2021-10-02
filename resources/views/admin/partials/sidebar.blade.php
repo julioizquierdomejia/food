@@ -6,14 +6,14 @@
                 <div class="peer peer-greed">
                     <a class='sidebar-link td-n' href="/">
                         <div class="peers ai-c fxw-nw">
-                            <div class="peer">
-                                <div class="logo">
+                            <div class=" peer peer-greed">
+                                <div class="logo" style="width: 150px !important; margin: 0px auto !important">
                                     <img src="/images/logo.png" alt="">
                                 </div>
                             </div>
-                            <div class="peer peer-greed">
+                            {{-- <div class="peer peer-greed">
                                 <h5 class="lh-1 mB-0 logo-text">La Rifa Perú</h5>
-                            </div>
+                            </div> --}}
                         </div>
                     </a>
                 </div>
