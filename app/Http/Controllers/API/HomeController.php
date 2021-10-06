@@ -258,8 +258,9 @@ class HomeController extends Controller
     {
         try {
             $raffles = Raffle::join('raffle_favorites','raffles.id','=','raffle_favorites.raffle_id')
+            ->join('items','raffles.item_id', '=' , 'items.id')
             ->where('raffle_favorites.user_id',auth()->guard('api')->user()->id)
-            ->select('raffles.*')
+            ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
             ->get();
 
 
