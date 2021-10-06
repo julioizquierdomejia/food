@@ -212,8 +212,8 @@ class HomeController extends Controller
         try {
             $raffles = Raffle::join('items','raffles.item_id', '=' , 'items.id')
             ->join('categories','items.category_id', '=', 'categories.id')
-            ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','items.name','description','items.image','price','categories.name AS namecategory')
-            ->get();
+            ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','items.name','description','items.image','price','categories.name AS namecategory')->where('raffles.id', $id_raffle)
+            ->get()->first();
 
             $raffles['tickets'] = Ticket::where('raffle_id',$id_raffle)->select('id','quantity','price')->get();
 
@@ -231,7 +231,7 @@ class HomeController extends Controller
 
         return $this->successResponse([
             'status' => 200,
-            'data' => $raffles,
+            'raffle' => $raffles,
         ]);
     }
 
