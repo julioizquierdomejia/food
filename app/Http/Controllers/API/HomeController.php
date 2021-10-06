@@ -339,23 +339,19 @@ class HomeController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/users/favorites",
+     *     path="/users/favorites/{id_raffle}",
      *     summary="Delete favorite",
      *     tags={"Usuarios"},
      *
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
-     *                  @OA\Property(
-     *                     property="id_raffle",
-     *                     type="integer"
-     *                 ),
-     *                 example={"id_raffle": "123456"}
-     *             )
-     *         )
-     *     ),
+     *     @OA\Parameter(
+     *          name="id_raffle",
+     *          description="id de rifa",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *
      *     @OA\Response(
      *         response=200,
@@ -370,11 +366,11 @@ class HomeController extends Controller
      *     deprecated=false
      * )
      */
-    public function DeleteFavorite(Request $request)
+    public function DeleteFavorite($id_raffle)
     {
         try {
 
-            $favorites = RaffleFavorite::where('raffle_id', $request->get('id_raffle'))
+            $favorites = RaffleFavorite::where('raffle_id', $id_raffle)
             ->where('user_id', auth()->guard('api')->user()->id)
             ->get()->first();
 

@@ -521,31 +521,26 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/users/favorites/{id_raffle}": {
             "delete": {
                 "tags": [
                     "Usuarios"
                 ],
                 "summary": "Delete favorite",
-                "operationId": "3be1d5fdfeae580fe37891e63af5eb7f",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "id_raffle": {
-                                        "type": "integer"
-                                    }
-                                },
-                                "type": "object",
-                                "example": {
-                                    "id_raffle": "123456"
-                                }
-                            }
+                "operationId": "9e4443bdba9ab09a8718ed699105c36e",
+                "parameters": [
+                    {
+                        "name": "id_raffle",
+                        "in": "path",
+                        "description": "id de rifa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
