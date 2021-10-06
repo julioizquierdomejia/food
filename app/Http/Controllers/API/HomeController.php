@@ -212,6 +212,7 @@ class HomeController extends Controller
         try {
             $raffles = Raffle::join('items','raffles.item_id', '=' , 'items.id')
             ->join('categories','items.category_id','categories.id')
+            ->select('raffles.*','items.*','categories.name AS namecategory')
             ->get();
 
             $raffles['tickets'] = Ticket::where('raffle_id',$id_raffle)->select('id','quantity','price')->get();
