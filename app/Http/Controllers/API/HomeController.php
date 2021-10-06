@@ -319,7 +319,11 @@ class HomeController extends Controller
             ->get()->first();
 
             if (!is_null($favorites)) {
-                return $this->errorResponse('Ya es tu favorito', 400);
+                $favorites->delete();
+                return $this->successResponse([
+                    'status' => 200,
+                    'message' => 'Favorite deleted'
+                ]);
             }
 
             $newFavorite = new RaffleFavorite();
