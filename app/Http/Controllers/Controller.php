@@ -26,7 +26,7 @@ class Controller extends BaseController
      * )
      *
      * @OA\Server(
-     *      url="http://3.131.226.144/api",
+     *      url="http://192.168.0.171:8000/api",
      *      description="La Rifa Perú API",
      *
      * @OA\ServerVariable(
