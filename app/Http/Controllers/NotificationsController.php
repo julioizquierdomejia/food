@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notitication;
+use App\Models\User;
 use App\Models\UsersMovilModel;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -112,7 +113,7 @@ class NotificationsController extends Controller
     {
         $notification = Notitication::find($request->notification_id);
         if ($notification) {
-            $users = UsersMovilModel::all();
+            $users = User::all();
             foreach ($users as $user) {
                 $this->sendNotification($user->iduser, 'Mas Latinos Notification', $notification->name);
             }
@@ -125,7 +126,7 @@ class NotificationsController extends Controller
     {
         try {
             $url = 'https://fcm.googleapis.com/fcm/send';
-            $DeviceToken = UsersMovilModel::whereNotNull('device_token')->where('idusers', '=', $iduser)->select('device_token')->get()->first();
+            $DeviceToken = User::whereNotNull('device_token')->where('idusers', '=', $iduser)->select('device_token')->get()->first();
             if ($DeviceToken == null) {
                 return -1;
             }

@@ -51,6 +51,7 @@ class RaffleWinnersController extends Controller
                 $raffle = RaffleWinner::create([
                     'user_id' => $winner_id,
                     'raffle_id' => $raffle->id,
+                    'banner' => 'default',
                     'win_date' => getFecha(),
                 ]);
 
