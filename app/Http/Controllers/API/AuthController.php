@@ -276,7 +276,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        $users = User::where('iduser', auth()->guard('api')->user()->iduser)->get()->first();
+        $users = User::where('iduser', auth()->guard('api')->user()->id)->get()->first();
         auth()->logout(true);
         $users->token = null;
         $users->device_token = null;
