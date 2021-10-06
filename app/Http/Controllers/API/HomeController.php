@@ -172,7 +172,7 @@ class HomeController extends Controller
 
         return $this->successResponse([
             'status' => 200,
-            'data' => $raffles,
+            'raffles' => $raffles,
         ]);
     }
 
@@ -268,7 +268,7 @@ class HomeController extends Controller
 
         return $this->successResponse([
             'status' => 200,
-            'data' => $raffles,
+            'raffles' => $raffles,
         ]);
     }
 
