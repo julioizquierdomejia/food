@@ -18,6 +18,8 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('raffles', 'RafflesController');
     Route::resource('sales', 'SalesController');
 
+    Route::get('winner/{id}', 'RaffleWinnersController@raffleDraw')->name('getwinner');
+
     /**
      * Notifications
      */

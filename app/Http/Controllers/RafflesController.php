@@ -21,6 +21,7 @@ class RafflesController extends Controller
     public function index(): View
     {
         $raffles = Raffle::with('item')->where('status', 0)
+            ->where('winner_id',null)
             ->orderBy('end_date', 'DESC')->paginate(15);
         $items = Item::orderBy('id', 'DESC')->get();
         return view('admin.raffles.index', compact('raffles', 'items'));

@@ -13,12 +13,12 @@ class RaffleWinnersController extends Controller
 {
     public function index()
     {
-        $this->raffleDraw();
+
         $winners = RaffleWinner::with('user', 'raffle')->get();
         return view('admin.raffle_winners.index', compact('winners'));
     }
 
-    public function raffleDraw(): bool
+    public function raffleDraw($id)
     {
         $raffles = Raffle::where('status', '0')->get();
         $winners = [];
@@ -63,6 +63,7 @@ class RaffleWinnersController extends Controller
                 array_push($winners, $winner);
             }
         }
-        return true;
+        $winners = RaffleWinner::with('user', 'raffle')->get();
+        return view('admin.raffle_winners.index', compact('winners'));
     }
 }

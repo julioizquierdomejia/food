@@ -33,7 +33,7 @@
                     <th>Fecha Fin</th>
                     <th>Cantidad Tickets</th>
                     <th>Progreso</th>
-                    <th>Acciones</th>
+                    <th style="width: 150px">Acciones</th>
                 </tr>
                 </tfoot>
 
@@ -47,6 +47,18 @@
                         <td>{{ $raffle->progress }} %</td>
                         <td>
                             <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    {!! Form::open([
+
+                                        'url'  => route(ADMIN . '.getwinner', [$raffle->id]),
+                                        'method' => 'GET',
+                                        ])
+                                    !!}
+                                    <button class="btn btn-success btn-sm" title="Rifar">
+                                        <i class="ti-control-play"></i>
+                                    </button>
+                                    {!! Form::close() !!}
+                                </li>
                                 <li class="list-inline-item">
                                     <a href="{{ route(ADMIN . '.raffles.edit', $raffle->id) }}"
                                        class="btn btn-primary btn-sm">
@@ -65,6 +77,7 @@
                                     </button>
                                     {!! Form::close() !!}
                                 </li>
+
                             </ul>
                         </td>
                     </tr>
