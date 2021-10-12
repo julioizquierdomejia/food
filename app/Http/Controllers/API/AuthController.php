@@ -164,6 +164,10 @@ class AuthController extends Controller
      *                     property="phone",
      *                     type="string"
      *                 ),
+     *                  @OA\Property(
+     *                     property="photo",
+     *                     type="file"
+     *                 ),
      *                 example={"email": "email@gmail.com", "password": "123456789", "name": "Pepe", "phone": "phone"}
      *             )
      *         )
@@ -207,6 +211,13 @@ class AuthController extends Controller
             }
 
             $users = new User();
+            if ($request->has('photo')) {
+                $files = $request->file('image');
+                $name = "users_" . time() . "." . $files->guessExtension();
+                $ruta = public_path("images/users/" . $name);
+                copy($files, $ruta);
+                $users->avatar = "images/users/" . $name;
+            }
             $users->email = $request->get('email');
             $users->password = Hash::make($request->get('password'));
             $users->name = $request->get('name');
@@ -316,6 +327,10 @@ class AuthController extends Controller
      *                     property="phone",
      *                     type="string"
      *                 ),
+     *                 @OA\Property(
+     *                     property="photo",
+     *                     type="file"
+     *                 ),
      *                 example={"name": "Pepe", "surnames": "Garcia Fuentes","phone":"984575821"}
      *             )
      *         )
@@ -353,6 +368,15 @@ class AuthController extends Controller
             }
 
             $users = User::find($idUser);
+
+            if ($request->has('photo')) {
+                $files = $request->file('image');
+                $name = "users_" . time() . "." . $files->guessExtension();
+                $ruta = public_path("images/users/" . $name);
+                copy($files, $ruta);
+                $users->avatar = "images/users/" . $name;
+            }
+
             $users->name = $request->get('name');
 
             $phone_exists = User::where('phone', $request->get('phone'))->first();
