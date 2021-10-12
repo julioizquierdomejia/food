@@ -17,12 +17,12 @@
             <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th style="width: 20%">Producto</th>
-                    <th style="width: 15%">Fecha Inicio</th>
-                    <th style="width: 15%">Fecha Fin</th>
-                    <th style="width: 20%">Cantidad Tickets</th>
-                    <th style="width: 20%">Progreso</th>
-                    <th style="width: 10%">Acciones</th>
+                    <th >Producto</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    {{-- <th >Cantidad Tickets</th> --}}
+                    <th>Progreso</th>
+                    <th style="width: 150px">Acciones</th>
                 </tr>
                 </thead>
 
@@ -31,7 +31,7 @@
                     <th>Producto</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
-                    <th>Cantidad Tickets</th>
+                    {{-- <th>Cantidad Tickets</th> --}}
                     <th>Progreso</th>
                     <th style="width: 150px">Acciones</th>
                 </tr>
@@ -43,7 +43,7 @@
                         <td>{{ $raffle->item->name }}</td>
                         <td>{{ explode(' ', $raffle->start_date)[0] }}</td>
                         <td>{{ explode(' ', $raffle->end_date)[0] }}</td>
-                        <td>{{ $raffle->tickets_number }}</td>
+                        {{-- <td>{{ $raffle->tickets_number }}</td> --}}
                         <td>{{ $raffle->progress }} %</td>
                         <td>
                             <ul class="list-inline">

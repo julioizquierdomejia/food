@@ -32,7 +32,7 @@ class Carousel extends Model
     public static function rules($update = false, $id=null)
     {
         return [
-            'image' => 'required|image|mimes:jpeg,png,jpg,bmp|max:5120',
+
         ];
     }
 

@@ -13,7 +13,7 @@
                             @endforeach
                         </select>
                     </div>
-                    {!! Form::myInput('number', 'raffle_goal_amount', 'Monto Objetivo:', ['required']) !!}
+                    {!! Form::myInput('number', 'raffle_goal_amount', 'Precio de Rifa:', ['required']) !!}
                     <div class="form-group">
                         <label for="start_date">Fecha Inicio</label>
                         <input type="date" name="start_date" id="start_date"
@@ -25,7 +25,7 @@
                                class="form-control" value="{{ $raffle->end_date->format('Y-m-d') }}">
                     </div>
                 </div>
-                <div class="col-md-6 repeater">
+                {{-- <div class="col-md-6 repeater">
                     <p class="font-weight-bold">TICKETS |
                         <a href="#" data-repeater-create>agregar<i class="ti-plus"></i></a>
                     </p>
@@ -51,7 +51,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

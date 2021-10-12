@@ -1,6 +1,6 @@
 <div class="modal fade" id="modalAddRaffles" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static"
      data-keyboard="false">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Agregando Rifa</h4>
@@ -14,7 +14,7 @@
             <div class="modal-body">
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="item_id">Producto</label>
                                 <select class="form-control" name="item_id" id="item_id" required>
@@ -26,7 +26,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {!! Form::myInput('number', 'raffle_goal_amount', 'Monto Objetivo:', ['required']) !!}
+                            {!! Form::myInput('number', 'raffle_goal_amount', 'Precio de Rifa:', ['required']) !!}
                             <div class="form-group">
                                 <label for="start_date">Fecha Inicio</label>
                                 <input type="date" name="start_date" id="start_date"
@@ -38,7 +38,7 @@
                                        class="form-control" value="{{ getFecha('Y-m-d') }}">
                             </div>
                         </div>
-                        <div class="col-md-6 repeater">
+                        {{-- <div class="col-md-6 repeater">
                             <p class="font-weight-bold">TICKETS |
                                 <a href="#" data-repeater-create>agregar<i class="ti-plus"></i></a>
                             </p>
@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

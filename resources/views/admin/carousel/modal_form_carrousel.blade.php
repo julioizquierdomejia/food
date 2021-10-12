@@ -1,6 +1,6 @@
 <div class="modal fade" id="modalAddCarrousel" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static"
      data-keyboard="false">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Adding Image Carrousel</h4>
@@ -15,8 +15,10 @@
             <div class="modal-body">
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-md-6">
-                            {!! Form::myFile('image', 'Banner',['required']) !!}
+                        <div class="col-md-12">
+
+
+                            {!! Form::myFile('image[]', 'Banner',['required','multiple','accept="image/png, image/gif, image/jpeg"']) !!}
                         </div>
                     </div>
                 </div>

@@ -215,7 +215,7 @@ class HomeController extends Controller
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','items.name','description','items.image','price','categories.name AS namecategory')->where('raffles.id', $id_raffle)
             ->get()->first();
 
-            $raffles['tickets'] = Ticket::where('raffle_id',$id_raffle)->select('id','quantity','price')->get();
+
 
 
             $favorite = RaffleFavorite::where('raffle_id',$id_raffle)

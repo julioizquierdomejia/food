@@ -39,22 +39,22 @@ class CarouselController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, Carousel::rules());
-        $data = new Carousel();
-        $name = '';
-
         if ($request->has('image')) {
-            $n_file = $request->file("image");
-            $name = "carrousel_" . time() . "." . $n_file->guessExtension();
-            $ruta = public_path("images/carousel/" . $name);
-            copy($n_file, $ruta);
+            $files = $request->file('image');
+            foreach($files as $n_file){
+                $data = new Carousel();
+                $name = '';
+                $name = "carrousel_" . time() . "." . $n_file->guessExtension();
+                $ruta = public_path("images/carousel/" . $name);
+                copy($n_file, $ruta);
+                $data->image = "images/carousel/" . $name;
+                $data->order = Carousel::all()->count() + 1;
+                $data->save();
+            }
+            return back()->withSuccess(trans('app.success_store'));
         } else {
             return back()->withErrors(trans('app.erro_store'));
         }
-        $data->image = "images/carousel/" . $name;
-        $data->order = Carousel::all()->count() + 1;
-        $data->save();
-
-        return back()->withSuccess(trans('app.success_store'));
     }
 
     /**

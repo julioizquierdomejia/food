@@ -48,17 +48,17 @@ class RafflesController extends Controller
     {
         $this->validate($request, Raffle::rules());
         $raffles = $request->all();
-        $tickets = $request->tickets;
-        $raffles['tickets_number'] = array_sum(array_column($tickets, 'quantity'));
+        //$tickets = $request->tickets;
+        $raffles['tickets_number'] = 0;
         $raffle = Raffle::create($raffles);
 
-        foreach ($tickets as $ticket) {
+        /* foreach ($tickets as $ticket) {
             Ticket::create([
                 'raffle_id' => $raffle->id,
                 'quantity' => $ticket['quantity'],
                 'price' => $ticket['price'],
             ]);
-        }
+        } */
 
         return back()->withSuccess(trans('app.success_store'));
     }
@@ -84,8 +84,8 @@ class RafflesController extends Controller
     {
         $raffle = Raffle::find($id);
         $items = Item::orderBy('id', 'DESC')->get();
-        $tickets = Ticket::where('raffle_id', $raffle->id)->get();
-        return view('admin.raffles.edit', compact('raffle', 'items', 'tickets'));
+        /* $tickets = Ticket::where('raffle_id', $raffle->id)->get(); */
+        return view('admin.raffles.edit', compact('raffle', 'items'));
     }
 
     /**
@@ -103,16 +103,16 @@ class RafflesController extends Controller
         $raffle = Raffle::findOrFail($id);
         $data = $request->all();
         $tickets = $request->tickets;
-        $data['tickets_number'] = array_sum(array_column($tickets, 'quantity'));
+        $data['tickets_number'] = 0;
 
-        Ticket::where('raffle_id', $raffle->id)->delete();
+        /* Ticket::where('raffle_id', $raffle->id)->delete();
         foreach ($tickets as $ticket) {
             Ticket::create([
                 'raffle_id' => $raffle->id,
                 'quantity' => $ticket['quantity'],
                 'price' => $ticket['price'],
             ]);
-        }
+        } */
 
         $raffle->update($data);
 
