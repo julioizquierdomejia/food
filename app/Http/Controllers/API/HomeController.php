@@ -160,9 +160,10 @@ class HomeController extends Controller
     {
         try {
             $raffles = Raffle::join('items','raffles.item_id', '=' , 'items.id')
-            ->where('winner_id','!=',null)
             ->join('raffle_winners','raffle_winners.raffle_id','=','raffles.id')
             ->join('users','raffles.winner_id','=','users.id')
+            ->where('winner_id','!=',null)
+            ->where('raffle_winners.banner','!=','default')
             ->get();
 
 

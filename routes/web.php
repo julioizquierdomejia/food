@@ -19,7 +19,7 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('sales', 'SalesController');
 
     Route::get('winner/{id}', 'RaffleWinnersController@raffleDraw')->name('getwinner');
-
+    Route::post('winner', 'RaffleWinnersController@uploadPhoto')->name('photowinner');
     /**
      * Notifications
      */

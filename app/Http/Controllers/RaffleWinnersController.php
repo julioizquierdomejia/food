@@ -18,6 +18,22 @@ class RaffleWinnersController extends Controller
         return view('admin.raffle_winners.index', compact('winners'));
     }
 
+    public function uploadPhoto(Request $request)
+    {
+        $id = $request->id;
+        $raffle = RaffleWinner::find($id);
+        if ($request->has('photo')) {
+            $files = $request->file('photo');
+            $name = "users_" . time() . "." . $files->guessExtension();
+            $ruta = public_path("images/users/" . $name);
+            copy($files, $ruta);
+            $raffle->banner = "images/users/" . $name;
+            $raffle->save();
+            return back()->withSuccess(trans('app.success_update'));
+        }
+        return back()->withSuccess('Error al guardar la imagen');
+    }
+
     public function raffleDraw($id)
     {
         $raffles = Raffle::where('status', '0')->get();
