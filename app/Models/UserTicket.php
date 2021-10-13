@@ -13,9 +13,10 @@ class UserTicket extends Model
     protected $table = 'user_tickets';
     protected $fillable = [
         'user_id',
-        'ticket_id',
+        'raffles_id',
         'raffled',
         'oreder_id',
+        'quantity',
         'status'
     ];
 
@@ -29,7 +30,8 @@ class UserTicket extends Model
         return [
             'user_id' => 'required',
             'ticket_id' => 'required',
-            'oreder_id' => 'required'
+            'oreder_id' => 'required',
+            'quantity' => 'required'
         ];
     }
 
