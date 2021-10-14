@@ -86,18 +86,32 @@ class PaymentController extends Controller
 
 
 
-        $response = Http::withHeaders($headers)->post($url, $body);
+        /* $response = Http::withHeaders($headers)->post($url, $body); */
+        $RESPONSE = json_encode($body);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $RESPONSE);
+
+        $response = curl_exec($ch);
+
+        $res = json_decode($response);
 
         $sell = new UserTicket();
         $sell->user_id = $iduser;
         $sell->raffles_id = $raffles_id;
         $sell->quantity = $amount;
-        if ($response->status()==200) {
-            $sell->status = 'confirmed';
+        if ($res['status'] == "ERROR") {
+            $sell->status = 'failed';
             $sell->oreder_id = $order_id;
             $sell->save();
         }else{
-            $sell->status = 'failed';
+            $sell->status = 'confirmed';
             $sell->oreder_id = $order_id;
             $sell->save();
         }
@@ -105,7 +119,7 @@ class PaymentController extends Controller
         return $this->successResponse([
             'status' => 200,
             'message' => 'Registro de pago completo',
-            'data' =>$response
+            'data' =>$res
         ]);
     }
 }
