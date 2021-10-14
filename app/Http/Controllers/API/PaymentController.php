@@ -106,7 +106,7 @@ class PaymentController extends Controller
         $sell->user_id = $iduser;
         $sell->raffles_id = $raffles_id;
         $sell->quantity = $amount;
-        if ($res['status'] == "ERROR") {
+        if ($res->status == "ERROR") {
             $sell->status = 'failed';
             $sell->oreder_id = $order_id;
             $sell->save();
