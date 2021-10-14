@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Raffle;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserTicket;
@@ -17,7 +18,7 @@ class PaymentController extends Controller
     public function paymentTest()
     {
         $url = 'https://api.micuentaweb.pe/api-payment/V4/Charge/SDKTest';
-        $account = "89289758:testpassword_7vAtvN49E8Ad6e6ihMqIOvOHC6QV5YKmIXgxisMm0V7Eq";
+        $account = "72672204:Larifa@@2021";
         $b64account = base64_encode($account);
         $headers = ['Authorization' => 'Basic ' . $b64account,
         'Content-Type'=> 'application/json'];
@@ -37,7 +38,8 @@ class PaymentController extends Controller
     public function paymentCreate(Request $requet)
     {
 
-        $idticket = $requet->get('idticket');
+        $raffles_id = $requet->get('raffles_id');
+        $amount = $requet->get('amount');
         $iduser = $requet->get('iduser');
 
         $pan = $requet->get('pan');
@@ -46,18 +48,18 @@ class PaymentController extends Controller
         $securityCode = $requet->get('securityCode');
 
         $user = User::where('id',$iduser)->get()->first();
-        $ticket = Ticket::where('id',$idticket)->get()->first();
+        $raffle = Raffle::where('id',$raffles_id)->get()->first();
 
-        if ($user == null || $ticket== null) {
+        if ($user == null || $raffle== null) {
             return $this->errorResponse('No se encontro el usuario o el ticket', 400);
         }
 
-        $price = $ticket->price * 100;
+        $price = $raffle->raffle_goal_amount * $amount * 100;
 
         $order_id = Str::uuid();
 
         $url = 'https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment';
-        $account = "89289758:testpassword_7vAtvN49E8Ad6e6ihMqIOvOHC6QV5YKmIXgxisMm0V7Eq";
+        $account = "44623003:testpassword_Rtn87ByTJlAHVXQZ3e3oSaDb8WX2kLzZ2UtSABKyJdSsC";
         $b64account = base64_encode($account);
         $headers = ['Authorization' => 'Basic ' . $b64account,
         'Content-Type'=> 'application/json'];
@@ -88,7 +90,8 @@ class PaymentController extends Controller
 
         $sell = new UserTicket();
         $sell->user_id = $iduser;
-        $sell->ticket_id = $idticket;
+        $sell->raffles_id = $raffles_id;
+        $sell->quantity = $amount;
         if ($response->status()==200) {
             $sell->status = 'confirmed';
             $sell->oreder_id = $order_id;
@@ -101,8 +104,8 @@ class PaymentController extends Controller
 
         return $this->successResponse([
             'status' => 200,
-            'message' => 'Mail was sent to reset password',
-            'data' =>$sell
+            'message' => 'Registro de pago completo',
+            'data' =>$response
         ]);
     }
 }

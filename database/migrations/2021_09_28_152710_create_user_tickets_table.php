@@ -16,9 +16,10 @@ class CreateUserTicketsTable extends Migration
         Schema::create('user_tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('ticket_id');
+            $table->integer('raffles_id');
             $table->uuid('oreder_id');
             $table->string('status');
+            $table->integer('quantity');
             $table->integer('raffled')->default(0);
             $table->timestamps();
         });

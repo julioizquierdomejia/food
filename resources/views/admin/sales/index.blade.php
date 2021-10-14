@@ -39,9 +39,9 @@
                         <td>{{ $sale->client }}</td>
                         <td>{{ $sale->product }}</td>
                         <td>{{ $sale->raffled ? 'Sorteo Finalizado' : 'Sorteo en Proceso' }}</td>
-                        <td>{{ explode(' ', $sale->end_date)[0]  }}</td>
-                        <td>{{ $sale->precio  }}</td>
+                        <td>{{ $sale->created_at }}</td>
                         <td>{{ $sale->quantity  }}</td>
+                        <td>{{ $sale->quantity * $sale->raffle_goal_amount }}</td>
 {{--                        <td>--}}
 {{--                            <button class="btn btn-info btn-sm" title="Detalles"><i class="ti-list"></i></button>--}}
 {{--                        </td>--}}
