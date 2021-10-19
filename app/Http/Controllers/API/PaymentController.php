@@ -11,6 +11,8 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use PhpParser\JsonDecoder;
+
 class PaymentController extends Controller
 {
     use ApiResponse;
@@ -38,10 +40,9 @@ class PaymentController extends Controller
     public function paymentCreate(Request $requet)
     {
 
-        $raffles_id = $requet->get('car');
+        $car = json_decode($requet->get('car'),true) ;
         $amount = $requet->get('amount');
         $iduser = $requet->get('iduser');
-
         $pan = $requet->get('pan');
         $expiryMonth = $requet->get('expiryMonth');
         $expiryYear = $requet->get('expiryYear');
@@ -51,10 +52,11 @@ class PaymentController extends Controller
         if ($user == null) {
             return $this->errorResponse('No se encontro el usuario'.' '.$user, 400);
         }
-        foreach ($raffles_id as $key) {
-            $raffle = Raffle::where('id',$key->raffle_id)->get()->first();
+        foreach ($car as $key) {
+
+            $raffle = Raffle::where('id',$key['raffle_id'])->get()->first();
             if ($raffle == null) {
-                return $this->errorResponse('No se encontro la rifa'.' '.$key->raffle_id, 400);
+                return $this->errorResponse('No se encontro la rifa'.' '.$key['raffle_id'], 400);
             }
         }
 
@@ -106,12 +108,12 @@ class PaymentController extends Controller
 
         $res = json_decode($response);
 
-        foreach ($raffles_id as $key) {
+        foreach ($car as $key) {
 
             $sell = new UserTicket();
             $sell->user_id = $iduser;
-            $sell->raffles_id = $key->raffle_id;
-            $sell->quantity = $key->amount;
+            $sell->raffles_id = $key['raffle_id'];
+            $sell->quantity = $key['amount'];
             if ($res->status == "ERROR") {
                 $sell->status = 'failed';
                 $sell->oreder_id = $order_id;
