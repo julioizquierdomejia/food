@@ -39,14 +39,16 @@ class PaymentController extends Controller
     }
     public function paymentCreate(Request $requet)
     {
+        $data = request()->json()->all();
 
-        $car = json_decode($requet->get('car'),true) ;
-        $amount = $requet->get('amount');
-        $iduser = $requet->get('iduser');
-        $pan = $requet->get('pan');
-        $expiryMonth = $requet->get('expiryMonth');
-        $expiryYear = $requet->get('expiryYear');
-        $securityCode = $requet->get('securityCode');
+
+        $car = $data['car'];
+        $amount = $data['amount'];
+        $iduser = $data['iduser'];
+        $pan = $data['pan'];
+        $expiryMonth = $data['expiryMonth'];
+        $expiryYear = $data['expiryYear'];
+        $securityCode = $data['securityCode'];
 
         $user = User::where('id',$iduser)->get()->first();
         if ($user == null) {
@@ -60,7 +62,7 @@ class PaymentController extends Controller
             }
         }
 
-        $price = $raffle->raffle_goal_amount * $amount * 100;
+        $price = $data['price'] * $amount * 100;
 
         $order_id = Str::uuid();
 
