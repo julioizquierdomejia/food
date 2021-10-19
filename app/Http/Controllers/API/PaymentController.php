@@ -39,6 +39,7 @@ class PaymentController extends Controller
     }
     public function paymentCreate(Request $requet)
     {
+        try {
         $data = request()->json()->all();
 
 
@@ -62,7 +63,7 @@ class PaymentController extends Controller
             }
         }
 
-        $price = $data['price'] * $amount * 100;
+        $price = $data['price']* 100;
 
         $order_id = Str::uuid();
 
@@ -126,6 +127,9 @@ class PaymentController extends Controller
                 $sell->save();
             }
         }
+    } catch (\Exception $exception) {
+        return $this->errorResponse($exception->getMessage(), 400);
+    }
 
         return $this->successResponse([
             'status' => 200,
