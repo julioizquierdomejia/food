@@ -38,7 +38,7 @@ class PaymentController extends Controller
     public function paymentCreate(Request $requet)
     {
 
-        $raffles_id = $requet->get('raffles_id');
+        $raffles_id = $requet->get('car');
         $amount = $requet->get('amount');
         $iduser = $requet->get('iduser');
 
@@ -48,10 +48,14 @@ class PaymentController extends Controller
         $securityCode = $requet->get('securityCode');
 
         $user = User::where('id',$iduser)->get()->first();
-        $raffle = Raffle::where('id',$raffles_id)->get()->first();
-
-        if ($user == null || $raffle== null) {
-            return $this->errorResponse('No se encontro el usuario o el ticket', 400);
+        if ($user == null) {
+            return $this->errorResponse('No se encontro el usuario'.' '.$user, 400);
+        }
+        foreach ($raffles_id as $key) {
+            $raffle = Raffle::where('id',$key->raffle_id)->get()->first();
+            if ($raffle == null) {
+                return $this->errorResponse('No se encontro la rifa', 400);
+            }
         }
 
         $price = $raffle->raffle_goal_amount * $amount * 100;
@@ -102,18 +106,21 @@ class PaymentController extends Controller
 
         $res = json_decode($response);
 
-        $sell = new UserTicket();
-        $sell->user_id = $iduser;
-        $sell->raffles_id = $raffles_id;
-        $sell->quantity = $amount;
-        if ($res->status == "ERROR") {
-            $sell->status = 'failed';
-            $sell->oreder_id = $order_id;
-            $sell->save();
-        }else{
-            $sell->status = 'confirmed';
-            $sell->oreder_id = $order_id;
-            $sell->save();
+        foreach ($raffles_id as $key) {
+
+            $sell = new UserTicket();
+            $sell->user_id = $iduser;
+            $sell->raffles_id = $key->raffle_id;
+            $sell->quantity = $key->amount;
+            if ($res->status == "ERROR") {
+                $sell->status = 'failed';
+                $sell->oreder_id = $order_id;
+                $sell->save();
+            }else{
+                $sell->status = 'confirmed';
+                $sell->oreder_id = $order_id;
+                $sell->save();
+            }
         }
 
         return $this->successResponse([
