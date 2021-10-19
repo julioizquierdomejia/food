@@ -54,7 +54,7 @@ class PaymentController extends Controller
         foreach ($raffles_id as $key) {
             $raffle = Raffle::where('id',$key->raffle_id)->get()->first();
             if ($raffle == null) {
-                return $this->errorResponse('No se encontro la rifa', 400);
+                return $this->errorResponse('No se encontro la rifa'.' '.$key->raffle_id, 400);
             }
         }
 
