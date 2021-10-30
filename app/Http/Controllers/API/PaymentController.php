@@ -66,32 +66,19 @@ class PaymentController extends Controller
         $price = $data['price']* 100;
 
         $order_id = Str::uuid();
-
+        $username = "44623003";
+        $password = "prodpassword_6LAbudTQG0n381ZefWtuya7W4K0TM7W6TyblWeNHBedBz";
         $url = 'https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment';
-        $account = "44623003:testpassword_Rtn87ByTJlAHVXQZ3e3oSaDb8WX2kLzZ2UtSABKyJdSsC";
-        $b64account = base64_encode($account);
-        $headers = ['Authorization' => 'Basic ' . $b64account,
-        'Content-Type'=> 'application/json'];
-        $body = [
+        /* $account = "44623003:testpassword_Rtn87ByTJlAHVXQZ3e3oSaDb8WX2kLzZ2UtSABKyJdSsC";
+        $b64account = base64_encode($account); */
+        $body = array(
             "amount"=> $price,
             "currency"=> "PEN",
-            "paymentForms"=> [
-                  "paymentMethodType"=> "CARD",
-                  "pan"=> $pan,
-                  "expiryMonth"=> $expiryMonth,
-                  "expiryYear"=> $expiryYear,
-                  "securityCode"=> $securityCode
-
-            ],
-            "customer"=> [
-                "email"=> $user->email,
-                "billingDetails"=> [
-                    "phoneNumber"=> $user->phone,
-                    "firstName" => $user->name
-                ]
-            ],
-            "orderId"=> $order_id
-        ];
+            "orderId" => $order_id,
+            "customer"=> array(
+                "email"=> $user->email
+            )
+        );
 
 
 
@@ -100,7 +87,8 @@ class PaymentController extends Controller
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
+        //curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
@@ -108,6 +96,8 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, $RESPONSE);
 
         $response = curl_exec($ch);
+
+        curl_close($ch);
 
         $res = json_decode($response);
 

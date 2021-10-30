@@ -8,7 +8,7 @@
     <title>LA RIFA PERU</title>
 
     <!-- Styles -->
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     {{-- <link href="{{ mix('/css/rtl.css') }}" rel="stylesheet"> --}}
     <!-- Global css content -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
