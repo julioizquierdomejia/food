@@ -130,13 +130,19 @@ class PaymentController extends Controller
         try {
             $data = request()->json()->all();
 
-            if (isset($data['tickets'])) {
+            if (isset($data['tickets']) && isset($data['status'])) {
+
                 $tickets = $data['tickets'];
 
                 foreach ($tickets as $key ) {
                     $ticket = UserTicket::findOrFail($key);
                     if ($ticket != null) {
-                        $ticket->status == "CONFIRMED";
+                        if ($data['status']==1) {
+
+                        }else{
+                            $ticket->status == "REJECTED";
+                        }
+
                         $ticket->update();
                     }
                 }
@@ -144,7 +150,6 @@ class PaymentController extends Controller
                 return $this->successResponse([
                     'status' => 201,
                     'message' => 'Validación completada',
-
                 ]);
             }else{
                 return $this->errorResponse("No se encontraron los tickets a validar.", 400);

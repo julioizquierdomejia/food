@@ -45,3 +45,4 @@ Route::get('favoritesRaffles', [HomeController::class, 'favorites'])->middleware
 Route::get('category/{id_category}', [HomeController::class, 'items_category'])->middleware(['jwt.auth']);
 
 Route::post('payment', [PaymentController::class, 'paymentCreate']);
+Route::post('payment/verify', [PaymentController::class, 'PyamentValidate']);
