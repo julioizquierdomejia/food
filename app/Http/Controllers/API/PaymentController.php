@@ -25,7 +25,7 @@ class PaymentController extends Controller
 
 
             $car = $data['car'];
-            $amount = $data['amount'];
+            $price = $data['price'];
             $iduser = $data['iduser'];
 
 
@@ -41,7 +41,7 @@ class PaymentController extends Controller
                 }
             }
 
-            $price = $amount * 100;
+            $price = $price * 100;
 
             $order_id = Str::uuid();
             $username = "44623003";
@@ -94,7 +94,7 @@ class PaymentController extends Controller
             }
 
 
-
+            $tickets = [];
 
              foreach ($car as $key) {
 
@@ -107,10 +107,11 @@ class PaymentController extends Controller
                     $sell->oreder_id = $order_id;
                     $sell->save();
                 } else {
-                    $sell->status = 'confirmed';
+                    $sell->status = 'INITIALIZED';
                     $sell->oreder_id = $order_id;
                     $sell->save();
                 }
+                array_push($tickets,$sell->id);
             }
 
         } catch (\Exception $exception) {
@@ -118,12 +119,41 @@ class PaymentController extends Controller
         }
 
         return $this->successResponse([
-            'status' => 200,
+            'status' => 201,
             'message' => 'Registro de pago completo',
-            'data' => $res
+            'data' => $res,
+            'tickets' => $tickets
         ]);
     }
 
+    public function PyamentValidate(){
+        try {
+            $data = request()->json()->all();
+
+            if (isset($data['tickets'])) {
+                $tickets = $data['tickets'];
+
+                foreach ($tickets as $key ) {
+                    $ticket = UserTicket::findOrFail($key);
+                    if ($ticket != null) {
+                        $ticket->status == "CONFIRMED";
+                        $ticket->update();
+                    }
+                }
+
+                return $this->successResponse([
+                    'status' => 201,
+                    'message' => 'Validación completada',
+
+                ]);
+            }else{
+                return $this->errorResponse("No se encontraron los tickets a validar.", 400);
+            }
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+    }
 
     public function curl($postfield)
     {
@@ -138,4 +168,6 @@ class PaymentController extends Controller
         curl_close($ch);
         return $server_output;
     }
+
+
 }
