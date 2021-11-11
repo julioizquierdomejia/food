@@ -46,3 +46,6 @@ Route::get('category/{id_category}', [HomeController::class, 'items_category'])-
 
 Route::post('payment', [PaymentController::class, 'paymentCreate']);
 Route::post('payment/verify', [PaymentController::class, 'PyamentValidate']);
+Route::post('payment/refused', [PaymentController::class, 'Pyamentrefused']);
+Route::post('payment/cancel', [PaymentController::class, 'Pyamentcancel']);
+Route::post('payment/error', [PaymentController::class, 'Pyamenterror']);

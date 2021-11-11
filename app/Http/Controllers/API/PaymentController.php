@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\PruebasModel;
 use App\Models\Raffle;
 use App\Models\Ticket;
 use App\Models\User;
@@ -63,6 +64,11 @@ class PaymentController extends Controller
                 $vads_trans_date = gmdate("YmdGis");
                 $vads_trans_id = rand(100000, 999999);
                 $vads_version = "V2";
+                $vads_order_id = $order_id;
+                $vads_url_success = response()->getSchemeAndHttpHost().'/api/verify';
+                $vads_url_refused = response()->getSchemeAndHttpHost().'/api/refused';
+                $vads_url_cancel = response()->getSchemeAndHttpHost().'/api/cancel';
+                $vads_url_error = response()->getSchemeAndHttpHost().'/api/error';
                 $signature = "";
                 $postfield = "";
                 $parameters_args = array(
@@ -76,7 +82,12 @@ class PaymentController extends Controller
                     'vads_site_id' => $vads_site_id,
                     'vads_trans_date' => $vads_trans_date,
                     'vads_trans_id' => $vads_trans_id,
-                    'vads_version' => $vads_version
+                    'vads_version' => $vads_version,
+                    'vads_order_id' => $vads_order_id,
+                    'vads_url_success' => $vads_url_success,
+                    'vads_url_refused' => $vads_url_refused,
+                    'vads_url_cancel' => $vads_url_cancel,
+                    'vads_url_error' => $vads_url_error
                 );
                 foreach ($parameters_args as $params => $value) {
                     $signature .= $value . '+';
@@ -127,23 +138,61 @@ class PaymentController extends Controller
     }
 
     public function PyamentValidate(){
-        try {
+
+        $data = request()->json()->all();
+
+        $prueba = new PruebasModel();
+        $prueba->content = $data;
+        $prueba->save();
+
+        /* try {
             $data = request()->json()->all();
 
-            if (isset($data['tickets']) && isset($data['status'])) {
+            if (isset($data['order_id'])) {
 
-                $tickets = $data['tickets'];
 
-                foreach ($tickets as $key ) {
-                    $ticket = UserTicket::findOrFail($key);
-                    if ($ticket != null) {
-                        if ($data['status']==1) {
+                $ticket = UserTicket::where('order_id',$data['order_id'])->get();
+                foreach ($ticket as $key ) {
 
-                        }else{
-                            $ticket->status == "REJECTED";
-                        }
+                    if ($key != null) {
 
-                        $ticket->update();
+                        $key->status == "Success";
+                        $key->update();
+                    }
+                }
+
+                return $this->successResponse([
+                    'status' => 201,
+                    'message' => 'Validación completada',
+                ]);
+            }else{
+                return $this->errorResponse("No se encontraron los tickets a validar.", 400);
+            }
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        } */
+
+    }
+    public function Pyamentrefused(){
+        $data = request()->json()->all();
+
+        $prueba = new PruebasModel();
+        $prueba->content = $data;
+        $prueba->save();
+
+        /* try {
+            $data = request()->json()->all();
+
+            if (isset($data['order_id'])) {
+
+
+                $ticket = UserTicket::where('order_id',$data['order_id'])->get();
+                foreach ($ticket as $key ) {
+
+                    if ($key != null) {
+
+                        $key->status == "Refused";
+                        $key->update();
                     }
                 }
 
@@ -157,7 +206,77 @@ class PaymentController extends Controller
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
         }
+ */
+    }
+    public function Pyamentcancel(){
+        $data = request()->json()->all();
 
+        $prueba = new PruebasModel();
+        $prueba->content = $data;
+        $prueba->save();
+
+        /* try {
+            $data = request()->json()->all();
+
+            if (isset($data['order_id'])) {
+
+
+                $ticket = UserTicket::where('order_id',$data['order_id'])->get();
+                foreach ($ticket as $key ) {
+
+                    if ($key != null) {
+
+                        $key->status == "Cancel";
+                        $key->update();
+                    }
+                }
+
+                return $this->successResponse([
+                    'status' => 201,
+                    'message' => 'Validación completada',
+                ]);
+            }else{
+                return $this->errorResponse("No se encontraron los tickets a validar.", 400);
+            }
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        } */
+
+    }
+    public function Pyamenterror(){
+        $data = request()->json()->all();
+
+        $prueba = new PruebasModel();
+        $prueba->content = $data;
+        $prueba->save();
+
+        /* try {
+            $data = request()->json()->all();
+
+            if (isset($data['order_id'])) {
+
+
+                $ticket = UserTicket::where('order_id',$data['order_id'])->get();
+                foreach ($ticket as $key ) {
+
+                    if ($key != null) {
+
+                        $key->status == "Error";
+                        $key->update();
+                    }
+                }
+
+                return $this->successResponse([
+                    'status' => 201,
+                    'message' => 'Validación completada',
+                ]);
+            }else{
+                return $this->errorResponse("No se encontraron los tickets a validar.", 400);
+            }
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+ */
     }
 
     public function curl($postfield)
