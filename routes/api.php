@@ -45,7 +45,8 @@ Route::get('favoritesRaffles', [HomeController::class, 'favorites'])->middleware
 Route::get('category/{id_category}', [HomeController::class, 'items_category'])->middleware(['jwt.auth']);
 
 Route::post('payment', [PaymentController::class, 'paymentCreate']);
-Route::get('payment/verify', [PaymentController::class, 'PyamentValidate']);
+Route::get('payment/verify', [PaymentController::class, 'PyamentVerificated']);
 Route::get('payment/refused', [PaymentController::class, 'Pyamentrefused']);
 Route::get('payment/cancel', [PaymentController::class, 'Pyamentcancel']);
 Route::get('payment/error', [PaymentController::class, 'Pyamenterror']);
+Route::post('payment/validate/{order_id}', [PaymentController::class, 'PaymentValidate']);

@@ -66,10 +66,10 @@ class PaymentController extends Controller
                 $vads_trans_id = rand(100000, 999999);
                 $vads_version = "V2";
                 $vads_order_info  = $order_id;
-                $vads_url_success = "http://127.0.0.1:8080/api/verify";
-                $vads_url_refused = "http://127.0.0.1:8080/api/refused";
-                $vads_url_cancel = "http://127.0.0.1:8080/api/cancel";
-                $vads_url_error = "http://127.0.0.1:8080/api/error";
+                $vads_url_success = "https://larifa.bimbadigital.com/api/verify";
+                $vads_url_refused = "https://larifa.bimbadigital.com/api/refused";
+                $vads_url_cancel = "https://larifa.bimbadigital.com/api/cancel";
+                $vads_url_error = "https://larifa.bimbadigital.com/api/error";
                 $signature = "";
                 $postfield = "";
                 $parameters_args = array(
@@ -138,17 +138,21 @@ class PaymentController extends Controller
             'status' => 201,
             'message' => 'Registro de pago completo',
             'data' => $res,
+            'order_id' => $order_id,
         ]);
     }
 
-    public function PyamentValidate(){
+    public function PyamentVerificated(){
 
         $data = request()->json()->all();
 
         $prueba = new PruebasModel();
         $prueba->content = $data;
         $prueba->save();
-
+        return $this->successResponse([
+            'status' => 201,
+            'message' => 'Validación completada',
+        ]);
         /* try {
             $data = request()->json()->all();
 
@@ -183,7 +187,10 @@ class PaymentController extends Controller
         $prueba = new PruebasModel();
         $prueba->content = $data;
         $prueba->save();
-
+        return $this->successResponse([
+            'status' => 201,
+            'message' => 'Validación completada',
+        ]);
         /* try {
             $data = request()->json()->all();
 
@@ -218,7 +225,10 @@ class PaymentController extends Controller
         $prueba = new PruebasModel();
         $prueba->content = $data;
         $prueba->save();
-
+        return $this->successResponse([
+            'status' => 201,
+            'message' => 'Validación completada',
+        ]);
         /* try {
             $data = request()->json()->all();
 
@@ -253,14 +263,17 @@ class PaymentController extends Controller
         $prueba = new PruebasModel();
         $prueba->content = $data;
         $prueba->save();
-
+        return $this->successResponse([
+            'status' => 201,
+            'message' => 'Validación completada',
+        ]);
         /* try {
             $data = request()->json()->all();
 
             if (isset($data['order_id'])) {
 
 
-                $ticket = UserTicket::where('order_id',$data['order_id'])->get();
+                $ticket = UserTicket::where('oreder_id',$data['order_id'])->get();
                 foreach ($ticket as $key ) {
 
                     if ($key != null) {
@@ -281,6 +294,25 @@ class PaymentController extends Controller
             return $this->errorResponse($exception->getMessage(), 400);
         }
  */
+    }
+
+
+    public function PaymentValidate($order_id)
+    {
+        try{
+            $ticket = UserTicket::where('oreder_id',$order_id)->get()->first();
+            if ($ticket == null) {
+                return $this->errorResponse("Orden no encontrada.", 400);
+            }else{
+                return $this->successResponse([
+                    'status' => 201,
+                    'message' => $ticket->status,
+                ]);
+            }
+
+        }catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
     }
 
     public function curl($postfield)
