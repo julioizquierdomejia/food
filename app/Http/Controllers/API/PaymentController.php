@@ -142,43 +142,48 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function PyamentVerificated(){
-
-        $data = request()->json()->all();
-
+    public function PyamentVerificated(Request $requet){
+    /*
+        $data = request()->all();
         $prueba = new PruebasModel();
-        $prueba->content = $data;
+            $prueba->content = json_encode($data) ;
         $prueba->save();
         return $this->successResponse([
             'status' => 201,
             'message' => 'Validación completada',
-        ]);
-        /* try {
-            $data = request()->json()->all();
+        ]);*/
+        try {
+        $data = request()->all();
 
-            if (isset($data['order_id'])) {
+        if (isset($data['vads_trans_status'])  ) {
 
 
-                $ticket = UserTicket::where('order_id',$data['order_id'])->get();
-                foreach ($ticket as $key ) {
+            $ticket = UserTicket::where('oreder_id',$data['vads_order_info'])->get();
+            foreach ($ticket as $key ) {
 
-                    if ($key != null) {
-
+                if ($key != null) {
+                    if ($data['vads_trans_status']== 'AUTHORISED') {
                         $key->status == "Success";
-                        $key->update();
+                    }elseif ($data['vads_trans_status']== 'REFUSED') {
+                        $key->status == "Refused";
+                    }else {
+                        $key->status == "Error";
                     }
-                }
 
-                return $this->successResponse([
-                    'status' => 201,
-                    'message' => 'Validación completada',
-                ]);
-            }else{
-                return $this->errorResponse("No se encontraron los tickets a validar.", 400);
+                    $key->update();
+                }
             }
-        } catch (\Exception $exception) {
-            return $this->errorResponse($exception->getMessage(), 400);
-        } */
+
+            return $this->successResponse([
+                'status' => 201,
+                'message' => 'Validación completada',
+            ]);
+        }else{
+            return $this->errorResponse("No se encontraron los tickets a validar.", 400);
+        }
+    } catch (\Exception $exception) {
+        return $this->errorResponse($exception->getMessage(), 400);
+    }
 
     }
     public function Pyamentrefused(){
