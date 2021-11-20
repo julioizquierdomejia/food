@@ -186,120 +186,7 @@ class PaymentController extends Controller
     }
 
     }
-    public function Pyamentrefused(){
-        $data = request()->json()->all();
 
-        $prueba = new PruebasModel();
-        $prueba->content = $data;
-        $prueba->save();
-        return $this->successResponse([
-            'status' => 201,
-            'message' => 'Validación completada',
-        ]);
-        /* try {
-            $data = request()->json()->all();
-
-            if (isset($data['order_id'])) {
-
-
-                $ticket = UserTicket::where('order_id',$data['order_id'])->get();
-                foreach ($ticket as $key ) {
-
-                    if ($key != null) {
-
-                        $key->status == "Refused";
-                        $key->update();
-                    }
-                }
-
-                return $this->successResponse([
-                    'status' => 201,
-                    'message' => 'Validación completada',
-                ]);
-            }else{
-                return $this->errorResponse("No se encontraron los tickets a validar.", 400);
-            }
-        } catch (\Exception $exception) {
-            return $this->errorResponse($exception->getMessage(), 400);
-        }
- */
-    }
-    public function Pyamentcancel(){
-        $data = request()->json()->all();
-
-        $prueba = new PruebasModel();
-        $prueba->content = $data;
-        $prueba->save();
-        return $this->successResponse([
-            'status' => 201,
-            'message' => 'Validación completada',
-        ]);
-        /* try {
-            $data = request()->json()->all();
-
-            if (isset($data['order_id'])) {
-
-
-                $ticket = UserTicket::where('order_id',$data['order_id'])->get();
-                foreach ($ticket as $key ) {
-
-                    if ($key != null) {
-
-                        $key->status == "Cancel";
-                        $key->update();
-                    }
-                }
-
-                return $this->successResponse([
-                    'status' => 201,
-                    'message' => 'Validación completada',
-                ]);
-            }else{
-                return $this->errorResponse("No se encontraron los tickets a validar.", 400);
-            }
-        } catch (\Exception $exception) {
-            return $this->errorResponse($exception->getMessage(), 400);
-        } */
-
-    }
-    public function Pyamenterror(){
-        $data = request()->json()->all();
-
-        $prueba = new PruebasModel();
-        $prueba->content = $data;
-        $prueba->save();
-        return $this->successResponse([
-            'status' => 201,
-            'message' => 'Validación completada',
-        ]);
-        /* try {
-            $data = request()->json()->all();
-
-            if (isset($data['order_id'])) {
-
-
-                $ticket = UserTicket::where('oreder_id',$data['order_id'])->get();
-                foreach ($ticket as $key ) {
-
-                    if ($key != null) {
-
-                        $key->status == "Error";
-                        $key->update();
-                    }
-                }
-
-                return $this->successResponse([
-                    'status' => 201,
-                    'message' => 'Validación completada',
-                ]);
-            }else{
-                return $this->errorResponse("No se encontraron los tickets a validar.", 400);
-            }
-        } catch (\Exception $exception) {
-            return $this->errorResponse($exception->getMessage(), 400);
-        }
- */
-    }
 
 
     public function PaymentValidate($order_id)
@@ -309,10 +196,18 @@ class PaymentController extends Controller
             if ($ticket == null) {
                 return $this->errorResponse("Orden no encontrada.", 400);
             }else{
-                return $this->successResponse([
-                    'status' => 201,
-                    'message' => $ticket->status,
-                ]);
+                if ($ticket->status == 'INITIALIZED') {
+                    return $this->errorResponse('Proceso no terminado.', 400);
+                }
+                elseif ($ticket->status == 'Success') {
+                    return $this->successResponse([
+                        'status' => 201,
+                        'message' => $ticket->status,
+                    ]);
+                }else {
+                    return $this->errorResponse('Proceso fallido.', 400);
+                }
+
             }
 
         }catch (\Exception $exception) {
