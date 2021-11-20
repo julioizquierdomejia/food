@@ -33,8 +33,8 @@ Route::group(['prefix' => 'users'], function () {
     Route::put('/{id_user}', [UserController::class, 'update'])->middleware(['jwt.auth']);
     Route::post('/favorites', [HomeController::class, 'NewFavorite'])->middleware(['jwt.auth']);
     Route::delete('/favorites/{$id_raffle}', [HomeController::class, 'DeleteFavorite'])->middleware(['jwt.auth']);
-    Route::get('/public/resetpass/{email_user}', [UserController::class, 'sendEmailPassword']);
-    Route::post('/public/resetpass', [UserController::class, 'NewPass']);
+    Route::get('/public/resetpass/{email_user}', [AuthController::class, 'sendEmailPassword']);
+    Route::post('/public/resetpass', [AuthController::class, 'NewPass']);
 });
 
 Route::get('home', [HomeController::class, 'index'])->middleware(['jwt.auth']);
