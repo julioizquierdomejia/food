@@ -11,8 +11,6 @@
 
             {!! Form::mySelect('role', 'Role', config('variables.role'), null, ['class' => 'form-control select2']) !!}
 
-            {!! Form::myFile('avatar', 'Avatar') !!}
-
             {!! Form::myTextArea('bio', 'Bio') !!}
         </div>
     </div>

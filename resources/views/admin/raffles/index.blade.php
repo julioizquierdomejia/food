@@ -44,7 +44,7 @@
                         <td>{{ explode(' ', $raffle->start_date)[0] }}</td>
                         <td>{{ explode(' ', $raffle->end_date)[0] }}</td>
                         {{-- <td>{{ $raffle->tickets_number }}</td> --}}
-                        <td>{{ $raffle->progress }} %</td>
+                        <td>{{ ($raffle->accumulate/$raffle->item->price)*100 }} %</td>
                         <td>
                             <ul class="list-inline">
                                 <li class="list-inline-item">

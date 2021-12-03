@@ -17,6 +17,8 @@ use App\Models\Category;
 use App\Models\Raffle;
 use App\Models\Ticket;
 use App\Models\RaffleFavorite;
+use App\Models\UserTicket;
+
 class HomeController extends Controller
 {
     use ApiResponse;
@@ -53,6 +55,12 @@ class HomeController extends Controller
             ->where('winner_id','=',null)
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
             ->get();
+
+            foreach ($raffles as $key) {
+                $tickets = UserTicket::where('raffles_id',$key->id)->sum('quantity');
+                $acc = $key->raffle_goal_amount*$tickets;
+                $key['accumulate'] = $acc;
+            }
 
             for ($i = 0; $i < count($raffles); $i++ ) {
                 $favorite = RaffleFavorite::where('raffle_id',$raffles[$i]['raffle_id'])

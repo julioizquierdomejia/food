@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Raffle;
 use App\Models\Ticket;
+use App\Models\UserTicket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -22,7 +23,14 @@ class RafflesController extends Controller
     {
         $raffles = Raffle::with('item')->where('status', 0)
             ->where('winner_id',null)
-            ->orderBy('end_date', 'DESC')->paginate(15);
+            ->orderBy('end_date', 'DESC')->get();
+
+        foreach ($raffles as $key) {
+            $tickets = UserTicket::where('raffles_id',$key->id)->sum('quantity');
+            $acc = $key->raffle_goal_amount*$tickets;
+            $key['accumulate'] = $acc;
+        }
+
         $items = Item::orderBy('id', 'DESC')->get();
         return view('admin.raffles.index', compact('raffles', 'items'));
     }

@@ -14,8 +14,8 @@ class CreateRafflesTable extends Migration
     public function up()
     {
         Schema::create('raffles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('item_id');
+            $table->id();
+            $table->bigInteger('item_id')->unsigned();
             $table->integer('winner_id')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
@@ -26,6 +26,9 @@ class CreateRafflesTable extends Migration
             $table->integer('active')->default(0)->nullable()->comment('0 show in app | 1 hide in app');
             $table->integer('status')->default(0)->nullable()->comment('0 not raffled | 1 raffled');
             $table->timestamps();
+
+            $table->foreign('item_id')->references('id')
+                ->on('items')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

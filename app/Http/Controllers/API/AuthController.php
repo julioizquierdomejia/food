@@ -357,10 +357,12 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|min:3',
                 'phone' => 'required|min:9|max:10|string',
+                'password' => 'min:5'
             ], [
                 'name.required' => 'Name is required',
                 'name.min' => 'Mínimo de caracteres no válido {name}',
                 'phone.required' => 'Phone is required',
+                'password.min' => 'Contraseña es demasiado corta',
             ]);
 
             if ($validator->fails()) {
@@ -370,11 +372,16 @@ class AuthController extends Controller
             $users = User::find($idUser);
 
             if ($request->has('photo')) {
-                $files = $request->file('image');
+                /* $files = $request->file('image');
                 $name = "users_" . time() . "." . $files->guessExtension();
                 $ruta = public_path("images/users/" . $name);
                 copy($files, $ruta);
-                $users->avatar = "images/users/" . $name;
+                $users->avatar = "images/users/" . $name; */
+                $users->avatar = $request->get('photo');
+            }
+
+            if ($request->has('password')) {
+                $users->password = Hash::make($request->get('password'));
             }
 
             $users->name = $request->get('name');
