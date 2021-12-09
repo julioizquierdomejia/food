@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "http://192.168.6.54:8000/api",
+            "url": "https://larifa.bimbadigital.com/api",
             "description": "La Rifa Perú API",
             "variables": {
                 "schema": {
@@ -553,6 +553,29 @@
                     },
                     "400": {
                         "description": "Failed"
+                    }
+                },
+                "deprecated": false,
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/myshopping": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Retorna tus rifas favoritas.",
+                "operationId": "efccba1d378d36cc1578789c819eaff6",
+                "responses": {
+                    "200": {
+                        "description": "Home page data"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
                     }
                 },
                 "deprecated": false,

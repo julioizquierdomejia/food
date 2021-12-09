@@ -46,7 +46,7 @@ class PaymentController extends Controller
 
             $order_id = Str::uuid();
             $username = "44623003";
-            $password = "2fKXe4j8dmS6n8hy";
+            $password = "EP2x9duNcrlrK98x";
 
 
 
@@ -56,7 +56,7 @@ class PaymentController extends Controller
                 $key = $password;  //LLAVE DEL COMERCIO
                 $vads_action_mode = "INTERACTIVE";
                 $vads_amount = $price;
-                $vads_ctx_mode = "TEST";
+                $vads_ctx_mode = "PRODUCTION";
                 $vads_currency = "604";
                 $vads_cust_email = $user->email;
                 $vads_page_action = "ASK_REGISTER_PAY";

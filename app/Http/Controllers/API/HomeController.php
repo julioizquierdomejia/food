@@ -224,7 +224,9 @@ class HomeController extends Controller
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','items.name','description','items.image','price','categories.name AS namecategory')->where('raffles.id', $id_raffle)
             ->get()->first();
 
-
+            $tickets = UserTicket::where('raffles_id',$raffles->id)->sum('quantity');
+            $acc = $raffles->raffle_goal_amount*$tickets;
+            $raffles['accumulate'] = $acc;
 
 
             $favorite = RaffleFavorite::where('raffle_id',$id_raffle)
@@ -400,5 +402,47 @@ class HomeController extends Controller
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
         }
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/myshopping",
+     *     summary="Retorna tus rifas favoritas.",
+     *     tags={"Home"},
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Home page data"
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     ),
+     *
+     *
+     *     security={{"apiAuth": {} }},
+     *
+     *     deprecated=false
+     *
+     * )
+     */
+    public function shopping()
+    {
+        try {
+            $raffles = UserTicket::join('raffles','raffles.id','=','user_tickets.raffles_id')
+            ->where('user_tickets.user_id',auth()->guard('api')->user()->id)
+            ->where('user_tickets.status','Success')
+            ->select('raffles.id','user_tickets.id as ticket','start_date','end_date','raffle_goal_amount','user_tickets.quantity')
+            ->get();
+
+
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+        return $this->successResponse([
+            'status' => 200,
+            'data' => $raffles,
+        ]);
     }
 }

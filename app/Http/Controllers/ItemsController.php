@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Raffle;
+use App\Models\RaffleFavorite;
+use App\Models\RaffleWinner;
+use App\Models\Ticket;
+use App\Models\UserTicket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -115,6 +120,16 @@ class ItemsController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         Item::destroy($id);
+        $rafles = Raffle::where('item_id',$id)->get()->first();
+        foreach ($rafles as $rafle) {
+
+            UserTicket::where('raffles_id',$rafle->id)->destroy();
+            RaffleWinner::where('raffle_id',$rafle->id)->destroy();
+            RaffleFavorite::where('raffle_id',$rafle->id)->destroy();
+            Ticket::where('raffle_id',$rafle->id)->destroy();
+            $rafle->destroy();
+        }
+
         return back()->withSuccess(trans('app.success_destroy'));
     }
 }

@@ -38,6 +38,7 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 Route::get('home', [HomeController::class, 'index'])->middleware(['jwt.auth']);
+Route::get('myshopping', [HomeController::class, 'shopping'])->middleware(['jwt.auth']);
 Route::get('detailRaffle/{id_raffle}', [HomeController::class, 'detail'])->middleware(['jwt.auth']);
 Route::get('winners', [HomeController::class, 'winners'])->middleware(['jwt.auth']);
 Route::get('favoritesRaffles', [HomeController::class, 'favorites'])->middleware(['jwt.auth']);

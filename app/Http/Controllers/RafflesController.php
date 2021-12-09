@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Raffle;
+use App\Models\RaffleFavorite;
+use App\Models\RaffleWinner;
 use App\Models\Ticket;
 use App\Models\UserTicket;
 use Illuminate\Http\RedirectResponse;
@@ -136,6 +138,10 @@ class RafflesController extends Controller
     public function destroy($id): RedirectResponse
     {
         Raffle::destroy($id);
+        UserTicket::where('raffles_id',$id)->destroy();
+        RaffleWinner::where('raffle_id',$id)->destroy();
+        RaffleFavorite::where('raffle_id',$id)->destroy();
+        Ticket::where('raffle_id',$id)->destroy();
         return back()->withSuccess(trans('app.success_destroy'));
     }
 }
