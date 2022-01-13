@@ -18,6 +18,9 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('raffles', 'RafflesController');
     Route::resource('sales', 'SalesController');
 
+    //Para re ordenar rifas
+    Route::post('reorder_raffles', [App\Http\Controllers\RafflesController::class, 'update_order_raffles'])->name('reorder');
+
     Route::get('winner/{id}', 'RaffleWinnersController@raffleDraw')->name('getwinner');
     Route::post('winner', 'RaffleWinnersController@uploadPhoto')->name('photowinner');
     /**

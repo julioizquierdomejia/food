@@ -25,7 +25,8 @@ class RafflesController extends Controller
     {
         $raffles = Raffle::with('item')->where('status', 0)
             ->where('winner_id',null)
-            ->orderBy('end_date', 'DESC')->get();
+            //->orderBy('end_date', 'DESC')->get();
+            ->orderBy('order', 'ASC')->get();
 
         foreach ($raffles as $key) {
             $tickets = UserTicket::where('raffles_id',$key->id)->sum('quantity');
@@ -56,11 +57,49 @@ class RafflesController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        
+        //revisamos el ultimo numero de orden
+        $rifas_all = Raffle::orderBy('order')
+               ->get();
+
+        if($rifas_all->count() == 0){
+            //Asignamos 1 al numero de orden
+            $last_order = 1;
+        }else{
+            //genero el ultimo numero de orden de posicion en relacion al mayor de la tabla
+            $last_order = $rifas_all->last()->order + 1;    
+        }
+
+
+
         $this->validate($request, Raffle::rules());
         $raffles = $request->all();
+
         //$tickets = $request->tickets;
         $raffles['tickets_number'] = 0;
-        $raffle = Raffle::create($raffles);
+        
+        //$raffle = Raffle::create($raffles);
+
+        //cramos el objeto de tipo Raffle
+        $raffle = new Raffle();
+
+
+
+        $raffle->item_id = $request->item_id;
+        $raffle->raffle_goal_amount = $request->raffle_goal_amount;
+        $raffle->order = $last_order;
+        $raffle->start_date = $request->start_date;
+        $raffle->end_date = $request->end_date;
+
+        $raffle->save();
+
+        /*
+        "_token" => "lERiSDNqKUfC6EKon2ZZZ1of48PeD0V6DcopkiY9"
+        "item_id" => "18"
+        "raffle_goal_amount" => "1000"
+        "start_date" => "2022-01-12"
+        "end_date" => "2022-01-12"
+        */
 
         /* foreach ($tickets as $ticket) {
             Ticket::create([
@@ -129,6 +168,48 @@ class RafflesController extends Controller
         return redirect()->route(ADMIN . '.raffles.index')->withSuccess(trans('app.success_update'));
     }
 
+    public function update_order_raffles(Request $request, Raffle $raffle){
+
+    
+        $newOrder = $request->order;
+        $rifas = Raffle::all();
+
+        $nuevoOrden = 0;
+
+        /*
+        foreach ($rifas as $key_rifa => $rifa) {
+            foreach ($newOrder as $key => $orden) { //el numero de Orden es el ID del Item
+                $nuevoOrden = $key_rifa + 1;
+                if ($orden == $rifa->order) {
+                    $rifa->update(['order' => $nuevoOrden]);
+                }
+                //return $orden;
+
+                //$nuevoOrden = $key + 1;
+                //$raffle = Raffle::where('order', $orden)->first();
+                //$raffle->update(['order' => $nuevoOrden]);
+                //return $key;
+            }    
+        }
+        */
+
+        $array_vacio = [];
+
+        foreach ($newOrder as $key => $order) {
+            $raffle = Raffle::find($order);
+            $raffle->update(['order' => $key]);
+            //$raffle->order = $key;
+            //$raffle->save();
+            array_push($array_vacio, $order, $key);
+        }
+        
+
+
+        //$post = $request->order[2];
+        return $array_vacio;
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -137,11 +218,44 @@ class RafflesController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
+        
+        #---------------------------------------------------------@
+        #                                                         #     
+        #  @julioIzquierdoMejia | modifico este codigo            # 
+        #                                                         #
+        #---------------------------------------------------------@
+
+        $user_ticket = UserTicket::where('raffles_id',$id)->get();  // esta es una coleccion
+        $rafle_winner = RaffleWinner::where('raffle_id',$id)->get(); //este registro es unico | Confirmar si hay un solo ganador por Rifa |
+        $rafle_favorite = RaffleFavorite::where('raffle_id',$id)->get();  // esta es una coleccion un user puede tener varias Rifas de favoritas
+        
+
+        if($user_ticket->count() > 0){
+            //dd($user_ticket); //UserTicket::where('raffles_id',$id)->destroy();
+            foreach ($user_ticket as $user_t) {
+                $user_ticket_ = UserTicket::find($user_t->id)->delete();
+            }
+        }
+
+        if($rafle_winner->count() > 0){
+            foreach ($rafle_winner as $winner) {
+                $winner_ = RaffleWinner::find($winner->id)->delete();
+            }
+        }
+
+        if($rafle_favorite->count() > 0){
+            foreach ($rafle_favorite as $favotirte) {
+                $favorite_ = RaffleFavorite::find($favotirte->id)->delete();
+            }
+        }        
+
         Raffle::destroy($id);
-        UserTicket::where('raffles_id',$id)->destroy();
-        RaffleWinner::where('raffle_id',$id)->destroy();
-        RaffleFavorite::where('raffle_id',$id)->destroy();
-        Ticket::where('raffle_id',$id)->destroy();
+        
+        
+        //esta tabla aun no se que hace
+        //Ticket::where('raffle_id',$id)->destroy();
+        
+
         return back()->withSuccess(trans('app.success_destroy'));
     }
 }

@@ -22,6 +22,7 @@ class Raffle extends Model
         'progress',
         'active',
         'status',
+        'order',
     ];
 
     /*

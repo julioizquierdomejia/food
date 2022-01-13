@@ -428,13 +428,15 @@ class HomeController extends Controller
      */
     public function shopping()
     {
-        try {
-            $raffles = UserTicket::join('raffles','raffles.id','=','user_tickets.raffles_id')
-            ->where('user_tickets.user_id',auth()->guard('api')->user()->id)
-            ->where('user_tickets.status','Success')
-            ->select('raffles.id','user_tickets.id as ticket','start_date','end_date','raffle_goal_amount','user_tickets.quantity')
-            ->get();
 
+        try {
+                        
+            $raffles = UserTicket::join('raffles','raffles.id','=','user_tickets.raffles_id')
+                ->where('user_tickets.user_id',auth()->guard('api')->user()->id)
+                //->where('user_tickets.status','Success')
+                ->where('user_tickets.status','INITIALIZED')
+                ->select('raffles.id','user_tickets.id as ticket','start_date','end_date','raffle_goal_amount','user_tickets.quantity')
+                ->get();
 
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);

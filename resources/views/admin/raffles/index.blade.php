@@ -6,6 +6,7 @@
 
 @section('content')
 
+
     <div class="mB-20">
         <button data-toggle="modal" data-target="#modalAddRaffles" class="btn btn-info">
             {{ trans('app.add_button') }}
@@ -37,57 +38,105 @@
                 </tr>
                 </tfoot>
 
-                <tbody>
-                @foreach($raffles as $raffle)
-                    <tr>
-                        <td>{{ $raffle->item->name }}</td>
-                        <td>{{ explode(' ', $raffle->start_date)[0] }}</td>
-                        <td>{{ explode(' ', $raffle->end_date)[0] }}</td>
-                        {{-- <td>{{ $raffle->tickets_number }}</td> --}}
-                        <td>{{ ($raffle->accumulate/$raffle->item->price)*100 }} %</td>
-                        <td>
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    {!! Form::open([
+                <tbody id="lista">
+                    {{-- Items here --}}
+                        @foreach($raffles as $raffle)
+                                <tr style="cursor:move ;" data-id='{{ $raffle->id }}'>
+                                    <td>{{ $raffle->item->name }}</td>
+                                    <td>{{ explode(' ', $raffle->start_date)[0] }}</td>
+                                    <td>{{ explode(' ', $raffle->end_date)[0] }}</td>
+                                    {{-- <td>{{ $raffle->tickets_number }}</td> --}}
+                                    <td>{{ ($raffle->accumulate/$raffle->item->price)*100 }} %</td>
+                                    <td>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                {!! Form::open([
 
-                                        'url'  => route(ADMIN . '.getwinner', [$raffle->id]),
-                                        'method' => 'GET',
-                                        ])
-                                    !!}
-                                    <button class="btn btn-success btn-sm" title="Rifar">
-                                        <i class="ti-control-play"></i>
-                                    </button>
-                                    {!! Form::close() !!}
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="{{ route(ADMIN . '.raffles.edit', $raffle->id) }}"
-                                       class="btn btn-primary btn-sm">
-                                        <span class="ti-pencil"></span>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    {!! Form::open([
-                                        'class' => 'delete',
-                                        'url'  => route(ADMIN . '.raffles.destroy', $raffle->id),
-                                        'method' => 'DELETE',
-                                        ])
-                                    !!}
-                                    <button class="btn btn-danger btn-sm" title="{{ trans('app.delete_title') }}">
-                                        <i class="ti-trash"></i>
-                                    </button>
-                                    {!! Form::close() !!}
-                                </li>
+                                                    'url'  => route(ADMIN . '.getwinner', [$raffle->id]),
+                                                    'method' => 'GET',
+                                                    ])
+                                                !!}
+                                                <button class="btn btn-success btn-sm" title="Rifar">
+                                                    <i class="ti-control-play"></i>
+                                                </button>
+                                                {!! Form::close() !!}
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="{{ route(ADMIN . '.raffles.edit', $raffle->id) }}"
+                                                   class="btn btn-primary btn-sm">
+                                                    <span class="ti-pencil"></span>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                {!! Form::open([
+                                                    'class' => 'delete',
+                                                    'url'  => route(ADMIN . '.raffles.destroy', $raffle->id),
+                                                    'method' => 'DELETE',
+                                                    ])
+                                                !!}
+                                                <button class="btn btn-danger btn-sm" title="{{ trans('app.delete_title') }}">
+                                                    <i class="ti-trash"></i>
+                                                </button>
+                                                {!! Form::close() !!}
+                                            </li>
 
-                            </ul>
-                        </td>
-                    </tr>
-                @endforeach
+                                        </ul>
+                                    </td>
+                                </tr>
+                            
+                        @endforeach
                 </tbody>
 
             </table>
         </div>
     </div>
+    <form action="reorder_raffles" method="POST" id="form_order">
+        @csrf
+    </form>
+
 
     @include('admin.raffles.modal_form_raffle')
+
+    @push('js')
+        <script>
+            const lista = document.getElementById('lista');
+            Sortable.create(lista, {
+                animation : 350,
+
+                onEnd: () => {
+                    console.log('Se isnrtto un nuevo elemento');
+                },
+
+                store: {
+                    set: (sortable) => {
+                        const order = sortable.toArray();
+
+                        //Lanzamos el ajax para guardar el re order
+                        $.ajax({
+                            url: 'reorder_raffles',
+                            method : 'POST',
+                            data: //$('#form_order').serialize(),
+                            {
+                                _token:$('input[name="_token"]').val(),
+                                order: order,
+                            }
+                        }).done(function(res){
+                            //alert(res);
+                            Swal.fire({
+                              position: 'top-end',
+                                icon: 'success',
+                                title: 'Rifas Re Ordenadas',
+                                showConfirmButton: false,
+                                timer: 2500
+                            })
+                        })
+
+                    }
+                }
+
+            });
+        </script>
+    @endpush
+
 
 @endsection
