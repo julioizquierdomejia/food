@@ -352,16 +352,17 @@ class AuthController extends Controller
      * )
      */
     public function update(Request $request, $idUser)
-    {
+    {   
+
+
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|min:3',
-                'phone' => 'required|min:9|max:10|string',
+                'phone' => 'min:9|max:10|string',
                 'password' => 'min:5'
             ], [
                 'name.required' => 'Name is required',
                 'name.min' => 'Mínimo de caracteres no válido {name}',
-                'phone.required' => 'Phone is required',
                 'password.min' => 'Contraseña es demasiado corta',
             ]);
 

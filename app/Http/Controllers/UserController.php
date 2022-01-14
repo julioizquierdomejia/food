@@ -81,6 +81,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+    
         $this->validate($request, User::rules(true, $id));
 
         $item = User::findOrFail($id);
@@ -94,6 +95,7 @@ class UserController extends Controller
         $item->update($data);
 
         return redirect()->route(ADMIN . '.users.index')->withSuccess(trans('app.success_update'));
+
     }
 
     /**
