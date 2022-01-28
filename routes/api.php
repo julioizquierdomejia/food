@@ -37,6 +37,8 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('/public/resetpass', [AuthController::class, 'NewPass']);
 });
 
+Route::put('statusSuccess', [HomeController::class, 'shoppingStatusSuccess'])->middleware(['jwt.auth']);
+
 Route::get('home', [HomeController::class, 'index'])->middleware(['jwt.auth']);
 Route::get('myshopping', [HomeController::class, 'shopping'])->middleware(['jwt.auth']);
 Route::get('detailRaffle/{id_raffle}', [HomeController::class, 'detail'])->middleware(['jwt.auth']);

@@ -12,6 +12,10 @@ use App\Http\Controllers\Controller;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+
+
 class AuthController extends Controller
 {
     use ApiResponse;
@@ -352,10 +356,10 @@ class AuthController extends Controller
      * )
      */
     public function update(Request $request, $idUser)
-    {   
-
+    {
 
         try {
+
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|min:3',
                 'phone' => 'min:9|max:10|string',
@@ -372,26 +376,37 @@ class AuthController extends Controller
 
             $users = User::find($idUser);
 
-            if ($request->has('photo')) {
-                /* $files = $request->file('image');
-                $name = "users_" . time() . "." . $files->guessExtension();
-                $ruta = public_path("images/users/" . $name);
-                copy($files, $ruta);
-                $users->avatar = "images/users/" . $name; */
-                $users->avatar = $request->get('photo');
-            }
+            //******************************************************************************
+            // Auth : @julioIzquierdoMejia
+            //
+            // Upload de Imagen como File requperado del $request->file('avatar'); Base 64
+            //
+            //******************************************************************************
 
+            if($request->avatar):
+                $image  =   $request->avatar;  // your base64 encoded
+                $image = str_replace('data:image/png;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $imageName = str_replace(' ', '_', $users->name);
+                $imageName = 'img_perfil/'.$imageName.'.png';
+                Storage::disk('public')->put($imageName, base64_decode($image)); //este Public se va al storage link
+
+                $imageName_path = 'https://larifa.bimbadigital.com/storage/'.$imageName;
+
+                $users->avatar = $imageName_path;
+            endif;
+
+    
             if ($request->has('password')) {
                 $users->password = Hash::make($request->get('password'));
             }
-
-            $users->name = $request->get('name');
 
             $phone_exists = User::where('phone', $request->get('phone'))->first();
             if ($phone_exists && $phone_exists->iduser != $users->iduser) {
                 return $this->errorResponse('Phone already exists', 400);
             }
 
+            $users->name = $request->get('name');
             $users->phone = $request->get('phone');
             $users->update();
 
@@ -399,6 +414,7 @@ class AuthController extends Controller
                 'status' => 200,
                 'message' => 'Updated Successfully'
             ]);
+
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
         }

@@ -35,7 +35,10 @@
                 <tbody>
                 @foreach ($items as $item)
                     <tr>
-                        <td><a href="{{ route(ADMIN . '.users.edit', $item->id) }}">{{ $item->name }}</a></td>
+                        <td>
+                             <img src="https://picsum.photos/36" class="border border-4 rounded-circle mr-3">
+                            <a href="{{ route(ADMIN . '.users.edit', $item->id) }}">{{ $item->name }}</a>
+                        </td>
                         <td>{{ $item->email }}</td>
                         <td>
                             <ul class="list-inline">

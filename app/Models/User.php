@@ -76,10 +76,14 @@ class User extends Authenticatable implements JWTSubject
 
         return config('variables.avatar.public').$value;
     }
+    
+    /*
     public function setAvatarAttribute($photo)
     {
         $this->attributes['avatar'] = move_file($photo, 'avatar');
     }
+    */
+    
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = strtolower($value);

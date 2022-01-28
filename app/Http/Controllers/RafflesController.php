@@ -23,15 +23,23 @@ class RafflesController extends Controller
      */
     public function index(): View
     {
+
+
         $raffles = Raffle::with('item')->where('status', 0)
             ->where('winner_id',null)
             //->orderBy('end_date', 'DESC')->get();
             ->orderBy('order', 'ASC')->get();
 
         foreach ($raffles as $key) {
-            $tickets = UserTicket::where('raffles_id',$key->id)->sum('quantity');
+            $tickets = UserTicket::where('raffles_id',$key->id)
+                        ->where('status', 'Success')
+                        ->sum('quantity');
+
             $acc = $key->raffle_goal_amount*$tickets;
+            $porcentaje = ($tickets*100)/$key->raffle_goal_amount;
             $key['accumulate'] = $acc;
+            $key['porcentaje'] = $porcentaje;
+            
         }
 
         $items = Item::orderBy('id', 'DESC')->get();

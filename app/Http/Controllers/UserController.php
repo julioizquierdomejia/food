@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -15,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $items = User::where('role',2)->latest('updated_at')->get();
+        $items = User::where('role',2)->latest('updated_at')
+                ->get();
 
         return view('admin.users.index', compact('items'));
     }
@@ -81,12 +83,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-    
+
         $this->validate($request, User::rules(true, $id));
 
         $item = User::findOrFail($id);
 
-        $data = $request->except('password');
+        $data = $request->except('password', 'avatar');
 
         if (request('password')) {
             $data['password'] = bcrypt(request('password'));
@@ -110,4 +112,5 @@ class UserController extends Controller
 
         return back()->withSuccess(trans('app.success_destroy'));
     }
+
 }

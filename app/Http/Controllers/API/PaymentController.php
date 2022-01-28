@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use PhpParser\JsonDecoder;
 
+
 class PaymentController extends Controller
 {
     use ApiResponse;
@@ -44,7 +45,8 @@ class PaymentController extends Controller
 
             $price = $price * 100;
 
-            $order_id = Str::uuid();
+            //$order_id = Str::uuid();
+            $order_id = Str::random(10);
             $username = "44623003";
             $password = "EP2x9duNcrlrK98x";
 

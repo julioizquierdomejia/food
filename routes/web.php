@@ -29,6 +29,8 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('notifications', 'NotificationsController');
     Route::post('notify', 'NotificationsController@notify')
         ->name('notifications.notify');
+
+
 });
 
 Route::get('/', function () {

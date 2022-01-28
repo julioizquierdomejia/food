@@ -11,6 +11,7 @@
             <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th>Codigo</th>
                     <th>Cliente</th>
                     <th>Rifa</th>
                     <th>Estado</th>
@@ -23,6 +24,7 @@
 
                 <tfoot>
                 <tr>
+                    <th>Codigo</th>
                     <th>Cliente</th>
                     <th>Producto Rifado</th>
                     <th>Estado</th>
@@ -35,17 +37,21 @@
 
                 <tbody>
                 @foreach($sales as $sale)
-                    <tr>
-                        <td>{{ $sale->client }}</td>
-                        <td>{{ $sale->product }}</td>
-                        <td>{{ $sale->raffled ? 'Sorteo Finalizado' : 'Sorteo en Proceso' }}</td>
-                        <td>{{ $sale->created_at }}</td>
-                        <td>{{ $sale->quantity  }}</td>
-                        <td>{{ $sale->quantity * $sale->raffle_goal_amount }}</td>
-{{--                        <td>--}}
-{{--                            <button class="btn btn-info btn-sm" title="Detalles"><i class="ti-list"></i></button>--}}
-{{--                        </td>--}}
-                    </tr>
+                    @if($sale->status == 'Success')
+                        <tr>
+                            <td>{{ $sale->oreder_id }}</td>
+                            <td>{{ $sale->client }}</td>
+                            <td>{{ $sale->product }}</td>
+                            <td>{{ $sale->raffled ? 'Sorteo Finalizado' : 'Sorteo en Proceso' }}</td>
+                            <td>{{ $sale->created_at }}</td>
+                            <td>{{ $sale->quantity  }}</td>
+                            <!--td>{{ $sale->quantity * $sale->raffle_goal_amount }}</td-->
+                            <td>S/. {{ $sale->quantity * $sale->price }}</td>
+    {{--                        <td>--}}
+    {{--                            <button class="btn btn-info btn-sm" title="Detalles"><i class="ti-list"></i></button>--}}
+    {{--                        </td>--}}
+                        </tr>
+                    @endif
                 @endforeach
                 </tbody>
             </table>

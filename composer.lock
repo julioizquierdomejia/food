@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc872abed6000ab5975f7f9641032335",
+    "content-hash": "c14f0ecb667be7ee9df5713314d1d7e3",
     "packages": [
         {
             "name": "asantibanez/laravel-blade-sortable",

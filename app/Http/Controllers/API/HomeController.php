@@ -46,24 +46,36 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         try {
             $carousel = Carousel::all();
             $categories = Category::select('id','name','icon')->get();
+
             $raffles = Raffle::join('items','raffles.item_id', '=' , 'items.id')
-            ->where('raffles.status','=','0')
-            ->where('raffles.active','=','0')
-            ->where('winner_id','=',null)
-            ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
-            ->get();
+                ->where('raffles.status','=','0')
+                ->where('raffles.active','=','0')
+                ->where('winner_id','=',null)
+                ->orderBy('order','asc')
+                ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
+                ->get();
 
             foreach ($raffles as $key) {
-                $tickets = UserTicket::where('raffles_id',$key->id)->sum('quantity');
+                $tickets = UserTicket::where('raffles_id',$key->id)
+                            ->where('status', 'Success')
+                            ->sum('quantity');
+                            
+                
                 $acc = $key->raffle_goal_amount*$tickets;
+                $porcentaje = ($tickets*100)/$key->raffle_goal_amount;
+                $porcentaje = round($porcentaje,2);
                 $key['accumulate'] = $acc;
+                $key['porcentaje'] = $porcentaje;
             }
 
             for ($i = 0; $i < count($raffles); $i++ ) {
-                $favorite = RaffleFavorite::where('raffle_id',$raffles[$i]['raffle_id'])
+
+                //$favorite = RaffleFavorite::where('raffle_id',$raffles[$i]['raffle_id'])
+                $favorite = RaffleFavorite::where('raffle_id',$raffles[$i]->id)
                 ->where('user_id',auth()->guard('api')->user()->id)
                 ->get()->first();
 
@@ -82,6 +94,7 @@ class HomeController extends Controller
                 'raffles' => $raffles
             ],
         ]);
+        
     }
     /**
      * @OA\Get(
@@ -218,15 +231,21 @@ class HomeController extends Controller
      */
     public function detail($id_raffle)
     {
+
         try {
             $raffles = Raffle::join('items','raffles.item_id', '=' , 'items.id')
             ->join('categories','items.category_id', '=', 'categories.id')
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','items.name','description','items.image','price','categories.name AS namecategory')->where('raffles.id', $id_raffle)
             ->get()->first();
 
-            $tickets = UserTicket::where('raffles_id',$raffles->id)->sum('quantity');
+            $tickets = UserTicket::where('raffles_id',$raffles->id)
+                        ->where('status', 'Success')
+                        ->sum('quantity');
+            //$acc = $raffles->raffle_goal_amount*$tickets;
             $acc = $raffles->raffle_goal_amount*$tickets;
             $raffles['accumulate'] = $acc;
+            $porcentaje = ($tickets*100)/$raffles->raffle_goal_amount;
+            $raffles['porcentaje'] = $porcentaje;
 
 
             $favorite = RaffleFavorite::where('raffle_id',$id_raffle)
@@ -276,6 +295,21 @@ class HomeController extends Controller
             ->where('raffle_favorites.user_id',auth()->guard('api')->user()->id)
             ->select('raffles.id','raffles.item_id','start_date','end_date','raffle_goal_amount','progress','category_id','name','description','image','price')
             ->get();
+
+            foreach ($raffles as $key) {
+                $tickets = UserTicket::where('raffles_id',$key->id)
+                            ->where('status', 'Success')
+                            ->sum('quantity');
+                            
+                
+                $acc = $key->raffle_goal_amount*$tickets;
+                $porcentaje = ($tickets*100)/$key->raffle_goal_amount;
+                $porcentaje = round($porcentaje,2);
+                $key['accumulate'] = $acc;
+                $key['porcentaje'] = $porcentaje;
+            }
+
+
 
 
         } catch (\Exception $exception) {
@@ -432,10 +466,11 @@ class HomeController extends Controller
         try {
                         
             $raffles = UserTicket::join('raffles','raffles.id','=','user_tickets.raffles_id')
+                ->join('items', 'raffles.item_id', '=', 'items.id')
                 ->where('user_tickets.user_id',auth()->guard('api')->user()->id)
-                //->where('user_tickets.status','Success')
-                ->where('user_tickets.status','INITIALIZED')
-                ->select('raffles.id','user_tickets.id as ticket','start_date','end_date','raffle_goal_amount','user_tickets.quantity')
+                ->where('user_tickets.status','Success')
+                //->where('user_tickets.status','INITIALIZED')
+                ->select('raffles.id','user_tickets.id as ticket','start_date','end_date','raffle_goal_amount','user_tickets.quantity', 'items.name', 'items.description', 'items.price')
                 ->get();
 
         } catch (\Exception $exception) {
@@ -447,4 +482,36 @@ class HomeController extends Controller
             'data' => $raffles,
         ]);
     }
+
+
+    public function shoppingStatusSuccess(Request $request)
+    {
+
+        $idOrder = $request->order_id;
+
+        try{
+            
+            $raffles = UserTicket::where('user_tickets.user_id',auth()->guard('api')->user()->id)
+                        ->where('oreder_id',$idOrder)
+                        ->first();
+
+            $raffles->status = 'Success';
+            $raffles->update();
+            
+
+        }catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+        return $this->successResponse([
+            'status' => 200,
+            'data' => $raffles,
+        ]);
+
+
+
+        
+    }
+
+    
 }
