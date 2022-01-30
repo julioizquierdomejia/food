@@ -24,7 +24,6 @@ class RafflesController extends Controller
     public function index(): View
     {
 
-
         $raffles = Raffle::with('item')->where('status', 0)
             ->where('winner_id',null)
             //->orderBy('end_date', 'DESC')->get();
@@ -35,15 +34,32 @@ class RafflesController extends Controller
                         ->where('status', 'Success')
                         ->sum('quantity');
 
-            $acc = $key->raffle_goal_amount*$tickets;
-            $porcentaje = ($tickets*100)/$key->raffle_goal_amount;
+            //$acc = $key->raffle_goal_amount*$tickets;
+            //Para calcular el acumular de cuantos tickets se han vendido por Rifa
+            // Sumámos el campo Quantity que es donde viene el precio de las opciones 
+            // y lo dividimos entreo el costo del tikect de cada item
+            $acc = $tickets/$key->item->price; //$key->raffle_goal_amount/$key->item->price;
+
+            //$porcentaje = ($tickets*100)/$key->raffle_goal_amount;
+            $porcentaje = ($acc*100)/$key->raffle_goal_amount;
             $key['accumulate'] = $acc;
-            $key['porcentaje'] = $porcentaje;
+            $porcentaje_rounded = round($porcentaje, 2);
+            $key['porcentaje'] = $porcentaje_rounded;
             
+            //
+            // Calculemos el porcentaje con los campos de cantidad  { @julio.izquierdo.mejia }
+            // Informacion para el calculo del porcentaje segun la cantidad de ventas de rifas
+            //
+            // Tabla user_tickets -->> campo {{ quantity }}  ->>> este campo tiene la cantidad de de rifas compradas por un usuario
+            // Tabla raffles -->> campo {{ rafle_goal_amount }}  ->>> ete campo tiene la cantidad total de rifas que se tienen que vender
+            //
         }
 
         $items = Item::orderBy('id', 'DESC')->get();
+
         return view('admin.raffles.index', compact('raffles', 'items'));
+
+
     }
 
     /**
@@ -84,14 +100,12 @@ class RafflesController extends Controller
         $raffles = $request->all();
 
         //$tickets = $request->tickets;
-        $raffles['tickets_number'] = 0;
+        $raffles['tickets_number'] = 0; 
         
         //$raffle = Raffle::create($raffles);
 
         //cramos el objeto de tipo Raffle
         $raffle = new Raffle();
-
-
 
         $raffle->item_id = $request->item_id;
         $raffle->raffle_goal_amount = $request->raffle_goal_amount;

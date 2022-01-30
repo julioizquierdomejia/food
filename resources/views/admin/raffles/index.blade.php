@@ -18,10 +18,11 @@
             <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th >Producto</th>
+                    <th>Producto</th>
+                    <th >Cantidad Tickets</th>
+                    <th >Total Tickets</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
-                    {{-- <th >Cantidad Tickets</th> --}}
                     <th>Progreso</th>
                     <th style="width: 150px">Acciones</th>
                 </tr>
@@ -30,9 +31,10 @@
                 <tfoot>
                 <tr>
                     <th>Producto</th>
+                    <th >Cantidad Tickets</th>
+                    <th >Total Tickets</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
-                    {{-- <th>Cantidad Tickets</th> --}}
                     <th>Progreso</th>
                     <th style="width: 150px">Acciones</th>
                 </tr>
@@ -43,10 +45,16 @@
                         @foreach($raffles as $raffle)
                                 <tr style="cursor:move ;" data-id='{{ $raffle->id }}'>
                                     <td>{{ $raffle->item->name }}</td>
-                                    <td>{{ explode(' ', $raffle->start_date)[0] }}</td>
-                                    <td>{{ explode(' ', $raffle->end_date)[0] }}</td>
+
+                                    <td>{{ ($raffle->accumulate) }}</td>
+                                    <td>{{ ($raffle->raffle_goal_amount ) }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($raffle->start_date)->format('d-m-Y')}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($raffle->end_date)->format('d-m-Y')}}</td>
                                     {{-- <td>{{ $raffle->tickets_number }}</td> --}}
-                                    <td>{{ ($raffle->accumulate/$raffle->item->price)*.01 }} %</td>
+                                    <td class="text-right">
+                                        {{ $raffle->porcentaje }} %
+                                    </td>
+                                    {{--  <td>{{ ($raffle->accumulate/$raffle->item->price)*.01 }} %</td> --}}
                                     <td>
                                         <ul class="list-inline">
                                             <li class="list-inline-item">

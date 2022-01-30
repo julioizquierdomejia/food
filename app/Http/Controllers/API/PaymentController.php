@@ -23,8 +23,9 @@ class PaymentController extends Controller
     public function paymentCreate(Request $requet)
     {
         try {
-            $data = request()->json()->all();
+            
 
+            $data = request()->json()->all();
 
             $car = $data['car'];
             $price = $data['price'];
@@ -92,10 +93,12 @@ class PaymentController extends Controller
                     'vads_url_success' => $vads_url_success,
                     'vads_version' => $vads_version
                 );
+
                 foreach ($parameters_args as $params => $value) {
                     $signature .= $value . '+';
                     $postfield .= $params . "=" . $value . "&";
                 }
+                
                 $signature = $signature . $key;
                 $signature = base64_encode(hash_hmac('sha256', $signature, $key, true));
                 $parameters_args['signature'] = $signature;

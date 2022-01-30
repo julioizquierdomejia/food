@@ -26,7 +26,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {!! Form::myInput('number', 'raffle_goal_amount', 'Precio de Rifa:', ['required']) !!}
+                            {!! Form::myInput('number', 'raffle_goal_amount', 'Cantidad de Rifas:', ['required']) !!}
                             <div class="form-group">
                                 <label for="start_date">Fecha Inicio</label>
                                 <input type="date" name="start_date" id="start_date"

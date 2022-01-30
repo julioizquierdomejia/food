@@ -391,7 +391,10 @@ class AuthController extends Controller
                 $imageName = 'img_perfil/'.$imageName.'.png';
                 Storage::disk('public')->put($imageName, base64_decode($image)); //este Public se va al storage link
 
-                $imageName_path = 'https://larifa.bimbadigital.com/storage/'.$imageName;
+
+                $random = Str::random(10);
+
+                $imageName_path = 'https://larifa.bimbadigital.com/storage/'.$imageName.'?random='.$random;
 
                 $users->avatar = $imageName_path;
             endif;

@@ -42,6 +42,7 @@ class RaffleWinnersController extends Controller
         foreach ($raffles as $raffle) {
             $tickets = Ticket::where('raffle_id', $raffle->id)->get();
             $box = [];
+            
             foreach ($tickets as $ticket) {
                 $user_tickets = UserTicket::where('ticket_id', $ticket->id)->where('status','Success')->get();
                 if ($user_tickets) {
