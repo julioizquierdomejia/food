@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PruebasModel;
 use App\Models\Raffle;
 use App\Models\Ticket;
+use App\Models\Item;
 use App\Models\User;
 use App\Models\UserTicket;
 use App\Traits\ApiResponse;
@@ -23,7 +24,6 @@ class PaymentController extends Controller
     public function paymentCreate(Request $requet)
     {
         try {
-            
 
             $data = request()->json()->all();
 
@@ -33,16 +33,30 @@ class PaymentController extends Controller
 
 
             $user = User::where('id', $iduser)->get()->first();
+
             if ($user == null) {
                 return $this->errorResponse('No se encontro el usuario' . ' ' . $user, 400);
             }
+
             foreach ($car as $key) {
 
                 $raffle = Raffle::where('id', $key['raffle_id'])->get()->first();
+                
                 if ($raffle == null) {
                     return $this->errorResponse('No se encontro la rifa' . ' ' . $key['raffle_id'], 400);
                 }
             }
+
+            //************************************************************************************************************
+            //
+            // Author : {julio.izquierdo.mejia}
+            //
+            // Codigo recibo las compras Success y genera la cantidad de tikects comprados
+            //
+            //************************************************************************************************************
+
+            //recor
+
 
             $price = $price * 100;
 
@@ -50,8 +64,6 @@ class PaymentController extends Controller
             $order_id = Str::random(10);
             $username = "44623003";
             $password = "EP2x9duNcrlrK98x";
-
-
 
 
             if ($price) {
@@ -109,6 +121,7 @@ class PaymentController extends Controller
             } else {
                 return $this->errorResponse('Algun valor en la api no se envio correctamente.', 400);
             }
+            
             if ($res->status != "ERROR") {
                 foreach ($car as $key) {
 
@@ -116,6 +129,7 @@ class PaymentController extends Controller
                     $sell->user_id = $iduser;
                     $sell->raffles_id = $key['raffle_id'];
                     $sell->quantity = $key['amount'];
+                    
                     if ($res->status == "ERROR") {
                         $sell->status = 'failed';
                         $sell->oreder_id = $order_id;
@@ -125,6 +139,32 @@ class PaymentController extends Controller
                         $sell->oreder_id = $order_id;
                         $sell->save();
                     }
+
+
+                    // luego de que se registre la compra como registro unico en user ticket
+                    // vamos a registrar la cantidad de tickets que el usuario compro
+
+                    // 1ero vamos a obtener el costo de la rifa
+                    // para ello necesitamos el Id del Item
+
+                    $raffle = Raffle::where('id', $key['raffle_id'])->first();
+                    $item = Item::where('id', $raffle->item_id)->first();
+                    $precio = $item->price;
+                    $cantidad_tickets = $key['amount'] / $precio;
+
+                    
+                    for ($i=0; $i < $cantidad_tickets; $i++) { 
+                        $ticket = new Ticket();
+                        //$ticket->raffle_id = $raffle->id;
+                        $ticket->raffle_id = $sell->id;
+                        $ticket->quantity = 1;
+                        $ticket->price = $precio;
+
+                        $ticket->save();
+                    }
+                    
+
+
                 }
             }else{
                 return $this->successResponse([

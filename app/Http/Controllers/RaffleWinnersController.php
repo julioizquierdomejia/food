@@ -8,6 +8,8 @@ use App\Models\RaffleWinner;
 use App\Models\Ticket;
 use App\Models\UserTicket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class RaffleWinnersController extends Controller
 {
@@ -36,9 +38,59 @@ class RaffleWinnersController extends Controller
 
     public function raffleDraw($id)
     {
+
+        //traemos la rifa activa y verifamos que este activa
         $raffles = Raffle::where('status', '0')->get();
+
+        //ahora debemos traer los user_tickets que esten en status Success
+        $user_tickets = DB::table('user_tickets')
+                        ->where('raffles_id', $id)
+                        ->where('status', 'Success')
+                        ->join('tickets', 'user_tickets.id', '=', 'tickets.raffle_id')
+                        ->get();
+                        
+
         $winners = [];
 
+        $box = [];
+            
+        foreach ($user_tickets as $user_ticket) {
+            array_push($box, $user_ticket->user_id);
+        }
+
+        if (count($box) > 0) {
+            shuffle($box);
+            shuffle($box);
+            $winner_position = array_rand($box);
+            $winner_id = $box[$winner_position];
+
+            $raffle_result = Raffle::where('id', $id)->first();
+
+            //$raffle_result = Raffle::where('id', $raffle->id)->first();
+            $raffle_result->winner_id = $winner_id;
+            $raffle_result->status = 1;
+            $raffle_result->update();
+
+            
+            $raffle = RaffleWinner::create([
+                'user_id' => $winner_id,
+                //'raffle_id' => $raffle->id,
+                'raffle_id' => $id,
+                'banner' => 'default',
+                'win_date' => getFecha(),
+            ]);
+
+            
+            $winner = [
+                "raffle" => $raffle,
+                "winner_id" => $winner_id
+            ];
+
+            array_push($winners, $winner);
+        }
+
+        
+        /*
         foreach ($raffles as $raffle) {
             $tickets = Ticket::where('raffle_id', $raffle->id)->get();
             $box = [];
@@ -80,6 +132,8 @@ class RaffleWinnersController extends Controller
                 array_push($winners, $winner);
             }
         }
+        */
+
         $winners = RaffleWinner::with('user', 'raffle')->get();
         return view('admin.raffle_winners.index', compact('winners'));
     }

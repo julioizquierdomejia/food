@@ -18,6 +18,7 @@
             <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Producto</th>
                     <th >Cantidad Tickets</th>
                     <th >Total Tickets</th>
@@ -30,6 +31,7 @@
 
                 <tfoot>
                 <tr>
+                    <th>ID</th>
                     <th>Producto</th>
                     <th >Cantidad Tickets</th>
                     <th >Total Tickets</th>
@@ -44,6 +46,7 @@
                     {{-- Items here --}}
                         @foreach($raffles as $raffle)
                                 <tr style="cursor:move ;" data-id='{{ $raffle->id }}'>
+                                    <td>{{ $raffle->item->id }}</td>
                                     <td>{{ $raffle->item->name }}</td>
 
                                     <td>{{ ($raffle->accumulate) }}</td>
