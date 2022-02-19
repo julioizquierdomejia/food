@@ -40,7 +40,7 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 Route::group(['prefix' => 'home'], function () {
-    Route::get('getCountries', [HomeController::class, 'getCountries'])->middleware(['jwt.auth']);
+    Route::get('getCountries', [HomeController::class, 'getCountries']);
 
 });
 

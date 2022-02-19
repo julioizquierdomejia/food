@@ -18,7 +18,7 @@ class CreateCountriesTable extends Migration
 
             $table->string('name');
             $table->string('code');
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
 
             $table->timestamps();
         });

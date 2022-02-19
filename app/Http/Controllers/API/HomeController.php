@@ -230,7 +230,7 @@ class HomeController extends Controller
 
         return $this->successResponse([
             'status' => 200,
-            'raffles' => $countries,
+            'countries' => $countries,
         ]);
     }
 
