@@ -16,6 +16,7 @@ use App\Models\Carousel;
 use App\Models\Category;
 use App\Models\Raffle;
 use App\Models\Ticket;
+use App\Models\Item;
 use App\Models\RaffleFavorite;
 use App\Models\UserTicket;
 
@@ -63,13 +64,35 @@ class HomeController extends Controller
                 $tickets = UserTicket::where('raffles_id',$key->id)
                             ->where('status', 'Success')
                             ->sum('quantity');
-                            
                 
-                $acc = $key->raffle_goal_amount*$tickets;
-                $porcentaje = ($tickets*100)/$key->raffle_goal_amount;
+
+                $acc = $tickets/$key->item->price; //$key->raffle_goal_amount/$key->item->price;
+
+                //$porcentaje = ($tickets*100)/$key->raffle_goal_amount;
+                $porcentaje = ($acc*100)/$key->raffle_goal_amount;
+                $key['accumulate'] = $acc;
+                $porcentaje_rounded = round($porcentaje, 10);
+                $porcen = (String)$porcentaje;
+                $key['porcentaje'] = $porcen;
+
+                //$acc = $key->raffle_goal_amount; // cantidad de tikects comprados
+                
+                /*
+                $porcentaje = (($tickets*100)/$key->raffle_goal_amount);
                 $porcentaje = round($porcentaje,2);
                 $key['accumulate'] = $acc;
                 $key['porcentaje'] = $porcentaje;
+                */
+
+
+                //$porcentaje = ($acc*100)/$key->raffle_goal_amount;
+                //$porcentaje = $acc/$key->raffle_goal_amount;
+                //$cant_tikets = (int)$tickets;
+                //$porcentaje = $acc / $cant_tikets;
+                //$key['accumulate'] = $acc;
+                //$porcentaje_rounded = round($porcentaje, 2);
+                //$key['porcentaje'] = $porcentaje; //$porcentaje_rounded;
+
             }
 
             for ($i = 0; $i < count($raffles); $i++ ) {
@@ -145,6 +168,20 @@ class HomeController extends Controller
                 $favorite != null ? $raffles[$i]['favorite'] = true : $raffles[$i]['favorite'] = false;
             }
 
+            foreach ($raffles as $key) {
+                $tickets = UserTicket::where('raffles_id',$key->id)
+                            ->where('status', 'Success')
+                            ->sum('quantity');
+                            
+                
+                $acc = $key->raffle_goal_amount*$tickets;
+                $porcentaje = ($tickets*100)/$key->raffle_goal_amount;
+                $porcentaje = round($porcentaje,10);
+                $key['accumulate'] = $acc;
+                $porcen = (String)$porcentaje;
+                $key['porcentaje'] = $porcen;
+            }
+
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 400);
         }
@@ -184,8 +221,20 @@ class HomeController extends Controller
             ->join('raffle_winners','raffle_winners.raffle_id','=','raffles.id')
             ->join('users','raffles.winner_id','=','users.id')
             ->where('winner_id','!=',null)
-            ->where('raffle_winners.banner','!=','default')
+            //->where('raffle_winners.banner','!=','default')
             ->get();
+
+            foreach ($raffles as $key) {
+                //return $key['item_id']; 
+                $nombre_producto = Item::find($key['item_id']);
+                $key['name'] = $nombre_producto->name;
+
+                $nombre_user = User::find($key['winner_id']);
+                $key['name_winner'] = $nombre_user->name;
+                
+
+            };
+
 
 
         } catch (\Exception $exception) {
@@ -241,11 +290,29 @@ class HomeController extends Controller
             $tickets = UserTicket::where('raffles_id',$raffles->id)
                         ->where('status', 'Success')
                         ->sum('quantity');
-            //$acc = $raffles->raffle_goal_amount*$tickets;
-            $acc = $raffles->raffle_goal_amount*$tickets;
+
+            $acc = $raffles->raffle_goal_amount; //
             $raffles['accumulate'] = $acc;
-            $porcentaje = ($tickets*100)/$raffles->raffle_goal_amount;
-            $raffles['porcentaje'] = $porcentaje;
+            $porcent = ($tickets * 100) / $acc ;
+            $porcent_round = round($porcent, 10);
+            $porcent_string = (String)$porcent_round;
+            $raffles['porcentaje'] = $porcent_string;
+
+            //$acc = $raffles->raffle_goal_amount*$tickets;
+            //$acc = $raffles->raffle_goal_amount/$tickets;
+            //$raffles['accumulate'] = $acc;
+            //$porcentaje = ($tickets*100)/$raffles->raffle_goal_amount;
+            //$porcentaje_rounded = round($porcentaje, 2);
+            //$raffles['porcentaje'] = $porcentaje_rounded;
+
+            /*
+            $porcentaje = ($acc*100)/$raffles->raffle_goal_amount;
+            $raffles['accumulate'] = $acc;
+            $porcentaje_rounded = round($porcentaje, 2);
+            $divido = $porcentaje_rounded/100;
+            $redondeado = round($divido, 2);
+            $raffles['porcentaje'] = $redondeado;
+            */
 
 
             $favorite = RaffleFavorite::where('raffle_id',$id_raffle)
@@ -304,9 +371,10 @@ class HomeController extends Controller
                 
                 $acc = $key->raffle_goal_amount*$tickets;
                 $porcentaje = ($tickets*100)/$key->raffle_goal_amount;
-                $porcentaje = round($porcentaje,2);
+                $porcentaje = round($porcentaje,10);
                 $key['accumulate'] = $acc;
-                $key['porcentaje'] = $porcentaje;
+                $porcen = (String)$porcentaje;
+                $key['porcentaje'] = $porcen;
             }
 
 
@@ -489,14 +557,18 @@ class HomeController extends Controller
 
         $idOrder = $request->order_id;
 
+
         try{
             
             $raffles = UserTicket::where('user_tickets.user_id',auth()->guard('api')->user()->id)
                         ->where('oreder_id',$idOrder)
-                        ->first();
+                        ->get();
 
-            $raffles->status = 'Success';
-            $raffles->update();
+            foreach ($raffles as $key) {
+                $key->status = 'Success';
+                $key->update();
+            }
+            
             
 
         }catch (\Exception $exception) {

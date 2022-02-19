@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'email', 'password', 'avatar', 'bio', 'role','token','device_token','reset_token','phone','active'
+        'id', 'name', 'email', 'password', 'avatar', 'bio', 'role','token','device_token','reset_token','phone','active', 'dni'
     ];
 
     /**
@@ -104,4 +104,26 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function countries(){
+        return $this->belongsToMany('App\Models\Country')->withPivot('country_id');
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

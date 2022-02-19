@@ -57,29 +57,104 @@ class AuthController extends Controller
      *     deprecated=false
      * )
      */
-    public function login(Request $request)
+    public function mobile(Request $request)
     {
+
         try {
             $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required|string|min:5'
+                'phone' => 'required',
+                'country_id' => 'required',
+                //'email' => 'required|email',
+                //'password' => 'required|string|min:5'
             ], [
-                'email.required' => 'Correo electrónico es un campo requerido',
-                'email.email' => 'Correo electrónico invalido',
-                'password.required' => 'Contraseña es un campo requerido',
-                'password.min' => 'Mínimo de caracteres no válido {5}',
+                'phone.required' => 'El telefono es un campo obligatorio',
+                'country_id.required' => 'El codigo del pais es un campo obligatorio',
+                //'email.required' => 'Correo electrónico es un campo requerido',
+                //'email.email' => 'Correo electrónico invalido',
+                //'password.required' => 'Contraseña es un campo requerido',
+                //'password.min' => 'Mínimo de caracteres no válido {5}',
             ]);
 
             if ($validator->fails()) {
                 return $this->errorResponse($validator->errors()->first(), 400);
             }
 
+            $infoUsers = User::where('phone', $request->get('phone'))->get()->first();
+            //$pais_id = $infoUsers->countries[0]->id;
+            if ($infoUsers == null) {
+                return $this->errorResponse('Lo sentimos el numero de telefono no existe en nuestro sistema.', 400);
+            }
+
+            $usuario_id = $infoUsers->id;
+
+            $pais_id = $request->get('country_id');
+
+            $result = DB::table('country_user')
+                        ->where('country_id', $pais_id)
+                        ->where('user_id', $usuario_id)
+                        ->first();
+
+            if ($result){
+                return $this->successResponse([
+                    'msg' => 'Los datos coinciden',
+                    'user' => $result,
+                    'login' => true,
+                ]);
+                
+            }else{
+                return $this->successResponse([
+                    'msg' => 'El País seleccionado no coincide con el Telefono registrado',
+                ]);
+            }
+
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+    }
+
+    public function login(Request $request)
+    {
+
+        try {
+            $validator = Validator::make($request->all(), [
+                'phone' => 'required',
+                //'country_id' => 'required',
+                //'email' => 'required|email',
+                //'password' => 'required|string|min:5'
+            ], [
+                'phone.required' => 'El telefono es un campo obligatorio',
+                //'country_id.required' => 'El codigo del pais es un campo obligatorio',
+                //'email.required' => 'Correo electrónico es un campo requerido',
+                //'email.email' => 'Correo electrónico invalido',
+                //'password.required' => 'Contraseña es un campo requerido',
+                //'password.min' => 'Mínimo de caracteres no válido {5}',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse($validator->errors()->first(), 400);
+            }
+
+            /*
             $infoUsers = User::where('email', $request->get('email'))->get()->first();
             if ($infoUsers == null) {
                 return $this->errorResponse('Lo sentimos su usuario no existe en el sistema.', 400);
             }
+            */
 
-            $credencial = array('email' => $infoUsers->email, 'password' => $request->get('password'));
+            //return $request->get('country_id');
+
+            $infoUsers = User::where('phone', $request->get('phone'))->get()->first();
+            //$infoPais = $infoUsers->countries[0]->id;
+
+            if ($infoUsers == null) {
+                return $this->errorResponse('Lo sentimos su usuario no existe en el sistema.', 400);
+            }
+
+
+            $password_email = bcrypt($request->get('phone'));
+
+            //$credencial = array('email' => $infoUsers->email, 'password' => $request->get('password'));
+            $credencial = array('email' => $infoUsers->email, 'password' => $request->get('phone'));
 
             if (!$token = auth()->guard('api')->attempt($credencial)) {
                 return $this->errorResponse('Contraseña incorrecta', 400);
@@ -191,18 +266,30 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+
+        $code_pais = [];
+        array_push($code_pais, (int)$request->get('country_id'));
+
+
         try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'name' => 'required|string|min:3',
-                'password' => 'required|min:5',
+                'phone' => 'required|unique:users',
+                'dni' => 'required|unique:users',
+                'country_id' => 'required',
+                //'password' => 'required|min:5',
             ], [
                 'email.required' => 'Correo electrónico es un campo requerido',
                 'email.email' => 'Correo electrónico invalido',
                 'name.required' => 'Nombre es un campo requerido',
                 'name.min' => 'Mínimo de caracteres no válido {name}',
-                'password.required' => 'Contraseña es un campo requerido',
-                'password.min' => 'Contraseña es demasiado corta',
+                'dni.required' => 'El Documento de identidad es obligatorio',
+                'phone.required' => 'El Telefono es obligatorio',
+                'phone.unique' => 'El Telefono ya existe',
+                'dni.unique' => 'El DNI ya existe',
+                //'password.required' => 'Contraseña es un campo requerido',
+                //'password.min' => 'Contraseña es demasiado corta',
             ]);
 
             if ($validator->fails()) {
@@ -223,10 +310,15 @@ class AuthController extends Controller
                 $users->avatar = "images/users/" . $name;
             }
             $users->email = $request->get('email');
-            $users->password = Hash::make($request->get('password'));
+            //$users->password = Hash::make($request->get('password'));
+            $users->password = Hash::make($request->get('phone'));
             $users->name = $request->get('name');
+            $users->phone = $request->get('phone');
+            $users->dni = $request->get('dni');
             $users->role = 2;
             $users->save();
+
+            $users->countries()->sync($code_pais);
 
 
             return $this->createResponse([

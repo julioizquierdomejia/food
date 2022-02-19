@@ -20,7 +20,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Producto</th>
-                    <th >Cantidad Tickets</th>
+                    <th >Tickets vendidos</th>
                     <th >Total Tickets</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
@@ -33,7 +33,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Producto</th>
-                    <th >Cantidad Tickets</th>
+                    <th >Tickets vendidos</th>
                     <th >Total Tickets</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>

@@ -9,7 +9,11 @@ Auth::routes();
 |------------------------------------------------------------------------------------
 */
 Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', 'Role:10']], function () {
+
+    Route::get('/', 'DashboardController@index')->name('dash');
 //    Route::get('/', 'DashboardController@index')->name('dash');
+    
+/*
     Route::get('/', 'RaffleWinnersController@index')->name('dash');
     Route::resource('users', 'UserController');
     Route::resource('carousel', 'CarouselController');
@@ -17,18 +21,21 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('items', 'ItemsController');
     Route::resource('raffles', 'RafflesController');
     Route::resource('sales', 'SalesController');
-
+*/
     //Para re ordenar rifas
-    Route::post('reorder_raffles', [App\Http\Controllers\RafflesController::class, 'update_order_raffles'])->name('reorder');
+    //Route::post('reorder_raffles', [App\Http\Controllers\RafflesController::class, 'update_order_raffles'])->name('reorder');
 
-    Route::get('winner/{id}', 'RaffleWinnersController@raffleDraw')->name('getwinner');
-    Route::post('winner', 'RaffleWinnersController@uploadPhoto')->name('photowinner');
+    //Route::get('winner/{id}', 'RaffleWinnersController@raffleDraw')->name('getwinner');
+    //Route::post('winner', 'RaffleWinnersController@uploadPhoto')->name('photowinner');
     /**
      * Notifications
      */
+
+    /*
     Route::resource('notifications', 'NotificationsController');
     Route::post('notify', 'NotificationsController@notify')
         ->name('notifications.notify');
+    */
 
 
 });
