@@ -31,6 +31,8 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'users'], function () {
+    Route::get('/countries', [HomeController::class, 'getCountries'])->middleware(['jwt.auth']);
+
     Route::put('/{id_user}', [AuthController::class, 'update'])->middleware(['jwt.auth']);
     Route::post('/favorites', [HomeController::class, 'NewFavorite'])->middleware(['jwt.auth']);
     Route::delete('/favorites/{$id_raffle}', [HomeController::class, 'DeleteFavorite'])->middleware(['jwt.auth']);

@@ -116,6 +116,7 @@ class AuthController extends Controller
     {
 
         try {
+
             $validator = Validator::make($request->all(), [
                 'phone' => 'required',
                 //'country_id' => 'required',

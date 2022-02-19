@@ -20,6 +20,8 @@ use App\Models\Item;
 use App\Models\RaffleFavorite;
 use App\Models\UserTicket;
 
+use App\Models\Country;
+
 class HomeController extends Controller
 {
     use ApiResponse;
@@ -214,6 +216,25 @@ class HomeController extends Controller
      *
      * )
      */
+
+    
+    public function getCountries()
+    {
+        try {
+            $countries = Country::where('status',1)->get();
+
+
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+        return $this->successResponse([
+            'status' => 200,
+            'raffles' => $countries,
+        ]);
+    }
+
+    /*
     public function winners()
     {
         try {
@@ -246,6 +267,7 @@ class HomeController extends Controller
             'raffles' => $raffles,
         ]);
     }
+    */
 
     /**
      * @OA\Get(
