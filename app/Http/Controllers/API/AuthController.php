@@ -11,9 +11,16 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
+
+//models
+use App\Models\User;
+use App\Models\Register;
+use App\Models\Jim;
+use App\Models\Point;
+use App\Models\Activity;
+
 
 
 class AuthController extends Controller
@@ -268,6 +275,9 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
+        //obtenemos de DB el valor de cada Punto Jim
+        $jim = Jim::all()->first();
+
         $code_pais = [];
         array_push($code_pais, (int)$request->get('country_id'));
 
@@ -292,6 +302,7 @@ class AuthController extends Controller
                 //'password.required' => 'Contraseña es un campo requerido',
                 //'password.min' => 'Contraseña es demasiado corta',
             ]);
+
 
             if ($validator->fails()) {
                 return $this->errorResponse($validator->errors()->first(), 400);
@@ -320,6 +331,28 @@ class AuthController extends Controller
             $users->save();
 
             $users->countries()->sync($code_pais);
+
+            //Regla de negocio
+            //al registrase X REGISTRARTE EN LA APP JIMBO X UNICA  VEZ GANA $0.4, pero se le brinda en puntos.
+            //Registramos la primera actividad del usuario
+            $actividad = New Activity();
+            $actividad->activity = 'registro';
+            $actividad->motive = 'registro_inicial';
+            $actividad->source = 'self';
+            $actividad->source = 'registro_inicial';
+            $actividad->modality = 'directa';
+            $actividad->user_id = $users->id;
+
+            $actividad->save();
+
+            //registramos los puntos iniciales
+            $puntos = New Point();
+            $puntos->valor_jim = 40;
+            $puntos->valor_us = $jim->valor * 4;
+            $puntos->activity_id = $actividad->id;
+
+            $puntos->save();
+            
 
 
             return $this->createResponse([

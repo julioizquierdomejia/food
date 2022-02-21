@@ -108,6 +108,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany('App\Models\Country')->withPivot('country_id');
     }
 
+    public function activities(){
+        return $this->hasMany('App\Models\Activity');
+    }
+
 
 }
 

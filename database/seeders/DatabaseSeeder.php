@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(users::class);
         $this->call(CountrySeeder::class);
+        $this->call(JimSeeder::class);
         
 
         if (config('variables.WITH_FAKER')) {
