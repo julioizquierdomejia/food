@@ -1,12 +1,12 @@
 <?php
 
-
-
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\HomeController;
 use App\Http\Controllers\API\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\PointController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +31,8 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'users'], function () {
+
+    Route::post('getPoints', [PointController::class, 'getPoints'])->middleware(['jwt.auth']);
 
     Route::put('/{id_user}', [AuthController::class, 'update'])->middleware(['jwt.auth']);
     Route::post('/favorites', [HomeController::class, 'NewFavorite'])->middleware(['jwt.auth']);
