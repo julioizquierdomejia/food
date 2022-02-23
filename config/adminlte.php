@@ -229,7 +229,7 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',
@@ -237,28 +237,34 @@ return [
         ],
 
         // Sidebar items:
+        /*
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+        */
+        ['header' => 'MANTENDORES'],
+        /*
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
+        */
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
+            'text' => 'Ofertas',
+            'url'  => 'admin/offer',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'        => 'Sorteos',
+            'url'         => 'admin/raffle',
             'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
+            //'label'       => 4,
             'label_color' => 'success',
         ],
         ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
+        
         [
             'text' => 'change_password',
             'url'  => 'admin/settings',

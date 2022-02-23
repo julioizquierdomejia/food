@@ -10,6 +10,7 @@ class Jim extends Model
     use HasFactory;
 
     protected $fillable = [];
+    protected $guarded = [];
 
     /*
     |------------------------------------------------------------------------------------

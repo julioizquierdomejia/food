@@ -3,6 +3,9 @@
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Auth::routes();
 
+//
+//use App\Http\Offercontroller;
+
 /*
 |------------------------------------------------------------------------------------
 | Admin
@@ -11,6 +14,8 @@ Auth::routes();
 Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', 'Role:10']], function () {
 
     Route::get('/', 'DashboardController@index')->name('dash');
+    Route::resource('offer', Offercontroller::class);
+    Route::resource('raffle', RaffleController::class);
 //    Route::get('/', 'DashboardController@index')->name('dash');
     
 /*

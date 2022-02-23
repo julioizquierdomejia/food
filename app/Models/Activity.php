@@ -9,6 +9,7 @@ class Activity extends Model
 {
     use HasFactory;
 
+    /*
     protected $fillable = [
         'user_id',
         'activity',
@@ -18,6 +19,9 @@ class Activity extends Model
         'user_id_child',
         'status'
     ];
+    */
+
+    protected $guarded = [];
 
     /*
     |------------------------------------------------------------------------------------

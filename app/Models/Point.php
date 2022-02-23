@@ -9,11 +9,15 @@ class Point extends Model
 {
     use HasFactory;
 
+    /*
     protected $fillable = [
         'activity',
         'valor_jim',
         'valor_us',        
     ];
+    */
+
+    protected $guarded = [];
 
     /*
     |------------------------------------------------------------------------------------

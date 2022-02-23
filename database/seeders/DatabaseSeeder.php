@@ -17,12 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(users::class);
         $this->call(CountrySeeder::class);
         $this->call(JimSeeder::class);
+        $this->call(RaffleSeeder::class);
+        $this->call(OfferSeeder::class);
         
-
-        if (config('variables.WITH_FAKER')) {
-            // FAKE data
-        }
-
-        DB::unprepared(file_get_contents(__dir__ . '/categories.sql'));
     }
 }

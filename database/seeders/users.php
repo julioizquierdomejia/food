@@ -15,33 +15,18 @@ class users extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
-        
-        $data = [];
-        
-        for ($i = 1; $i <= 1 ; $i++) {
-            array_push($data, [
-                'name'     => 'Administrador',
-                'email'    => 'admin@gmail.com',
-                'phone'    => '998913140',
-                'dni'    => '06813928',
-                'password' => bcrypt('998913140'),
-                'role'     => 10,
-                'bio'      => $faker->realText(),
-            ]);
-        }
 
-        /*
-        for ($i = 1; $i <= 10 ; $i++) {
-            array_push($data, [
-                'name'     => $faker->name(),
-                'email'    => $faker->email,
-                'password' => bcrypt('123456'),
-                'role'     => 0,
-                'bio'      => $faker->realText(),
-            ]);
-        }
-        */
+        $user = new User;
+        $user->name = 'Administrador';
+        $user->email        = 'admin@gmail.com';
+        $user->phone        = '998913140';
+        $user->dni          = '06813928';
+        $user->password     = bcrypt('998913140');
+        $user->role         = 10;
+        $user->bio          = $faker->realText();
+
+        $user->save();
         
-        User::insert($data);
+        
     }
 }
