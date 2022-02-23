@@ -30,6 +30,11 @@ class Offer extends Model
     |------------------------------------------------------------------------------------
     */
 
+    //relacion muchos a muchos
+    public function raffles(){
+        return $this->belongsToMany('App\Models\Raffle');
+    }
+
     /*
     |------------------------------------------------------------------------------------
     | Scopes

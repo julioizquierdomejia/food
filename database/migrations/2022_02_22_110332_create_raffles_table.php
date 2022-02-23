@@ -22,9 +22,9 @@ class CreateRafflesTable extends Migration
             $table->string('uri_image')->nullable();
             $table->string('name_image')->nullable();
 
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->date('income_limit')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+            $table->dateTime('income_limit')->nullable();
 
             $table->boolean('status')->default(1);
 

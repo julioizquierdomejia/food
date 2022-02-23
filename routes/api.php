@@ -47,6 +47,8 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('getCountries', [HomeController::class, 'getCountries']);
+    Route::get('getRaffles', [HomeController::class, 'getRaffles']);
+    Route::get('getOffer', [HomeController::class, 'getOffer']);
 
 });
 

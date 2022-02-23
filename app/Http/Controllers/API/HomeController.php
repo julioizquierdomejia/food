@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Carousel;
 use App\Models\Category;
 use App\Models\Raffle;
+use App\Models\Offer;
 use App\Models\Ticket;
 use App\Models\Item;
 use App\Models\RaffleFavorite;
@@ -231,6 +232,49 @@ class HomeController extends Controller
         return $this->successResponse([
             'status' => 200,
             'countries' => $countries,
+        ]);
+    }
+
+    public function getRaffles()
+    {
+        try {
+            $sorteos = Raffle::where('status',1)->get();
+
+            //recorremos para recoger las ofertas de cada rifa
+            foreach ($sorteos as $key => $sorteo) {
+                // code...
+                
+                //array_push($ofertas, $sorteo->offers->name);
+                $sorteo->offers;
+                $sorteo = json_encode($sorteo);
+
+            }
+
+
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+        return $this->successResponse([
+            'status' => 200,
+            'sorteos' => $sorteos,
+        ]);
+    }
+
+    
+    public function getOffer()
+    {
+        try {
+            $ofertas = Offer::where('status',1)->get();
+
+
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+        return $this->successResponse([
+            'status' => 200,
+            'ofertas' => $sorteo,
         ]);
     }
 

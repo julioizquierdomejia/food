@@ -18,7 +18,7 @@
 	
 
 
-		<form action="{{ route('admin.raffle.store') }}" method="POST" enctype="multipart form-data">
+		<form action="{{ route('admin.raffle.store') }}" method="POST" enctype="multipart/form-data">
 			@csrf
 			
 			<div class="row">
@@ -94,10 +94,12 @@
 								<div class="form-group col-md-12">
 									<label for="name">Elegir Ofertas</label>
 
+									<input type="text" name="ofertas_array" id="ofertas">
+
 									@foreach($ofertas as $oferta)
 										<div class="btn-group-toggle mb-2">
 											<label class="btn btn-secondary">
-												<input type="checkbox" id="{{ $oferta->id }}" class="checkBox"> {{ $oferta->name }}
+												<input type="checkbox" id="{{ $oferta->id }}" class="checkBox" name="ofertas[]"> {{ $oferta->name }}
 												<i class="far fa-check-circle ml-2 d-none"></i> 
 											</label>
 										</div>
@@ -164,26 +166,61 @@
         });
 
         //revisar el ezstado de mi CheckBox
+        ids_array = []
 		$(".checkBox").change(function() {
+
+			me = $(this);
 
 			if ($(this).is(':checked')) {
 				$(this).parent().addClass('bg-warning');	
 				$(this).parent().removeClass('bg-secondary');
 
-				//para el iconito
-				$(this).parent().$('i').addClass('d-block')
-				$(this).parent().$('i').removeClass('d-none')
+				ids_array.push($(this).attr('id'))
+				$('#ofertas').val(ids_array);
+
 
 			}else{
 				$(this).parent().addClass('bg-secondary');	
 				$(this).parent().removeClass('bg-warning');
 
-				//para el iconito
-				$(this).parent().$('i').addClass('d-none')
-				$(this).parent().$('i').removeClass('d-block')
+				ids_array.forEach(function(attr, index, object) {
+					if(attr === me.attr('id')){
+						ids_array.splice(index, 1);
+						$('#ofertas').val(ids_array);
+					}
+				});
 			}
 			
 		});
+
+		//sistema de seleccionador de attributos
+		/*
+		$('.btn-checkBox').click(function(){
+
+
+
+			me = $(this)
+
+			if($(this).is(':checked')){
+				console.log('has chekeado' + $(this).attr('id'))
+				ids_array.push($(this).attr('id'))
+				$('#ofertas').val(ids_array);
+			}else{
+				//console.log('has quitado el check' + $(this).attr('id'))
+				ids_array.forEach(function(attr, index, object) {
+					if(attr === me.attr('id')){
+						ids_array.splice(index, 1);
+						$('#ofertas').val(ids_array);
+					}
+				});
+			}
+
+
+			//$('.idAttr').val('hola');
+		})
+		*/
+
+
     </script>
 @stop
 

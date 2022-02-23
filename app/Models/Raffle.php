@@ -29,6 +29,10 @@ class Raffle extends Model
     | Relations
     |------------------------------------------------------------------------------------
     */
+    //relacion muchos a muchos
+    public function offers(){
+        return $this->belongsToMany('App\Models\Offer');
+    }
 
     /*
     |------------------------------------------------------------------------------------

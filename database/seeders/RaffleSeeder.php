@@ -15,10 +15,12 @@ class RaffleSeeder extends Seeder
     public function run()
     {
         //
+        /*
         $rifa = new Raffle();
         $rifa->name = 'Rifa 1';
         $rifa->description = 'Lorem, Lorem, Lorem, Lorem, Lorem, Lorem';
 
         $rifa->save();
+        */
     }
 }
