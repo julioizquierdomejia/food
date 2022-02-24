@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PointController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,8 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'users'], function () {
 
     Route::post('getPoints', [PointController::class, 'getPoints'])->middleware(['jwt.auth']);
+    Route::post('add_favorite', [FavoriteController::class, 'store'])->middleware(['jwt.auth']);
+    Route::delete('remove_favorite', [FavoriteController::class, 'destroy'])->middleware(['jwt.auth']);
 
     /*
     Route::put('/{id_user}', [AuthController::class, 'update'])->middleware(['jwt.auth']);
@@ -47,7 +50,7 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('getCountries', [HomeController::class, 'getCountries']);
-    Route::get('getRaffles', [HomeController::class, 'getRaffles']);
+    Route::get('getRaffles', [HomeController::class, 'getRaffles'])->middleware(['jwt.auth']);
     Route::get('getOffer', [HomeController::class, 'getOffer']);
 
 });

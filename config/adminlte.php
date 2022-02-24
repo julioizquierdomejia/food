@@ -252,16 +252,21 @@ return [
         ],
         */
         [
-            'text' => 'Ofertas',
-            'url'  => 'admin/offer',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
             'text'        => 'Sorteos',
             'url'         => 'admin/raffle',
             'icon'        => 'far fa-fw fa-file',
             //'label'       => 4,
             'label_color' => 'success',
+        ],
+        [
+            'text' => 'Ofertas',
+            'url'  => 'admin/offer',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Slider',
+            'url'  => 'admin/slider',
+            'icon' => 'far fa-images',
         ],
         ['header' => 'account_settings'],
         

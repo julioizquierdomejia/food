@@ -16,6 +16,7 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::get('/', 'DashboardController@index')->name('dash');
     Route::resource('offer', Offercontroller::class);
     Route::resource('raffle', RaffleController::class);
+    Route::resource('slider', SliderController::class);
 //    Route::get('/', 'DashboardController@index')->name('dash');
     
 /*

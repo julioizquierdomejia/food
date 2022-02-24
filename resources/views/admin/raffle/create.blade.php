@@ -34,30 +34,54 @@
 									@enderror
 								</div>
 
+								<div class="form-group col-md-4">
+									<label for="prize">Premio</label>
+									<input type="number" class="form-control" name='prize' placeholder="Ingresar monto del Premio" value="{{ old('prize') }}">
+									@error('prize')
+										<div><small class="text-danger">* {{ $message }}</small></div>
+									@enderror
+								</div>
+
+								<div class="form-group col-md-4">
+									<label for="goal">Meta</label>
+									<input type="number" class="form-control" name='goal' placeholder="Ingresar Meta en US$" value="{{ old('goal') }}">
+									@error('goal')
+										<div><small class="text-danger">* {{ $message }}</small></div>
+									@enderror
+								</div>
+
+							</div>
+
+							<div class="form-row">
 								<div class="form-group col-md-8">
 									<label for="image">Imagen del Sorteo</label>
 									<div class="input-group mb-3">
-										
 										<div class="custom-file">
 											<input type="file" class="custom-file-input" id="image_sorteo" aria-describedby="inputGroupFileAddon03" name="image">
-											<label class="custom-file-label" for="image">Elegir imagen</label>
+											<label class="custom-file-label" for="image">{{ old('image', 'Elegir Imagen') }}</label>
 										</div>
 									</div>
+									@error('image')
+										<div><small class="text-danger">* {{ $message }}</small></div>
+									@enderror
 								</div>
 							</div>
 
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label for="cost_us">Fecha de inicio</label>
-									<textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+									<label for="cost_us">Descripción</label>
+									<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="description">{{ old('description') }}</textarea>
 								</div>
+								@error('description')
+									<div><small class="text-danger">* {{ $message }}</small></div>
+								@enderror
 							</div>
 
 							<div class="form-row">
 								<div class="form-group col-md-4">
 									<label for="start_date">Fecha de inicio</label>
 									<div class="input-group date">
-										<input id="datepicker1" width="276" name="start_date" />
+										<input id="datepicker1" width="276" name="start_date" value="{{ old('start_date') }}" />
 										@error('start_date')
 											<div><small class="text-danger">* {{ $message }}</small></div>
 										@enderror
@@ -66,7 +90,7 @@
 
 								<div class="form-group col-md-4">
 									<label for="income_limit">Fecha Limite</label>
-									<input id="datepicker2" width="276" name="income_limit" />
+									<input id="datepicker2" width="276" name="income_limit" value="{{ old('income_limit') }}" />
 									<!--input type="number" class="form-control" name='cost_us' placeholder="Costo de la oferta"-->
 									@error('income_limit')
 										<div><small class="text-danger">* {{ $message }}</small></div>
@@ -75,7 +99,7 @@
 
 								<div class="form-group col-md-4">
 									<label for="end_date">Fecha de Finalizado</label>
-									<input id="datepicker3" width="276" name="end_date" />
+									<input id="datepicker3" width="276" name="end_date" value="{{ old('end_date') }}" />
 									<!--input type="number" class="form-control" name='cant' placeholder="Cantidad de Rifas"-->
 									@error('end_date')
 										<div><small class="text-danger">* {{ $message }}</small></div>
@@ -94,7 +118,12 @@
 								<div class="form-group col-md-12">
 									<label for="name">Elegir Ofertas</label>
 
-									<input type="text" name="ofertas_array" id="ofertas">
+									<input type="hidden" name="ofertas_array" id="ofertas">
+									
+									@error('ofertas_array')
+										<div><small class="text-danger">* {{ $message }}</small></div>
+									@enderror
+
 
 									@foreach($ofertas as $oferta)
 										<div class="btn-group-toggle mb-2">

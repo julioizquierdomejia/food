@@ -17,7 +17,11 @@ class CreateRafflesTable extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
+
+            $table->double('prize', 12, 2)->nullable();
+            $table->double('goal', 12, 2)->nullable();
+            
 
             $table->string('uri_image')->nullable();
             $table->string('name_image')->nullable();

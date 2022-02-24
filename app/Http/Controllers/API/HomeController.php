@@ -15,6 +15,8 @@ use App\Models\User;
 use App\Models\Carousel;
 use App\Models\Category;
 use App\Models\Raffle;
+use App\Models\Slider;
+use App\Models\Favorite;
 use App\Models\Offer;
 use App\Models\Ticket;
 use App\Models\Item;
@@ -235,16 +237,31 @@ class HomeController extends Controller
         ]);
     }
 
-    public function getRaffles()
+    public function getRaffles(Request $request)
     {
         try {
+
+            $id_user = $request->user_id;
+
+            $slider = Slider::where('status',1)->get();
             $sorteos = Raffle::where('status',1)->get();
+
+            $favoritos = Favorite::all();
 
             //recorremos para recoger las ofertas de cada rifa
             foreach ($sorteos as $key => $sorteo) {
-                // code...
+
+                foreach($favoritos as $key => $favorito){
+                    $id_table = $favorito->user_id . $favorito->raffle_id;
+                    $id_current = $id_user . $sorteo->id;
+                    if ($id_table == $id_current) {
+                        $sorteo['favorito'] = 'true';
+                    }else{
+                        $sorteo['favorito'] = 'false';
+                    }
                 
-                //array_push($ofertas, $sorteo->offers->name);
+                }
+
                 $sorteo->offers;
                 $sorteo = json_encode($sorteo);
 
@@ -257,6 +274,7 @@ class HomeController extends Controller
 
         return $this->successResponse([
             'status' => 200,
+            'slider' => $slider,
             'sorteos' => $sorteos,
         ]);
     }

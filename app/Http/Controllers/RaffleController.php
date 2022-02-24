@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRaffleRequest;
+
 use App\Models\Raffle;
 use App\Models\Offer;
 use Illuminate\Http\Request;
@@ -38,7 +40,6 @@ class RaffleController extends Controller
 
         $ofertas = Offer::where('status', 1)->get();;
 
-
         return view('admin.raffle.create', compact('ofertas'));
     }
 
@@ -48,14 +49,12 @@ class RaffleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRaffleRequest $request)
     {
         //
-        $at = $request->ofertas_array;
 
-        $request->validate([
-            'name' => 'required'
-        ]);
+        
+        $at = $request->ofertas_array;
 
         $sorteo = new Raffle();
 
@@ -88,6 +87,9 @@ class RaffleController extends Controller
         $sorteo->start_date = $fecha_inicio;
         $sorteo->end_date = $fecha_final;
         $sorteo->income_limit = $fecha_limite;
+
+        $sorteo->prize = $request->prize;
+        $sorteo->goal = $request->goal;
 
         $sorteo->save();
 
