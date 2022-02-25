@@ -23,7 +23,7 @@ class users extends Seeder
         $user->dni          = '06813928';
         $user->password     = bcrypt('998913140');
         $user->role         = 10;
-        $user->bio          = $faker->realText();
+        //$user->bio          = $faker->realText();
 
         $user->save();
         
