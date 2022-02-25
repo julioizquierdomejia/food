@@ -21,11 +21,11 @@
     </div>
     <div class="card card-primary">
         <div class="card-body">
-            <div class="row row-cols-1 row-cols-md-12">
-                
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <div class="row row-cols-1 row-cols-md-12 px-3 py-4">
+                <table id="table_index" class="table table-striped table-bordered display" style="width:100%">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>DNI</th>
@@ -34,6 +34,7 @@
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>DNI</th>
@@ -43,10 +44,10 @@
                     <tbody>
                         @foreach($usuarios as $usuario)
                             <tr>
+                                <td>{{ $usuario->id }}</td>
                                 <td>{{ $usuario->name }}</td>
                                 <td>{{ $usuario->email }}</td>
                                 <td>{{ $usuario->dni }}</td>
-                                <td>{{ $usuario->name }}</td>
                                 <td>
                                     <a href="{{ route('admin.users.edit', $usuario) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
 
@@ -70,13 +71,20 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+
+    <!-- Styles para Data Tabale repsonsive con Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+
 @stop
 
 @section('js')
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 
     <script> 
+        
 
         /*
         Swal.fire({

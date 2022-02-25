@@ -18,7 +18,7 @@
 
 	<div class="card">
 		<div class="card-body">
-			<table id="example" class="table table-striped table-bordered" style="width:100%">
+			<table id="table_index" class="table table-striped table-bordered" style="width:100%">
 		        <thead>
 		            <tr>
 		                <th>Sorteo</th>

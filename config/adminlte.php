@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Jimbo</b>SORTEOS',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -244,13 +244,6 @@ return [
         ],
         */
         ['header' => 'MANTENDORES'],
-        /*
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        */
         [
             'text' => 'Usuarios',
             'url'  => 'admin/users',
@@ -273,6 +266,8 @@ return [
             'url'  => 'admin/slider',
             'icon' => 'far fa-images',
         ],
+
+        /*
         ['header' => 'account_settings'],
         
         [
@@ -334,6 +329,7 @@ return [
             'icon_color' => 'cyan',
             'url'        => '#',
         ],
+        */
     ],
 
     /*
