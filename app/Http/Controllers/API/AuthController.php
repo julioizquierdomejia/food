@@ -488,12 +488,11 @@ class AuthController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|min:3',
-                'phone' => 'min:9|max:10|string',
-                'password' => 'min:5'
+                'phone' => 'required|min:9|max:10|string',
             ], [
-                'name.required' => 'Name is required',
+                'name.required' => 'No puedes enviar el nombre vacio',
                 'name.min' => 'Mínimo de caracteres no válido {name}',
-                'password.min' => 'Contraseña es demasiado corta',
+                'phone.required' => 'No puedes enviar el teléfono vacio',
             ]);
 
             if ($validator->fails()) {
@@ -517,12 +516,11 @@ class AuthController extends Controller
                 $imageName = 'img_perfil/'.$imageName.'.png';
                 Storage::disk('public')->put($imageName, base64_decode($image)); //este Public se va al storage link
 
-
                 $random = Str::random(10);
 
-                $imageName_path = 'https://larifa.bimbadigital.com/storage/'.$imageName.'?random='.$random;
-
+                $imageName_path = '/storage/'.$imageName.'?random='.$random;
                 $users->avatar = $imageName_path;
+
             endif;
 
     
@@ -532,11 +530,18 @@ class AuthController extends Controller
 
             $phone_exists = User::where('phone', $request->get('phone'))->first();
             if ($phone_exists && $phone_exists->iduser != $users->iduser) {
-                return $this->errorResponse('Phone already exists', 400);
+                return $this->errorResponse('El telefono ya esta registrado', 400);
             }
 
             $users->name = $request->get('name');
             $users->phone = $request->get('phone');
+            $users->email = $request->get('email');
+
+            //actualizar informacion bancaria
+            $users->bank = $request->get('bank');
+            $users->bank_account = $request->get('bank_account');
+            $users->cci = $request->get('cci');
+
             $users->update();
 
             return $this->successResponse([

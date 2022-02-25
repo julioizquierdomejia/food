@@ -16,10 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $items = User::where('role',2)->latest('updated_at')
-                ->get();
 
-        return view('admin.users.index', compact('items'));
+        $usuarios = User::all();
+
+        return view('admin.users.index', compact('usuarios'));
     }
 
     /**

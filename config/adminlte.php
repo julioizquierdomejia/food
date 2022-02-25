@@ -252,6 +252,11 @@ return [
         ],
         */
         [
+            'text' => 'Usuarios',
+            'url'  => 'admin/users',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
             'text'        => 'Sorteos',
             'url'         => 'admin/raffle',
             'icon'        => 'far fa-fw fa-file',
@@ -261,7 +266,7 @@ return [
         [
             'text' => 'Ofertas',
             'url'  => 'admin/offer',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'far fa-money-bill-alt',
         ],
         [
             'text' => 'Slider',

@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->text('device_token')->nullable();
             $table->text('reset_token')->nullable();
             $table->integer('role')->default(0);
-            $table->text('bio')->nullable();
+            //$table->text('bio')->nullable();
             
             $table->rememberToken();
             $table->timestamps();
