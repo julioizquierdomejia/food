@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'JIMBO Sorteos',
+    'title' => 'Business Food',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Jimbo</b>SORTEOS',
+    'logo' => '<b>Business</b>FOOD',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -66,7 +66,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => 'bg-warning',
     'usermenu_image' => false,
     'usermenu_desc' => false,
     'usermenu_profile_url' => false,
@@ -245,10 +245,25 @@ return [
         */
         ['header' => 'MANTENDORES'],
         [
-            'text' => 'Usuarios',
+            'text' => ' Usuarios',
             'url'  => 'admin/users',
             'icon' => 'fas fa-fw fa-user',
         ],
+
+        [
+            'text' => ' - Platos',
+            'url'  => 'admin/dishes',
+            'icon' => 'fas fa-utensils',
+        ],
+
+        [
+            'text' => ' - Menus',
+            'url'  => 'admin/menus',
+            'icon' => 'fas fa-utensils',
+        ],
+        
+
+        /*
         [
             'text'        => 'Sorteos',
             'url'         => 'admin/raffle',
@@ -267,7 +282,10 @@ return [
             'icon' => 'far fa-images',
         ],
 
-        /*
+
+
+
+        
         ['header' => 'account_settings'],
         
         [

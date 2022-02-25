@@ -13,8 +13,7 @@ class DashboardController extends Controller
     {   
 
         $usuarios = User::all();
-        $sorteos = Raffle::where('status', 1)->get();
 
-        return view('admin.dashboard.index', compact('usuarios', 'sorteos'));
+        return view('admin.dashboard.index', compact('usuarios'));
     }
 }

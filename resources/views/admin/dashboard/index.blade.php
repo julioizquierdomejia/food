@@ -13,7 +13,7 @@
         <div class="col-12 col-md-3">
             <div class="small-box bg-info">
             <div class="inner">
-                <h3>{{ $sorteos->count() }}</h3>
+                <h3>algn dato aqui</h3>
                 <p>Sorteos Activos</p>
             </div>
             <div class="icon">

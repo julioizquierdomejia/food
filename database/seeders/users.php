@@ -21,9 +21,8 @@ class users extends Seeder
         $user->email        = 'admin@gmail.com';
         $user->phone        = '998913140';
         $user->dni          = '06813928';
-        $user->password     = bcrypt('998913140');
-        $user->role         = 10;
-        //$user->bio          = $faker->realText();
+        $user->password     = bcrypt('12345678');
+        $user->role         = 1;
 
         $user->save();
         
