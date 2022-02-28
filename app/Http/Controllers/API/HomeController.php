@@ -258,6 +258,50 @@ class HomeController extends Controller
         ]);
     }
 
+    public function cancelOrder(Request $request)
+    {
+        try {
+            
+            $id = $request->id;
+            $array_ids = explode(',', $id);
+
+            //buscamos si existe el registro
+            $orden = Order::where('user_id', $array_ids[0])
+                        ->where('menu_id', $array_ids[1])
+                        ->first();
+            
+            if($orden->status == 1){
+                $orden->status = 3;
+                $orden->update();
+                $msg = 'El pedido fue cancelado';
+            }else{
+                if($orden->status == 2){
+                    return $this->errorResponse('Este Pedido ya fue Atendido', 400);
+                }else{
+                    if($orden->status == 3){
+                        return $this->errorResponse('Este Pedido ya esta cancelado', 400);  
+                    }else{
+                        if($orden->status == 4){
+                            return $this->errorResponse('Este Pedido ya no se consumio', 400);  
+                        }
+                    }
+                }
+                
+            }
+
+
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+        return $this->successResponse([
+            'status' => 200,
+            'Orden' => $orden,
+            'msg' => $msg,
+        ]);
+    }
+
+
     public function getMenus(Request $request)
     {
         try {

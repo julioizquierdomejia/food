@@ -30,6 +30,7 @@
                             <th>Menu</th>
                             <th>Turno</th>
                             <th>Horario</th>
+                            <th>Fecha</th>
                             <th>Status</th>
                             <th>QR</th>
                         </tr>
@@ -42,6 +43,7 @@
                             <th>Menu</th>
                             <th>Turno</th>
                             <th>Horario</th>
+                            <th>Fecha</th>
                             <th>Status</th>
                             <th>QR</th>
                         </tr>
@@ -61,6 +63,7 @@
                                 <td class="align-middle" >{{ $item->menu }}</td>
                                 <td class="align-middle" >{{ $item->turno }}</td>
                                 <td class="align-middle" >{{ $item->horario }}</td>
+                                <td class="align-middle" >{{ $item->fecha }}</td>
                                 <td class="align-middle 
                                     @if($item->status == 1)
                                         bg-success
@@ -68,19 +71,25 @@
                                     @if($item->status == 2)
                                         bg-warning
                                     @endif
-                                    @if($item->status == 2)
+                                    @if($item->status == 3)
                                         bg-danger
+                                    @endif
+                                    @if($item->status == 4)
+                                        bg-info
                                     @endif
                                 ">
 
                                     @if($item->status == 1)
-                                        Solicitado
+                                        Reservado
                                     @endif
                                     @if($item->status == 2)
-                                        Pendiente
+                                        Atendido
                                     @endif
                                     @if($item->status == 3)
-                                        Entregado
+                                        Cancelado
+                                    @endif
+                                    @if($item->status == 4)
+                                        No consumido
                                     @endif
 
                                 </td>
