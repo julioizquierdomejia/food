@@ -34,6 +34,10 @@ class Menu extends Model
         return $this->belongsToMany('App\Models\Dish');
     }
 
+    public function pedidos(){
+        return $this->hasMany('App\Models\Order');
+    }
+
     /*
     |------------------------------------------------------------------------------------
     | Scopes

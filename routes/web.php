@@ -20,6 +20,7 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('menus', MenuController::class);
     Route::resource('stalls', StallController::class);
     Route::resource('areas', AreaController::class);
+    Route::resource('orders', OrderController::class);
 
 
 });

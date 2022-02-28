@@ -27,6 +27,7 @@
                         <th>Precio</th>
                         <th>Costo</th>
                         <th>Cantidad</th>
+                        <th>Consumidos</th>
                         <th>Imagen</th>
                         <th>Status</th>
                         <th>Acciones</th>
@@ -40,6 +41,7 @@
                         <th>Precio</th>
                         <th>Costo</th>
                         <th>Cantidad</th>
+                        <th>Consumidos</th>
                         <th>Imagen</th>
                         <th>Status</th>
                         <th>Acciones</th>
@@ -54,6 +56,7 @@
                             <td class="align-middle" >{{ $item->price }}</td>
                             <td class="align-middle" >{{ $item->cost }}</td>
                             <td class="align-middle" >{{ $item->cant }}</td>
+                            <td class="align-middle" >{{ $item->pedidos->count() }}</td>
                             <td class="align-middle" >
                                 <img src="{{ $item->uri_image }}{{ $item->name_image }}" alt="" class="img-thumbnail rounded-circle" width="40">
                             </td>

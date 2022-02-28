@@ -249,6 +249,11 @@ return [
             'url'  => 'admin/users',
             'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'text' => ' Ordenes',
+            'url'  => 'admin/orders',
+            'icon' => 'fas fa-shopping-cart',
+        ],
 
         [
             'text' => ' - Platos',

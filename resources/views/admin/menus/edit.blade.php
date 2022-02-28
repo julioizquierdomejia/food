@@ -9,12 +9,6 @@
 @section('content')
     <p>Administrador de Menu</p>
 
-
-    <div class="visible-print text-center">
-    {!! QrCode::size(500)->generate(Request::url()); !!}
-    <p>Scan me to return to the original page.</p>
-</div>
-
 	<div class="card">
 		<div class="card-body">
 			<a href="{{ route('admin.menus.index') }}" class="btn btn-info"><i class="fas fa-list-ul mr-2"></i> Ver listado de Menu</a>

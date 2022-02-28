@@ -21,7 +21,6 @@ use App\Models\Order;
 use App\Models\Ticket;
 use App\Models\Item;
 use App\Models\Menu;
-use App\Models\UserTicket;
 
 use App\Models\Country;
 
@@ -249,8 +248,11 @@ class HomeController extends Controller
         try {
 
             $menus = Menu::where('status', 1)->get();
+            $orders = Order::all();
             
-            foreach ($menus as $key => $menu) {
+            foreach ($menus as $menu) {
+
+                $menu['pedido'] = $menu->pedidos->count();
 
                 $menu->platos;
                 $menu = json_encode($menu);
