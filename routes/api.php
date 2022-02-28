@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PointController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\MenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,6 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 Route::group(['prefix' => 'home'], function () {
-
+    Route::get('getMenus', [HomeController::class, 'getMenus'])->middleware(['jwt.auth']);
 });
 

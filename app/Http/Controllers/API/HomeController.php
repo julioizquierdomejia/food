@@ -20,7 +20,7 @@ use App\Models\Favorite;
 use App\Models\Offer;
 use App\Models\Ticket;
 use App\Models\Item;
-use App\Models\RaffleFavorite;
+use App\Models\Menu;
 use App\Models\UserTicket;
 
 use App\Models\Country;
@@ -237,10 +237,33 @@ class HomeController extends Controller
         ]);
     }
 
-    public function getRaffles(Request $request)
+    public function getMenus(Request $request)
     {
         try {
 
+            $menus = Menu::where('status', 1)->get();
+            
+            foreach ($menus as $key => $menu) {
+
+                /*
+                foreach($favoritos as $key => $favorito){
+                    $id_table = $favorito->user_id . $favorito->raffle_id;
+                    $id_current = $id_user . $sorteo->id;
+                    if ($id_table == $id_current) {
+                        $sorteo['favorito'] = 'true';
+                    }else{
+                        $sorteo['favorito'] = 'false';
+                    }
+                
+                }
+                */
+
+                $menu->platos;
+                $menu = json_encode($menu);
+
+            }
+
+            /*
             $id_user = $request->user_id;
 
             $slider = Slider::where('status',1)->get();
@@ -266,6 +289,7 @@ class HomeController extends Controller
                 $sorteo = json_encode($sorteo);
 
             }
+            */
 
 
         } catch (\Exception $exception) {
@@ -274,8 +298,7 @@ class HomeController extends Controller
 
         return $this->successResponse([
             'status' => 200,
-            'slider' => $slider,
-            'sorteos' => $sorteos,
+            'menus' => $menus,
         ]);
     }
 
@@ -293,6 +316,7 @@ class HomeController extends Controller
         return $this->successResponse([
             'status' => 200,
             'ofertas' => $sorteo,
+
         ]);
     }
 
