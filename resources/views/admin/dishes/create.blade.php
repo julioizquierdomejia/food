@@ -72,7 +72,7 @@
 								<div class="form-group col-md-12">
 									<label for="name">Elegir Tipo de Comida</label>
 
-									<input type="text" name="type" id="tipo">
+									<input type="hidden" name="type" id="tipo">
 									
 									@error('tipo')
 										<div><small class="text-danger">* {{ $message }}</small></div>
