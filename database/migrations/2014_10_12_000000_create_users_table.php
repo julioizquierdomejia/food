@@ -23,7 +23,13 @@ class CreateUsersTable extends Migration
             $table->string('dni')->unique();
             $table->string('phone')->unique();
 
-            $table->text('avatar')->nullable();
+            $table->text('uri_image')->nullable();
+            $table->text('name_image')->nullable();
+
+            $table->boolean('status')->default(1);
+
+            $table->unsignedBigInteger('area_id')->nullable();
+            $table->unsignedBigInteger('stall_id')->nullable();
             
             $table->text('token')->nullable();
             $table->boolean('active')->nullable();

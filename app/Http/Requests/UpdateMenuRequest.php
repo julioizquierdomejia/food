@@ -13,7 +13,7 @@ class UpdateMenuRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,27 @@ class UpdateMenuRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'date' => 'required',
+            'cant' => 'required',
+            'cost' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'type' => 'required',
+            
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Debes ingresar el nombre del Sorteo',
+            'date.required' => 'Seleccione una fecha',
+            'cant.required' => 'Seleccione una cantidad',
+            'cost.required' => 'Seleccione un costo',
+            'price.required' => 'Seleccione un precio',
+            'description.required' => 'Escriba una Descripción',
+            'type.required' => 'Seleccione uno de los tipos',
         ];
     }
 }

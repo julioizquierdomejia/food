@@ -243,7 +243,7 @@ return [
             'text' => 'search',
         ],
         */
-        ['header' => 'MANTENDORES'],
+        ['header' => 'ADMINISTRACIÓN'],
         [
             'text' => ' Usuarios',
             'url'  => 'admin/users',
@@ -260,6 +260,19 @@ return [
             'text' => ' - Menus',
             'url'  => 'admin/menus',
             'icon' => 'fas fa-utensils',
+        ],
+
+        ['header' => 'MANTENDORES'],
+        [
+            'text' => ' Áreas',
+            'url'  => 'admin/areas',
+            'icon' => 'far fa-building',
+        ],
+
+        [
+            'text' => ' Cargo',
+            'url'  => 'admin/stalls',
+            'icon' => 'fas fa-user-tie',
         ],
         
 

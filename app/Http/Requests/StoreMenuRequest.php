@@ -26,7 +26,7 @@ class StoreMenuRequest extends FormRequest
         return [
             'name' => 'required',
             'image' => 'required',
-            'date' => 'required',
+            'date' => 'required|unique:menus',
             'cant' => 'required',
             'cost' => 'required',
             'price' => 'required',
@@ -42,6 +42,7 @@ class StoreMenuRequest extends FormRequest
             'name.required' => 'Debes ingresar el nombre del Sorteo',
             'image.required' => 'Seleccione una imagen',
             'date.required' => 'Seleccione una fecha',
+            'date.unique' => 'Ya se creó un Menu para esta fecha',
             'cant.required' => 'Seleccione una cantidad',
             'cost.required' => 'Seleccione un costo',
             'price.required' => 'Seleccione un precio',

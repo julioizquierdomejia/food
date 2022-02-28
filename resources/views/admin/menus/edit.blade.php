@@ -3,7 +3,7 @@
 @section('title', 'Crear Menu')
 
 @section('content_header')
-    <h1>Crear Nuevo Menu</h1>
+    <h1>Edita Menu - {{ $menu->name }}</h1>
 @stop
 
 @section('content')
@@ -16,9 +16,9 @@
 		</div>
 	</div>
 
-		<form action="{{ route('admin.menus.store') }}" method="POST" enctype="multipart/form-data">
+		<form action="{{ route('admin.menus.update', $menu) }}" method="POST" enctype="multipart/form-data">
 			@csrf
-			
+			@method('PUT')
 			<div class="row">
 				<div class="col-12 col-md-8">
 					<div class="card card-primary">
@@ -26,7 +26,8 @@
 							<div class="form-row">
 								<div class="form-group col-md-8">
 									<label for="name">Nombre del Menu</label>
-									<input type="text" class="form-control" name='name' placeholder="Nombre de la Oferta" value="{{ old('name') }}">
+									<input type="text" class="form-control" name='name' placeholder="Nombre de la Oferta"
+										value="{{ $menu->name }}">
 									@error('name')
 										<div><small class="text-danger">* {{ $message }}</small></div>
 									@enderror
@@ -38,8 +39,8 @@
 									<label for="image">Imagen del Menu</label>
 									<div class="input-group mb-3">
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="upLoadImage" aria-describedby="inputGroupFileAddon03" name="image">
-											<label class="custom-file-label" for="image">{{ old('image', 'Elegir Imagen') }}</label>
+											<input type="file" class="custom-file-input" id="upLoadImage" aria-describedby="inputGroupFileAddon03" name="image" value="{{ $menu->name_image }}">
+											<label class="custom-file-label" for="image">{{ $menu->name_image }}</label>
 										</div>
 									</div>
 									@error('image')
@@ -52,7 +53,8 @@
 								<div class="form-group col-md-3">
 									<label for="date">Fecha del Menu</label>
 									<div class="input-group date">
-										<input id="datepicker1" width="276" name="date" value="{{ old('date') }}" />
+										<input id="datepicker1" width="276" name="date"
+											value="{{ \Carbon\Carbon::parse($menu->date)->format('m/d/Y')}}" />
 										@error('date')
 											<div><small class="text-danger">* {{ $message }}</small></div>
 										@enderror
@@ -61,7 +63,7 @@
 
 								<div class="form-group col-md-3">
 									<label for="cant">Cantidad</label>
-									<input type="text" class="form-control" name='cant' placeholder="Cantidad" value="{{ old('name') }}">
+									<input type="text" class="form-control" name='cant' placeholder="Cantidad" value="{{ $menu->cant }}">
 									@error('cant')
 										<div><small class="text-danger">* {{ $message }}</small></div>
 									@enderror
@@ -69,7 +71,7 @@
 
 								<div class="form-group col-md-3">
 									<label for="price">Precio</label>
-									<input type="text" class="form-control" name='price' placeholder="Precio" value="{{ old('price') }}">
+									<input type="text" class="form-control" name='price' placeholder="Precio" value="{{ $menu->price }}">
 									@error('price')
 										<div><small class="text-danger">* {{ $message }}</small></div>
 									@enderror
@@ -77,7 +79,7 @@
 
 								<div class="form-group col-md-3">
 									<label for="cost">Costo</label>
-									<input type="text" class="form-control" name='cost' placeholder="Cantidad" value="{{ old('cost') }}">
+									<input type="text" class="form-control" name='cost' placeholder="Cantidad" value="{{ $menu->cost }}">
 									@error('cost')
 										<div><small class="text-danger">* {{ $message }}</small></div>
 									@enderror
@@ -87,14 +89,14 @@
 							<div class="form-row">
 								<div class="form-group col-md-12">
 									<label for="description">Descripción - (Opción)</label>
-									<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="description">{{ old('description') }}</textarea>
+									<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="description">{{ $menu->description }}</textarea>
 								</div>
 								@error('description')
 									<div><small class="text-danger">* {{ $message }}</small></div>
 								@enderror
 							</div>
 
-							<button type="submit" class="btn btn-primary">Registrar Menu</button>
+							<button type="submit" class="btn btn-primary">Editar Menu</button>
 						</div>
 					</div>
 				</div>
@@ -103,9 +105,10 @@
 						<div class="card-body">
 							<div class="form-row">
 								<div class="form-group col-md-12">
+
 									<label for="name">ENTRDAS</label>
 
-									<input type="hidden" name="type" id="tipo">
+									<input type="hidden" name="type" id="tipo" value="">
 									
 									@error('type')
 										<div><small class="text-danger">* {{ $message }}</small></div>
@@ -113,11 +116,30 @@
 
 									@foreach($platos as $plato)
 										@if($plato->type == 0)
+
 											<div class="btn-group-toggle mb-2">
-												<label class="btn btn-secondary">
-													<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"> {{ $plato->name }}
+
+												<label class="btn bg-secondary
+														@foreach($ids_array as $val)
+															@if($val == $plato->id)
+																bg-warning 
+															@endif
+														@endforeach">
+													<input 
+														type="checkbox"
+														id="{{ $plato->id }}"
+														class="checkBox" name="tipo[]"
+														{{-- Revisamos los atributos que tiene el producto para meterle Check--}}
+														@foreach($ids_array as $val)
+															@if($val == $plato->id)
+																checked 
+															@endif
+														@endforeach
+														> {{ $plato->name }}
 												</label>
+												
 											</div>
+											
 										@endif
 										
 									@endforeach
@@ -140,8 +162,20 @@
 									@foreach($platos as $plato)
 										@if($plato->type == 1)
 											<div class="btn-group-toggle mb-2">
-												<label class="btn btn-secondary">
-													<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"> {{ $plato->name }}
+												<label class="btn btn-secondary 
+														@foreach($ids_array as $val)
+															@if($val == $plato->id)
+																bg-warning 
+															@endif
+														@endforeach
+														">
+													<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"
+														@foreach($ids_array as $val)
+															@if($val == $plato->id)
+																checked 
+															@endif
+														@endforeach
+													> {{ $plato->name }}
 												</label>
 											</div>
 										@endif
@@ -166,8 +200,19 @@
 									@foreach($platos as $plato)
 										@if($plato->type == 2)
 											<div class="btn-group-toggle mb-2">
-												<label class="btn btn-secondary">
-													<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"> {{ $plato->name }}
+												<label class="btn btn-secondary
+														@foreach($ids_array as $val)
+															@if($val == $plato->id)
+																bg-warning 
+															@endif
+														@endforeach">
+													<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"
+														@foreach($ids_array as $val)
+															@if($val == $plato->id)
+																checked 
+															@endif
+														@endforeach
+													> {{ $plato->name }}
 												</label>
 											</div>
 										@endif
@@ -197,6 +242,7 @@
 
 
     <script>
+
     	$("#upLoadImage").on('change', function() {
 		    var fileName = $(this).val().split("\\").pop();
 		    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);        
@@ -204,12 +250,17 @@
 		})
 
 		$('#datepicker1').datepicker({
-            uiLibrary: 'bootstrap4'
+            uiLibrary: 'bootstrap4',
         });
 
+		const ids = {!! json_encode($ids_array) !!};
 
         //revisar el ezstado de mi CheckBox
-        ids_array = []
+        //ids_array = ids;
+        ids_array = [];
+        ids_array = ids;
+        $('#tipo').val(ids_array);
+        
 		$(".checkBox").change(function() {
 
 			me = $(this);
@@ -227,7 +278,14 @@
 				$(this).parent().removeClass('bg-warning');
 
 				ids_array.forEach(function(attr, index, object) {
-					if(attr === me.attr('id')){
+
+					console.log(attr);
+					console.log(me.attr('id'));
+
+					meAttr = parseInt(me.attr('id'));//tuve que convertirlo en INT el valor era String
+					//if(attr === me.attr('id')){
+					if(attr === meAttr){
+						console.log('coincide')
 						ids_array.splice(index, 1);
 						$('#tipo').val(ids_array);
 					}

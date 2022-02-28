@@ -1,18 +1,18 @@
 @extends('adminlte::page')
 
-@section('title', 'Menu')
+@section('title', 'Áreas')
 
 @section('content_header')
-    <h1>Menus</h1>
+    <h1>Áreas</h1>
 @stop
 
 @section('content')
-    <p>Listado de Menu</p>
+    <p>Listado de Áreas</p>
 
     <div class="card">
         <div class="card-body">
-            <h1>Menu</h1>
-            <a href="{{ route('admin.menus.create') }}" class="btn btn-primary"><i class="far fa-money-bill-alt mr-2"></i> Crear Nuevo Menu</a>
+            <h1>Áreas</h1>
+            <a href="{{ route('admin.areas.create') }}" class="btn btn-primary"><i class="far fa-money-bill-alt mr-2"></i> Crear Nueva Área</a>
         </div>
     </div>
 
@@ -22,12 +22,7 @@
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Fecha</th>
                         <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Costo</th>
-                        <th>Cantidad</th>
-                        <th>Imagen</th>
                         <th>Status</th>
                         <th>Acciones</th>
                     </tr>
@@ -35,28 +30,16 @@
                 <tfoot>
                     <tr>
                         <th>Id</th>
-                        <th>Fecha</th>
                         <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Costo</th>
-                        <th>Cantidad</th>
-                        <th>Imagen</th>
                         <th>Status</th>
                         <th>Acciones</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach($menus as $item)
+                    @foreach($areas as $item)
                         <tr>
-                            <td class="align-middle" >{{ $item->id }}</td>
-                            <td class="align-middle" >{{ \Carbon\Carbon::parse($item->date)->format('D d-M-Y')}}</td>
-                            <td class="align-middle" >{{ $item->name }}</td>
-                            <td class="align-middle" >{{ $item->price }}</td>
-                            <td class="align-middle" >{{ $item->cost }}</td>
-                            <td class="align-middle" >{{ $item->cant }}</td>
-                            <td class="align-middle" >
-                                <img src="{{ $item->uri_image }}{{ $item->name_image }}" alt="" class="img-thumbnail rounded-circle" width="40">
-                            </td>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->name }}</td>
                             <td class="align-middle"> {{-- switch para Outstanding --}}
                                 <form action="" method="POST">
                                     @csrf
@@ -66,11 +49,10 @@
                                     </div>
                                 </form>
                             </td>
-                            
-                            <td class="align-middle">
-                                <a href="{{ route('admin.menus.edit', $item) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                            <td>
+                                <a href="{{ route('admin.areas.edit', $item) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                                 <a href="" class="btn btn-danger btn-sm delete" id="{{$item->id}}" data-idUser="{{$item->id}}"><i class="fas fa-trash"></i></a>
-                            </td>
+                            </td>   
                         </tr>
                     @endforeach
                 </tbody>
@@ -85,7 +67,7 @@
 @stop
 
 @section('js')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     
     <script>
         
@@ -111,7 +93,7 @@
                 }
 
                 $.ajax({
-                    url: "{{ route('menu.updateStatus') }}",
+                    url: "{{ route('area.updateStatus') }}",
                     method: 'POST',
                     data:{
                         _token:$('input[name="_token"]').val(),
@@ -159,9 +141,8 @@
                   cancelButtonText: 'Cancelar'
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    console.log('entro al Ajax');
                     $.ajax({
-                        url: "/admin/menus/"+ id,
+                        url: "/admin/areas/"+ id,
                         method: 'DELETE',
                         data:{
                             _token:$('input[name="_token"]').val(),
@@ -183,5 +164,6 @@
         })
 
     </script>
+
 
 @stop
