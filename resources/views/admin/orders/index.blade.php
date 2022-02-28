@@ -63,7 +63,7 @@
                                 <td class="align-middle" >{{ $item->menu }}</td>
                                 <td class="align-middle" >{{ $item->turno }}</td>
                                 <td class="align-middle" >{{ $item->horario }}</td>
-                                <td class="align-middle" >{{ $item->fecha }}</td>
+                                <td class="align-middle" >{{ \Carbon\Carbon::parse($item->fecha)->format('D d-M-Y')}}</td>
                                 <td class="align-middle 
                                     @if($item->status == 1)
                                         bg-success
