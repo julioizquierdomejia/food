@@ -46,6 +46,11 @@ class DishSeeder extends Seeder
         $plato->save();
 
         $plato = new Dish();
+        $plato->name = 'Seco a la norteña';
+        $plato->type = 1;
+        $plato->save();
+
+        $plato = new Dish();
         $plato->name = 'Aji de Gallina';
         $plato->type = 1;
         $plato->save();
