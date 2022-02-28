@@ -338,6 +338,7 @@ class HomeController extends Controller
         return $this->successResponse([
             'status' => 200,
             'order' => $orden,
+            'msg' => 'La orden fue registrada',
             
         ]);
     }
