@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PointController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +39,7 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('getMenus', [HomeController::class, 'getMenus'])->middleware(['jwt.auth']);
+    Route::post('registerOrder', [HomeController::class, 'registerOrder'])->middleware(['jwt.auth']);
+    
 });
 

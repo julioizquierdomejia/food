@@ -17,13 +17,20 @@ use App\Models\Category;
 use App\Models\Raffle;
 use App\Models\Slider;
 use App\Models\Favorite;
-use App\Models\Offer;
+use App\Models\Order;
 use App\Models\Ticket;
 use App\Models\Item;
 use App\Models\Menu;
 use App\Models\UserTicket;
 
 use App\Models\Country;
+
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
+
+
 
 class HomeController extends Controller
 {
@@ -245,51 +252,10 @@ class HomeController extends Controller
             
             foreach ($menus as $key => $menu) {
 
-                /*
-                foreach($favoritos as $key => $favorito){
-                    $id_table = $favorito->user_id . $favorito->raffle_id;
-                    $id_current = $id_user . $sorteo->id;
-                    if ($id_table == $id_current) {
-                        $sorteo['favorito'] = 'true';
-                    }else{
-                        $sorteo['favorito'] = 'false';
-                    }
-                
-                }
-                */
-
                 $menu->platos;
                 $menu = json_encode($menu);
 
             }
-
-            /*
-            $id_user = $request->user_id;
-
-            $slider = Slider::where('status',1)->get();
-            $sorteos = Raffle::where('status',1)->get();
-
-            $favoritos = Favorite::all();
-
-            //recorremos para recoger las ofertas de cada rifa
-            foreach ($sorteos as $key => $sorteo) {
-
-                foreach($favoritos as $key => $favorito){
-                    $id_table = $favorito->user_id . $favorito->raffle_id;
-                    $id_current = $id_user . $sorteo->id;
-                    if ($id_table == $id_current) {
-                        $sorteo['favorito'] = 'true';
-                    }else{
-                        $sorteo['favorito'] = 'false';
-                    }
-                
-                }
-
-                $sorteo->offers;
-                $sorteo = json_encode($sorteo);
-
-            }
-            */
 
 
         } catch (\Exception $exception) {
@@ -299,6 +265,63 @@ class HomeController extends Controller
         return $this->successResponse([
             'status' => 200,
             'menus' => $menus,
+        ]);
+    }
+
+
+
+    public function registerOrder(Request $request)
+    {
+        try {
+
+            
+            $validator = Validator::make($request->all(), [
+                'menu_id' => 'required',
+
+            ], [
+                'menu_id.required' => 'Elegir al menos una opción del Menú',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse($validator->errors()->first(), 400);
+            }
+
+            $orden = new Order();
+
+            //creamos un id unico de la mezcla de user_id y menu_id
+            $id = $request->user_id . ',' . $request->menu_id;
+            $nombre = $id . '.png';
+
+            $ruta = storage_path() . '/app/public/images/qr/' . $nombre;
+
+            //generamos el Codigo QR
+            QrCode::format('png')->size(700)->generate($id, $ruta);
+
+            //Grabamos en la base de datos toda la ruta de la imagen
+            $orden->uri_image = '/storage/images/qr/';
+            $orden->name_image = $nombre;
+
+            $orden->user_id = $request->user_id;
+            $orden->menu_id = $request->menu_id;
+
+            $orden->entrada_id = $request->entrada_id;
+            $orden->segundo_id = $request->segundo_id;
+            $orden->postre_id = $request->postre_id;
+
+            $orden->turn = $request->turn;
+            $orden->schedule = $request->schedule;
+
+            $orden->save();
+            
+
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+        return $this->successResponse([
+            'status' => 200,
+            'order' => $orden,
+            
         ]);
     }
 
