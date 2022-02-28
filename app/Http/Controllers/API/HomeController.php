@@ -227,10 +227,24 @@ class HomeController extends Controller
      */
 
     
-    public function getCountries()
+    public function updateStatus(Request $request)
     {
         try {
-            $countries = Country::where('status',1)->get();
+            
+            $id = $request->id;
+            $array_ids = explode(',', $id);
+
+            //buscamos si existe el registro
+            $orden = Order::where('user_id', $array_ids[0])
+                        ->where('menu_id', $array_ids[1])
+                        ->first();
+            
+            if($orden->status == 1){
+                $orden->status = 2;
+                $orden->update();
+            }else{
+                return $this->errorResponse('Este Pedido ya fue solicitado', 400);
+            }
 
 
         } catch (\Exception $exception) {
@@ -239,7 +253,8 @@ class HomeController extends Controller
 
         return $this->successResponse([
             'status' => 200,
-            'countries' => $countries,
+            'Orden' => $orden,
+            'msg' => 'Ahora el Pedido esta listo para ser recogido',
         ]);
     }
 

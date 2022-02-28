@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
+use App\Models\Menu;
+use App\Models\Dish;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 
 class OrderController extends Controller
@@ -16,7 +21,18 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $ordenes = Order::all();
+        //$ordenes = Order::all();
+        $usuarios = User::all();
+        $menus = Menu::all();
+        $platos = Dish::all();
+
+        
+        $ordenes = DB::table('orders')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->join('menus', 'orders.menu_id', '=', 'menus.id')
+            ->select('orders.id', 'users.uri_image', 'users.name_image', 'users.name as nombre', 'menus.name as menu', 'orders.uri_image as uri', 'orders.name_image as image', 'orders.turn as turno', 'orders.schedule as horario', 'orders.status as status')
+            ->get();
+
 
         return view('admin.orders.index', compact('ordenes'));
 

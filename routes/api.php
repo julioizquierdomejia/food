@@ -40,6 +40,7 @@ Route::group(['prefix' => 'users'], function () {
 Route::group(['prefix' => 'home'], function () {
     Route::get('getMenus', [HomeController::class, 'getMenus'])->middleware(['jwt.auth']);
     Route::post('registerOrder', [HomeController::class, 'registerOrder'])->middleware(['jwt.auth']);
+    Route::post('updateStatus', [HomeController::class, 'updateStatus'])->middleware(['jwt.auth']);
     
 });
 

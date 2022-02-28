@@ -27,13 +27,11 @@
                             <th>Id</th>
                             <th>Perfil</th>
                             <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>DNI</th>
-                            <th>Área</th>
-                            <th>Cargo</th>
-                            <th>Tipo</th>
+                            <th>Menu</th>
+                            <th>Turno</th>
+                            <th>Horario</th>
                             <th>Status</th>
-                            <th>Acciones</th>
+                            <th>QR</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -41,13 +39,11 @@
                             <th>Id</th>
                             <th>Perfil</th>
                             <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>DNI</th>
-                            <th>Área</th>
-                            <th>Cargo</th>
-                            <th>Tipo</th>
+                            <th>Menu</th>
+                            <th>Turno</th>
+                            <th>Horario</th>
                             <th>Status</th>
-                            <th>Acciones</th>
+                            <th>QR</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -55,22 +51,42 @@
                             <tr>
                                 <td class="align-middle" >{{ $item->id }}</td>
                                 <td class="align-middle" >
-                                    ddd
-                                    
+                                    @if( $item->uri_image == null )
+                                        <img src="{{ asset('storage/images/perfil/perfil.png') }}" class="figure-img img-fluid rounded" width="36" alt="">
+                                    @else
+                                        <img src="{{ $item->uri_image }}{{ $item->name_image }}" class="rounded-circle" width="36" alt="">
+                                    @endif
                                 </td>
-                                <td class="align-middle" >c</td>
-                                <td class="align-middle" >c</td>
-                                <td class="align-middle" >c</td>
-                                <td class="align-middle" >c</td>
-                                <td class="align-middle" >c</td>
+                                <td class="align-middle" >{{ $item->nombre }}</td>
+                                <td class="align-middle" >{{ $item->menu }}</td>
+                                <td class="align-middle" >{{ $item->turno }}</td>
+                                <td class="align-middle" >{{ $item->horario }}</td>
+                                <td class="align-middle 
+                                    @if($item->status == 1)
+                                        bg-success
+                                    @endif
+                                    @if($item->status == 2)
+                                        bg-warning
+                                    @endif
+                                    @if($item->status == 2)
+                                        bg-danger
+                                    @endif
+                                ">
 
-                                <td class="align-middle"> {{-- switch para Outstanding --}}
-                                    el estaus
+                                    @if($item->status == 1)
+                                        Solicitado
+                                    @endif
+                                    @if($item->status == 2)
+                                        Pendiente
+                                    @endif
+                                    @if($item->status == 3)
+                                        Entregado
+                                    @endif
+
                                 </td>
                                 <td class="align-middle" >
-                                    
-
-                                </td>   
+                                    <img src="{{ $item->uri }}{{ $item->image }}" alt="" width="50">
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
