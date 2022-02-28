@@ -12,7 +12,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h1>Usuarios</h1>
+            <h1>Registro de Ordenes</h1>
             {{-- 
             <a href="{{ route('admin.users.create') }}" class="btn btn-primary"><i class="fas fa-users"></i></i> Registrar nuevo usuario</a>
              --}}
