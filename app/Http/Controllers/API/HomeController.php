@@ -231,10 +231,11 @@ class HomeController extends Controller
     {
         try {
             
-            return $request;
 
             $id = $request->id;
             $array_ids = explode(',', $id);
+
+            return $array_ids;
 
             //buscamos si existe el registro
             $orden = Order::where('user_id', $array_ids[0])
