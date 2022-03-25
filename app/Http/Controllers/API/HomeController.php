@@ -235,8 +235,6 @@ class HomeController extends Controller
             $id = $request->id;
             $array_ids = explode(',', $id);
 
-            return $array_ids[0];
-
             //buscamos si existe el registro
             $orden = Order::where('user_id', $array_ids[0])
                         ->where('menu_id', $array_ids[1])
