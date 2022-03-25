@@ -159,7 +159,7 @@
                     Swal.fire({
                       position: 'bottom-end',
                       icon: 'success',
-                      title: 'El Menu ' + name + ' ha sido ' + message,
+                      title: 'El Usuario ' + name + ' ha sido ' + message,
                       showConfirmButton: false,
                       timer: 1500,
                     })

@@ -269,6 +269,7 @@ class HomeController extends Controller
             $orden = Order::where('user_id', $array_ids[0])
                         ->where('menu_id', $array_ids[1])
                         ->first();
+
             
             if($orden->status == 1){
                 $orden->status = 3;

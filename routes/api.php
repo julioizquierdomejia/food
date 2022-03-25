@@ -42,6 +42,7 @@ Route::group(['prefix' => 'home'], function () {
     Route::post('registerOrder', [HomeController::class, 'registerOrder'])->middleware(['jwt.auth']);
     Route::post('updateStatus', [HomeController::class, 'updateStatus'])->middleware(['jwt.auth']);
     Route::post('cancelOrder', [HomeController::class, 'cancelOrder'])->middleware(['jwt.auth']);
+    Route::post('cancelOrder', [HomeController::class, 'cancelOrder'])->middleware(['jwt.auth']);
     
 });
 
