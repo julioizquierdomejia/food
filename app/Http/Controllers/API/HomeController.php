@@ -231,6 +231,8 @@ class HomeController extends Controller
     {
         try {
             
+            return $request;
+
             $id = $request->id;
             $array_ids = explode(',', $id);
 
