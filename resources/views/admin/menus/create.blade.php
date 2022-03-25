@@ -26,7 +26,7 @@
 							<div class="form-row">
 								<div class="form-group col-md-8">
 									<label for="name">Nombre del Menu</label>
-									<input type="text" class="form-control" name='name' placeholder="Nombre de la Oferta" value="{{ old('name') }}">
+									<input type="text" class="form-control" name='name' placeholder="Nombre del menu" value="{{ old('name') }}">
 									@error('name')
 										<div><small class="text-danger">* {{ $message }}</small></div>
 									@enderror

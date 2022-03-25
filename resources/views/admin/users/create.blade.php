@@ -26,7 +26,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="name">Nombre del colaborador</label>
-                                    <input type="text" class="form-control" name='name' placeholder="Nombre de la Oferta" value="{{ old('name') }}">
+                                    <input type="text" class="form-control" name='name' placeholder="Nombre del colaborador" value="{{ old('name') }}">
                                     @error('name')
                                         <div><small class="text-danger">* {{ $message }}</small></div>
                                     @enderror
@@ -34,7 +34,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="name">Correo electrónico</label>
-                                    <input type="mail" class="form-control" name='email' placeholder="Nombre de la Oferta" value="{{ old('email') }}">
+                                    <input type="mail" class="form-control" name='email' placeholder="Correo electronico" value="{{ old('email') }}">
                                     @error('email')
                                         <div><small class="text-danger">* {{ $message }}</small></div>
                                     @enderror
