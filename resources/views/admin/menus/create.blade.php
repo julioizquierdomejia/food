@@ -99,29 +99,32 @@
 					</div>
 				</div>
 				<div class="col-12 col-md-4">
+
+
 					<div class="card card-primary">
 						<div class="card-body">
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label for="name">ENTRDAS</label>
+									<label for="name" data-toggle="collapse" href="#collapse_entradas" role="button" aria-expanded="false" aria-controls="collapse_entradas">ENTRDAS</label>
 
-									<input type="hidden" name="type" id="tipo">
+									<div class="collapse" id="collapse_entradas">
+									  <input type="hidden" name="type" id="tipo">
 									
-									@error('type')
-										<div><small class="text-danger">* {{ $message }}</small></div>
-									@enderror
+										@error('type')
+											<div><small class="text-danger">* {{ $message }}</small></div>
+										@enderror
 
-									@foreach($platos as $plato)
-										@if($plato->type == 0)
-											<div class="btn-group-toggle mb-2">
-												<label class="btn btn-secondary">
-													<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"> {{ $plato->name }}
-												</label>
-											</div>
-										@endif
-										
-									@endforeach
-									
+										@foreach($platos as $plato)
+											@if($plato->type == 0)
+												<div class="btn-group-toggle mb-2">
+													<label class="btn btn-secondary">
+														<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"> {{ $plato->name }}
+													</label>
+												</div>
+											@endif
+											
+										@endforeach
+									</div>									
 								</div>
 							</div>
 						</div>
@@ -131,35 +134,41 @@
 						<div class="card-body">
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label for="name">PLATO DE FONDO</label>
-									
-									@error('tipo')
-										<div><small class="text-danger">* {{ $message }}</small></div>
-									@enderror
+									<label for="name" data-toggle="collapse" href="#collapse_segundos" role="button" aria-expanded="false" aria-controls="collapse_segundos">PLATO DE FONDO</label>
 
-									@foreach($platos as $plato)
-										@if($plato->type == 1)
-											<div class="btn-group-toggle mb-2">
-												<label class="btn btn-secondary">
-													<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"> {{ $plato->name }}
-												</label>
-											</div>
-										@endif
-										
-									@endforeach
+									<div class="collapse" id="collapse_segundos">
+									  <input type="hidden" name="type" id="tipo">
 									
+										@error('tipo')
+											<div><small class="text-danger">* {{ $message }}</small></div>
+										@enderror
+
+										@foreach($platos as $plato)
+											@if($plato->type == 1)
+												<div class="btn-group-toggle mb-2">
+													<label class="btn btn-secondary">
+														<input type="checkbox" id="{{ $plato->id }}" class="checkBox" name="tipo[]"> {{ $plato->name }}
+													</label>
+												</div>
+											@endif
+										@endforeach
+									</div>									
 								</div>
 							</div>
 						</div>
 					</div>
 
+
 					<div class="card card-primary">
 						<div class="card-body">
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label for="name">POSTRES</label>
+									<label for="name" data-toggle="collapse" href="#collapse_postres" role="button" aria-expanded="false" aria-controls="collapse_postres">POSTRES</label>
 
-									@error('tipo')
+									<div class="collapse" id="collapse_postres">
+									  <input type="hidden" name="type" id="tipo">
+									
+										@error('tipo')
 										<div><small class="text-danger">* {{ $message }}</small></div>
 									@enderror
 
@@ -173,7 +182,8 @@
 										@endif
 										
 									@endforeach
-									
+
+									</div>									
 								</div>
 							</div>
 						</div>
