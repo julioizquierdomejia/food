@@ -279,6 +279,12 @@ return [
             'url'  => 'admin/stalls',
             'icon' => 'fas fa-user-tie',
         ],
+
+        [
+            'text' => ' Configuraciones',
+            'url'  => 'admin/config',
+            'icon' => 'fas fa-cogs',
+        ],
         
 
         /*

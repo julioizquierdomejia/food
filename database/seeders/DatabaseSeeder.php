@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AreaSeeder::class);
         $this->call(StallSeeder::class);
         $this->call(DishSeeder::class);
+        $this->call(ParameterSeeder::class);
     }
 }
