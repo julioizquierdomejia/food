@@ -21,6 +21,8 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
     Route::resource('stalls', StallController::class);
     Route::resource('areas', AreaController::class);
     Route::resource('orders', OrderController::class);
+    Route::resource('orders/consumo', OrderController::class);
+    
     Route::resource('config', ParameterController::class);
 
 

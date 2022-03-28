@@ -72,10 +72,10 @@ class UserController extends Controller
     {
         
         $request->validate([
-            'name'  =>  'required',
-            'email'  =>  'required|unique:users',
-            'dni'  =>  'required|unique:users',
-            'phone'  =>  'required|unique:users',
+            'name'  =>  'required|regex:/^[\pL\s\-]+$/u',
+            'email'  =>  'required|unique:users|email',
+            'dni'  =>  'required|unique:users|regex:/(01)[0-9]{8}/',
+            'phone'  =>  'required|unique:users|regex:/(01)[0-9]{9}/',
             'role'  =>  'required',
             'area_id'  =>  'required',
             'stall_id'  =>  'required',

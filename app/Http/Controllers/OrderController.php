@@ -31,6 +31,8 @@ class OrderController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->join('menus', 'orders.menu_id', '=', 'menus.id')
             ->select('orders.id', 'users.uri_image', 'users.name_image', 'users.name as nombre', 'menus.name as menu', 'orders.uri_image as uri', 'orders.name_image as image', 'orders.turn as turno', 'orders.schedule as horario', 'orders.status as status', 'menus.date as fecha')
+            ->select('browser', DB::raw('count(*) as total'))
+            ->groupBy('browser')
             ->get();
 
 

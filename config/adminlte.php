@@ -286,6 +286,13 @@ return [
             'icon' => 'fas fa-cogs',
         ],
         
+        ['header' => 'REPORTES'],
+        [
+            'text' => ' Consumo de Usuarios',
+            'url'  => 'admin/orders/consumo',
+            'icon' => 'far fa-file-chart-line',
+        ],
+
 
         /*
         [
