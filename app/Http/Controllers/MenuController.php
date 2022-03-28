@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Dish;
+use App\Models\Parameter;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\StoreMenuRequest;
@@ -29,7 +30,11 @@ class MenuController extends Controller
     {
         //
         $menus = Menu::all();
-        return view('admin.menus.index', compact('menus'));
+        $datos = Parameter::where('status', 1)
+                    ->orderBy('created_at', 'asc')
+                    ->get()->last();
+
+        return view('admin.menus.index', compact('menus', 'datos'));
     }
 
     /**

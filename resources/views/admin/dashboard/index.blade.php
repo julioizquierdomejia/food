@@ -59,7 +59,7 @@
         <div class="col-12 col-md-3">
             <div class="small-box bg-gradient-danger">
                 <div class="inner">
-                    <h3>{{ $platos->count() }}</h3>
+                    <h3>{{ $ordenes->count() }}</h3>
                     <p>Pedidos realizados</p>
                 </div>
                 <div class="icon">
@@ -70,6 +70,54 @@
                 </a>
             </div> 
         </div>
+
+
+        <div class="col-12 col-md-3">
+            <div class="small-box bg-gradient-success">
+                <div class="inner">
+                    <h3>{{ $ordenes_atendidas->count() }}</h3>
+                    <p>Pedidos Atendidas</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <a href="{{ route('admin.dishes.index') }}" class="small-box-footer">
+                    Mas información <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div> 
+        </div>
+
+        <div class="col-12 col-md-3">
+            <div class="small-box bg-gradient-warning">
+                <div class="inner">
+                    <h3>{{ $ordenes_canceladas->count() }}</h3>
+                    <p>Pedidos Canceladas</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <a href="{{ route('admin.dishes.index') }}" class="small-box-footer">
+                    Mas información <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div> 
+        </div>
+
+
+        <div class="col-12 col-md-3">
+            <div class="small-box bg-gradient-info">
+                <div class="inner">
+                    <h3>{{ $ordenes_no_consumido->count() }}</h3>
+                    <p>Pedidos No Consumidos</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <a href="{{ route('admin.dishes.index') }}" class="small-box-footer">
+                    Mas información <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div> 
+        </div>
+
     </div>
         
         

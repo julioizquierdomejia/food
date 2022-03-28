@@ -26,6 +26,7 @@
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>DNI</th>
+                            <th>Celular</th>
                             <th>Área</th>
                             <th>Cargo</th>
                             <th>Tipo</th>
@@ -40,6 +41,7 @@
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>DNI</th>
+                            <th>Celular</th>
                             <th>Área</th>
                             <th>Cargo</th>
                             <th>Tipo</th>
@@ -62,6 +64,7 @@
                                 <td class="align-middle" >{{ $usuario->name }}</td>
                                 <td class="align-middle" >{{ $usuario->email }}</td>
                                 <td class="align-middle" >{{ $usuario->dni }}</td>
+                                <td class="align-middle" >{{ $usuario->phone }}</td>
                                 <td class="align-middle" >{{ $usuario->area }}</td>
                                 <td class="align-middle" >{{ $usuario->cargo }}</td>
                                 <td class="align-middle" >

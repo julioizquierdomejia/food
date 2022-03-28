@@ -28,7 +28,7 @@
 							<div class="form-row">
 								<div class="form-group col-md-8">
 									<label for="name">Nombre del Plato</label>
-									<input type="text" class="form-control" name='name' placeholder="Nombre de la Oferta" value="{{ old('name') }}">
+									<input type="text" class="form-control" name='name' placeholder="Nombre del plato" value="{{ old('name') }}">
 									@error('name')
 										<div><small class="text-danger">* {{ $message }}</small></div>
 									@enderror
@@ -36,6 +36,7 @@
 
 							</div>
 
+							{{-- 
 							<div class="form-row">
 								<div class="form-group col-md-8">
 									<label for="image">Imagen del Sorteo</label>
@@ -51,6 +52,7 @@
 								</div>
 							</div>
 
+							
 							<div class="form-row">
 								<div class="form-group col-md-12">
 									<label for="cost_us">Descripción - (Opción)</label>
@@ -61,7 +63,9 @@
 								@enderror
 							</div>
 
-							<button type="submit" class="btn btn-primary">Registrar Platos</button>
+							 --}}
+							 
+							<button type="submit" class="btn btn-primary">Registrar Plato</button>
 						</div>
 					</div>
 				</div>
