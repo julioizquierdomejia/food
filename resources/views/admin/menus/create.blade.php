@@ -68,7 +68,7 @@
 								</div>
 
 								<div class="form-group col-md-3">
-									<label for="price">Precio</label>
+									<label for="price">Precio S/.</label>
 									<input type="text" class="form-control" name='price' placeholder="Precio" value="{{ old('price') }}">
 									@error('price')
 										<div><small class="text-danger">* {{ $message }}</small></div>
@@ -76,7 +76,7 @@
 								</div>
 
 								<div class="form-group col-md-3">
-									<label for="cost">Costo</label>
+									<label for="cost">Costo S/.</label>
 									<input type="text" class="form-control" name='cost' placeholder="Cantidad" value="{{ old('cost') }}">
 									@error('cost')
 										<div><small class="text-danger">* {{ $message }}</small></div>
