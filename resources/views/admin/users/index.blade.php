@@ -227,9 +227,13 @@
                     Swal.fire({
                       position: 'bottom-end',
                       icon: 'success',
-                      title: 'El Usuario ' + name + ' ha sido ' + message,
+                      //title: 'El Usuario ' + name + ' ha sido ' + message,
                       showConfirmButton: false,
                       timer: 1500,
+                      width:400,
+                      padding:10,
+                      html: 'El Usuario <b>' + name + '</b> ha sido ' + message,
+
                     })
                 })
 

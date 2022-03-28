@@ -165,7 +165,7 @@
                     Swal.fire({
                       position: 'bottom-end',
                       icon: 'success',
-                      title: 'El Menu ' + name + ' ha sido ' + message,
+                      html: 'La Orden <b>' + name + '</b> ha sido ' + message,
                       showConfirmButton: false,
                       timer: 1500,
                     })
