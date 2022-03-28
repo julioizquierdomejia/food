@@ -105,7 +105,7 @@
 						<div class="card-body">
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label for="name" data-toggle="collapse" href="#collapse_entradas" role="button" aria-expanded="false" aria-controls="collapse_entradas">ENTRDAS</label>
+									<label for="name" data-toggle="collapse" href="#collapse_entradas" role="button" aria-expanded="false" aria-controls="collapse_entradas">ENTRDAS <i class="fas fa-angle-double-down ml-2 text-info"></i></label>
 
 									<div class="collapse" id="collapse_entradas">
 									  <input type="hidden" name="type" id="tipo">
@@ -134,7 +134,7 @@
 						<div class="card-body">
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label for="name" data-toggle="collapse" href="#collapse_segundos" role="button" aria-expanded="false" aria-controls="collapse_segundos">PLATO DE FONDO</label>
+									<label for="name" data-toggle="collapse" href="#collapse_segundos" role="button" aria-expanded="false" aria-controls="collapse_segundos">PLATO DE FONDO <i class="fas fa-angle-double-down ml-2 text-info"></i></label>
 
 									<div class="collapse" id="collapse_segundos">
 									  <input type="hidden" name="type" id="tipo">
@@ -163,7 +163,7 @@
 						<div class="card-body">
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<label for="name" data-toggle="collapse" href="#collapse_postres" role="button" aria-expanded="false" aria-controls="collapse_postres">POSTRES</label>
+									<label for="name" data-toggle="collapse" href="#collapse_postres" role="button" aria-expanded="false" aria-controls="collapse_postres">POSTRES <i class="fas fa-angle-double-down ml-2 text-info"></i></label>
 
 									<div class="collapse" id="collapse_postres">
 									  <input type="hidden" name="type" id="tipo">
