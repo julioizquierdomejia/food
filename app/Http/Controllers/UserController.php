@@ -151,9 +151,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $item = User::findOrFail($id);
 
-        return view('admin.users.edit', compact('item'));
+        $item = User::findOrFail($id);
+        $areas = Area::where('status', 1)->get();
+        $cargos = Stall::where('status', 1)->get();
+
+        return view('admin.users.edit', compact('item', 'areas', 'cargos'));
     }
 
     /**
@@ -170,13 +173,43 @@ class UserController extends Controller
 
         $item = User::findOrFail($id);
 
-        $data = $request->except('password', 'avatar');
+        //$data = $request->except('password', 'avatar');
 
+        /*
         if (request('password')) {
             $data['password'] = bcrypt(request('password'));
         }
+        */
 
-        $item->update($data);
+        if($request->hasFile("image")){
+
+            //obteneos el nombre de la imagen con GetclientOriginalName()
+            $nombre = Str::random(10) . '_' . $request->file('image')->getClientOriginalName();
+
+            //Creamos una ruta apuntando al Storage, y a que carpeta irá, tiene que existitr la carpeta
+            $ruta = storage_path() . '/app/public/images/perfil/' . $nombre;
+
+
+            //en una sola linea, creamos la imagen, la redimensionamos y la grabamos en la ruta que hemos crado
+            Image::make($request->file('image'))->resize(250, 250)->save($ruta);
+
+            //Grabamos en la base de datos toda la ruta de la imagen
+            $item->uri_image = '/storage/images/perfil/';
+            $item->name_image = $nombre;
+
+        }
+
+        $item->name = $request->name;
+        $item->email = $request->email;
+        $item->dni = $request->dni;
+        $item->phone = $request->phone;
+        $item->role = $request->role;
+        $item->area_id = $request->area_id;
+        $item->stall_id = $request->stall_id;
+        $item->password = bcrypt($request->phone);
+        
+        $item->update();
+
 
         return redirect()->route(ADMIN . '.users.index')->withSuccess(trans('app.success_update'));
 

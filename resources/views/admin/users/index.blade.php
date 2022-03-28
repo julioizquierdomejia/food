@@ -1,5 +1,4 @@
 @extends('adminlte::page') <!-- vendor/jeroennoten/laravel-adminlte/resources/views/page.blade.php -->
-
 @section('title', 'User')
 
 @section('content_header')
