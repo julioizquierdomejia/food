@@ -108,7 +108,7 @@
 									<label for="name" data-toggle="collapse" href="#collapse_entradas" role="button" aria-expanded="false" aria-controls="collapse_entradas">ENTRDAS <i class="fas fa-angle-double-down ml-2 text-info"></i></label>
 
 									<div class="collapse" id="collapse_entradas">
-									  <input type="hidden" name="type" id="tipo">
+									  <input type="text" name="type" id="tipo">
 									
 										@error('type')
 											<div><small class="text-danger">* {{ $message }}</small></div>
@@ -137,7 +137,7 @@
 									<label for="name" data-toggle="collapse" href="#collapse_segundos" role="button" aria-expanded="false" aria-controls="collapse_segundos">PLATO DE FONDO <i class="fas fa-angle-double-down ml-2 text-info"></i></label>
 
 									<div class="collapse" id="collapse_segundos">
-									  <input type="hidden" name="type" id="tipo">
+									  {{-- <input type="hidden" name="type" id="tipo"> --}}
 									
 										@error('tipo')
 											<div><small class="text-danger">* {{ $message }}</small></div>
@@ -166,7 +166,7 @@
 									<label for="name" data-toggle="collapse" href="#collapse_postres" role="button" aria-expanded="false" aria-controls="collapse_postres">POSTRES <i class="fas fa-angle-double-down ml-2 text-info"></i></label>
 
 									<div class="collapse" id="collapse_postres">
-									  <input type="hidden" name="type" id="tipo">
+									  {{-- <input type="hidden" name="type" id="tipo"> --}}
 									
 										@error('tipo')
 										<div><small class="text-danger">* {{ $message }}</small></div>
@@ -243,6 +243,8 @@
 					}
 				});
 			}
+
+			console.log(ids_array);
 			
 		});
 
