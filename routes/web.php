@@ -30,6 +30,8 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware' => ['auth', '
 });
 
 Route::post('menu/updateStatus', [\App\Http\Controllers\MenuController::class, 'updateStatus'])->name('menu.updateStatus');
+Route::post('menu/getMenu', [\App\Http\Controllers\MenuController::class, 'getMenu'])->name('menu.getMenu');
+
 Route::post('area/updateStatus', [\App\Http\Controllers\AreaController::class, 'updateStatus'])->name('area.updateStatus');
 Route::post('cargo/updateStatus', [\App\Http\Controllers\StallController::class, 'updateStatus'])->name('cargo.updateStatus');
 Route::post('user/updateStatus', [\App\Http\Controllers\UserController::class, 'updateStatus'])->name('user.updateStatus');

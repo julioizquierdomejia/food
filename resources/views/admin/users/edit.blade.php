@@ -48,7 +48,7 @@
                                 
                                 <div class="form-group col-md-4">
                                     <label for="dni">Documento de Identidad</label>
-                                    <input type="text" class="form-control" name='dni' placeholder="Documento de Identidad" value="{{ old('dni', $item->dni) }}">
+                                    <input type="text" class="form-control validaDni" name='dni' placeholder="Documento de Identidad" value="{{ old('dni', $item->dni) }}">
                                     @error('dni')
                                         <div><small class="text-danger">* {{ $message }}</small></div>
                                     @enderror
@@ -56,7 +56,7 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="phone">Telfono</label>
-                                    <input type="text" class="form-control" name='phone' placeholder="Telefono" value="{{ old('phone', $item->phone) }}">
+                                    <input type="text" class="form-control validaPhone" name='phone' placeholder="Telefono" value="{{ old('phone', $item->phone) }}">
                                     @error('phone')
                                         <div><small class="text-danger">* {{ $message }}</small></div>
                                     @enderror
@@ -231,6 +231,24 @@
             }
             
         });
+
+        var ele = document.querySelectorAll('.validaDni')[0];
+        ele.onkeypress = function(e) {
+         if(isNaN(this.value+String.fromCharCode(e.charCode)))
+            return false;
+        }
+        ele.onpaste = function(e){
+         e.preventDefault();
+        }
+
+        var ele = document.querySelectorAll('.validaPhone')[0];
+        ele.onkeypress = function(e) {
+         if(isNaN(this.value+String.fromCharCode(e.charCode)))
+            return false;
+        }
+        ele.onpaste = function(e){
+         e.preventDefault();
+        }
 
     </script>
 @stop

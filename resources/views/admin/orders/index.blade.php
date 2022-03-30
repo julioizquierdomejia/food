@@ -60,7 +60,12 @@
                                     @endif
                                 </td>
                                 <td class="align-middle" >{{ $item->nombre }}</td>
-                                <td class="align-middle" >{{ $item->menu }}</td>
+                                <td class="align-middle" >
+                                    <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <a href="" class="btn verDetalle" data-idMenu="{{ $item->menu_id }}">{{ $item->menu }}</a>
+                                    </form>
+                                </td>
                                 <td class="align-middle" >{{ $item->turno }}</td>
                                 <td class="align-middle" >{{ $item->horario }}</td>
                                 <td class="align-middle" >{{ \Carbon\Carbon::parse($item->fecha)->format('D d-M-Y')}}</td>
@@ -198,6 +203,46 @@
                     }
                 },
             });
+
+
+
+            // *****************************************
+            //
+            // Ver detalle del Menú modal
+            //
+            // *****************************************
+            $(".verDetalle").on( 'click', function(e) {
+
+                e.preventDefault();
+
+                menu_id = $(this).attr('data-idMenu');
+
+                $.ajax({
+                    url: "{{ route('menu.getMenu') }}",
+                    method: 'POST',
+                    data:{
+                        _token:$('input[name="_token"]').val(),
+                        id: menu_id,
+                    }
+                }).done(function(res){
+
+
+                    //let datos = JSON.parse(res);
+
+                    Swal.fire({
+                      //position: 'bottom-end',
+                      position: 'center',
+                      //icon: 'success',
+                      //html: 'La Orden <b>' + name + '</b> ha sido ' + message,
+                      html: res,
+                      showConfirmButton: false,
+                    })
+                })
+
+            })
+            
+                
+
 
             // *****************************************
             //

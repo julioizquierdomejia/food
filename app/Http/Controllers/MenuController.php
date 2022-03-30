@@ -244,4 +244,52 @@ class MenuController extends Controller
             'status' => $request->status,
         ]);
     }
+
+
+
+    public function getMenu(Request $request){
+
+        $platos = Dish::where('menu_id', $request->id);
+        $menu = Menu::find($request->id);
+        
+        $ids_array = [];
+
+        $menus = DB::table('dish_menu')
+                    ->where('menu_id', $request->id)
+                    ->join('dishes', 'dish_menu.dish_id', '=', 'dishes.id')
+                    ->select('dishes.name as nombre', 'dishes.type as tipo')
+                    ->orderBy('dishes.type', 'asc')
+                    ->get();
+
+        /*
+        $tipos = DB::table('dish_menu')
+                    ->where('menu_id', $request->id)
+                    ->join('dishes', 'dish_menu.dish_id', '=', 'dishes.id')
+                    ->select('dishes.name as nombre', 'dishes.type as tipo')
+                    ->orderBy('dishes.type', 'asc')
+                    ->groupBy('account_id')
+                    ->get();
+        */
+
+        //armamos los platos
+        $html = '<h3>'.$menu->name.'</h3>';         
+        $html = $html.'<ul class="list-group">';
+        foreach ($menus as $key => $value) {
+            array_push($ids_array, $value->nombre);
+            if ($value->tipo == 0) {
+                $html = $html.'<li class="list-group-item list-group-item-info"><b>Entrada - </b>'.$value->nombre.'</li>';
+            }else{
+                if ($value->tipo == 1) {
+                    $html = $html.'<li class="list-group-item list-group-item-success"><b>Plato de Fondo - </b>'.$value->nombre.'</li>';
+                }else{
+                    $html = $html.'<li class="list-group-item list-group-item-warning"><b>Postre - </b>'.$value->nombre.'</li>';
+                }
+            }
+                        
+        }
+
+        $html = $html.'</ul>';
+
+        return response()->json($html, 200, []);
+    }
 }

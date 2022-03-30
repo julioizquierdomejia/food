@@ -74,8 +74,8 @@ class UserController extends Controller
         $request->validate([
             'name'  =>  'required|regex:/^[\pL\s\-]+$/u',
             'email'  =>  'required|unique:users|email',
-            'dni'  =>  'required|unique:users|regex:/(01)[0-9]{8}/',
-            'phone'  =>  'required|unique:users|regex:/(01)[0-9]{9}/',
+            'dni'  =>  'required|unique:users|max:8|min:8',
+            'phone'  =>  'required|unique:users|max:9|min:9',
             'role'  =>  'required',
             'area_id'  =>  'required',
             'stall_id'  =>  'required',
@@ -169,7 +169,17 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->validate($request, User::rules(true, $id));
+        //$this->validate($request, User::rules(true, $id));
+        $request->validate([
+            'name'  =>  'required|regex:/^[\pL\s\-]+$/u',
+            'email'  =>  'required|email',
+            'dni'  =>  'required|max:8|min:8',
+            'phone'  =>  'required|max:9|min:9',
+            'role'  =>  'required',
+            'area_id'  =>  'required',
+            'stall_id'  =>  'required',
+            
+        ]);
 
         $item = User::findOrFail($id);
 

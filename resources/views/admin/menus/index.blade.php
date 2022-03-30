@@ -53,7 +53,12 @@
                         <tr>
                             <td class="align-middle" >{{ $item->id }}</td>
                             <td class="align-middle" >{{ \Carbon\Carbon::parse($item->date)->format('D d-M-Y')}}</td>
-                            <td class="align-middle" >{{ $item->name }}</td>
+                            <td class="align-middle" >
+                                <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <a href="" class="btn verDetalle" data-idMenu="{{ $item->id }}">{{ $item->name }}</a>
+                                </form>
+                            </td>
                             <td class="align-middle" >{{ $item->price }}</td>
                             <td class="align-middle" >{{ $item->cost }}</td>
                             <td class="align-middle" >{{ $item->cant }}</td>
@@ -172,6 +177,41 @@
                     }
                 },
             });
+
+            // *****************************************
+            //
+            // Ver detalle del Menú modal
+            //
+            // *****************************************
+            $(".verDetalle").on( 'click', function(e) {
+
+                e.preventDefault();
+
+                menu_id = $(this).attr('data-idMenu');
+
+                $.ajax({
+                    url: "{{ route('menu.getMenu') }}",
+                    method: 'POST',
+                    data:{
+                        _token:$('input[name="_token"]').val(),
+                        id: menu_id,
+                    }
+                }).done(function(res){
+
+
+                    //let datos = JSON.parse(res);
+
+                    Swal.fire({
+                      //position: 'bottom-end',
+                      position: 'center',
+                      //icon: 'success',
+                      //html: 'La Orden <b>' + name + '</b> ha sido ' + message,
+                      html: res,
+                      showConfirmButton: false,
+                    })
+                })
+
+            })
 
             
             // *****************************************
