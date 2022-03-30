@@ -180,7 +180,7 @@
 
             // *****************************************
             //
-            // Ver detalle del Menú modal para el detalle de menus
+            // Ver detalle del Menú modal
             //
             // *****************************************
             $(".verDetalle").on( 'click', function(e) {
