@@ -70,6 +70,7 @@ class AreaController extends Controller
     public function edit(Area $area)
     {
         //
+        return view('admin.areas.edit', compact('area'));
     }
 
     /**
@@ -82,6 +83,10 @@ class AreaController extends Controller
     public function update(Request $request, Area $area)
     {
         //
+        $area->name = $request->name;
+        $area->update();
+
+        return redirect('/admin/areas');
     }
 
     /**

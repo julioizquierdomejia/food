@@ -52,7 +52,7 @@
                             <td>
                                 <a href="{{ route('admin.areas.edit', $item) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                                 <a href="" class="btn btn-danger btn-sm delete" id="{{$item->id}}" data-idUser="{{$item->id}}"><i class="fas fa-trash"></i></a>
-                            </td>   
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -135,7 +135,7 @@
 
                 Swal.fire({
                   title: 'Estas seguro?',
-                  text: "De eliminar este Menu",
+                  text: "De eliminar esta área",
                   icon: 'warning',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',

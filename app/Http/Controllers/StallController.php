@@ -71,6 +71,7 @@ class StallController extends Controller
     public function edit(Stall $stall)
     {
         //
+        return view('admin.stalls.edit', compact('stall'));
     }
 
     /**
@@ -83,6 +84,10 @@ class StallController extends Controller
     public function update(Request $request, Stall $stall)
     {
         //
+        $stall->name = $request->name;
+        $stall->update();
+
+        return redirect('/admin/stalls');
     }
 
     /**
