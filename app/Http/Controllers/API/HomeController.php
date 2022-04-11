@@ -21,6 +21,7 @@ use App\Models\Order;
 use App\Models\Ticket;
 use App\Models\Item;
 use App\Models\Menu;
+use App\Models\Parameter;
 
 use App\Models\Country;
 
@@ -310,10 +311,12 @@ class HomeController extends Controller
 
             $menus = Menu::where('status', 1)->get();
             $orders = Order::all();
+            $parametros = Parameter::all()->last();
             
             foreach ($menus as $menu) {
 
                 $menu['pedido'] = $menu->pedidos->count();
+                $menu['tiempoCancel'] = $parametros->cancelTime;
 
                 $menu->platos;
                 $menu = json_encode($menu);
