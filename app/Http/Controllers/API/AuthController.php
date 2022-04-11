@@ -177,6 +177,11 @@ class AuthController extends Controller
                 'id' => $infoUsers->id,
                 'email' => $infoUsers->email,
                 'name' => $infoUsers->name,
+                'dni' => $infoUsers->dni,
+                'phone' => $infoUsers->phone,
+                'uri_image' => $infoUsers->uri_image,
+                'name_image' => $infoUsers->name_image,
+                'role' => $infoUsers->role,
                 'access_token' => $token
             ]);
         } catch (\Exception $exception) {
