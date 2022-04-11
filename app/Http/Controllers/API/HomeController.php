@@ -20,6 +20,7 @@ use App\Models\Favorite;
 use App\Models\Order;
 use App\Models\Ticket;
 use App\Models\Item;
+use App\Models\Dish;
 use App\Models\Menu;
 use App\Models\Parameter;
 
@@ -331,6 +332,64 @@ class HomeController extends Controller
         return $this->successResponse([
             'status' => 200,
             'menus' => $menus,
+        ]);
+    }
+
+    public function getHistory(Request $request)
+    {
+        try {
+
+            $orders = Order::where('user_id', $request->id)
+                        //->join('dishes', 'orders.entrada_id', '=', 'dishes.id')
+                        ->get();
+
+            $menus = Menu::where('status', 1)->get();
+            $platos = Dish::all();
+
+
+            
+            $parametros = Parameter::all()->last();
+            
+            foreach ($orders as $order) {
+                $order['tiempoCancel'] = $parametros->cancelTime;
+                //vemos el nombre del Menu
+                foreach ($menus as $key => $menu) {
+                    if ($menu->id == $order->menu_id) {
+                        $order['Menu'] = $menu->name;
+                    }
+                }
+
+                //vemos el nombre dela Entrada
+                foreach ($platos as $key => $plato) {
+                    if ($plato->id == $order->entrada_id) {
+                        $order['Entrada'] = $plato->name;
+                    }
+                }
+
+                //vemos el nombre del plato de fondo
+                foreach ($platos as $key => $plato) {
+                    if ($plato->id == $order->segundo_id) {
+                        $order['Plato de Fondo'] = $plato->name;
+                    }
+                }
+
+                //vemos el nombre del plato de Postre
+                foreach ($platos as $key => $plato) {
+                    if ($plato->id == $order->postre_id) {
+                        $order['Postre'] = $plato->name;
+                    }
+                }
+
+            }
+
+
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 400);
+        }
+
+        return $this->successResponse([
+            'status' => 200,
+            'menus' => $orders,
         ]);
     }
 
