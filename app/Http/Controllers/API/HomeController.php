@@ -264,15 +264,23 @@ class HomeController extends Controller
     public function cancelOrder(Request $request)
     {
         try {
+
             
-            $id = $request->id;
+            $id = $request;
+
             $array_ids = explode(',', $id);
 
+
             //buscamos si existe el registro
+            /*
             $orden = Order::where('user_id', $array_ids[0])
                         ->where('menu_id', $array_ids[1])
                         ->first();
+                    */
 
+            $orden = Order::where('user_id', $request->user_id)
+                        ->where('menu_id', $request->menu_id)
+                        ->first();
             
             if($orden->status == 1){
                 $orden->status = 3;
