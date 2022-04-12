@@ -356,6 +356,7 @@ class HomeController extends Controller
                 foreach ($menus as $key => $menu) {
                     if ($menu->id == $order->menu_id) {
                         $order['Menu'] = $menu->name;
+                        $order['imagen'] = $menu->uri_image.$menu->name_image;
                     }
                 }
 
